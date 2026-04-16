@@ -34,18 +34,22 @@ app.get('/', (req, res) => {
 // ─────────────────────────────────────────────
 app.post("/login", async (req, res) => {
   const { emp_id, password, role } = req.body;
+  console.log("LOGIN ATTEMPT - INPUT:", { emp_id, password, role });
   try {
     const result = await pool.query(
       "SELECT * FROM users WHERE employee_id=$1 AND password=$2 AND role=$3",
       [emp_id, password, role]
     );
+    console.log("DB RESULT COUNT:", result.rows.length);
     if (result.rows.length > 0) {
+      console.log("LOGIN SUCCESS for:", emp_id);
       res.json({ success: true, user: result.rows[0] });
     } else {
+      console.log("LOGIN FAILED - No match found in DB");
       res.json({ success: false });
     }
   } catch (err) {
-    console.error(err);
+    console.error("LOGIN ERROR:", err);
     res.status(500).send("Server error");
   }
 });
