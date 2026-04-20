@@ -201,23 +201,28 @@ class _LoginScreenState extends State<LoginScreen> {
                     contentPadding: const EdgeInsets.symmetric(vertical: 14)),
                 ),
               ),
-              const SizedBox(height: 28),
-              const SizedBox(height: 12),
-              const Center(
-                child: Text("Build Version: 2.5 (Network & Download Fix)",
-                    style: TextStyle(fontSize: 10, color: Colors.grey)),
-              ),
-              const SizedBox(height: 20),
-              const Center(
-                child: Text("Build Version: 2.5 (Network & Download Fix)",
-                    style: TextStyle(fontSize: 10, color: Colors.grey)),
-              ),
-              const SizedBox(height: 20),
-              const Center(
-                child: Text("Build Version: 2.6 (Network & Download Fix)",
-                    style: TextStyle(fontSize: 11, color: Colors.grey)),
-              ),
-            ],
+               const SizedBox(height: 28),
+               SizedBox(
+                 width: double.infinity, height: 52,
+                 child: ElevatedButton(
+                   onPressed: _isLoading ? null : login,
+                   style: ElevatedButton.styleFrom(
+                     backgroundColor: const Color(0xFF1A2E2A),
+                     shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(10))),
+                   child: _isLoading
+                       ? const CircularProgressIndicator(color: Colors.white)
+                       : const Text("Login", style: TextStyle(
+                           color: Colors.white, fontSize: 16,
+                           fontWeight: FontWeight.w600)),
+                 ),
+               ),
+               const SizedBox(height: 24),
+               const Center(
+                 child: Text("Build Version: 3.0 (Critical Fixes)",
+                     style: TextStyle(fontSize: 11, color: Colors.grey)),
+               ),
+             ],
           ),
         ),
       ),
