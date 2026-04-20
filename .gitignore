@@ -3,3 +3,5 @@ node_modules
 .agents
 scratch
 .gemini
+
+mobile_app/build/

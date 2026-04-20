@@ -33,22 +33,24 @@ Future<void> downloadAsXlsx(BuildContext context, String sheetName,
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final fileName = '${sheetName}_$timestamp.xlsx';
 
-    if (kIsWeb) {
-      // ✅ Web-specific download logic (triggers browser download)
-      excel.save(fileName: fileName);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("✅ $fileName download started")),
-        );
-      }
-      return;
-    }
-
-    // ✅ Mobile/Desktop logic
-    final dir = await getTemporaryDirectory(); // Use temporary directory for sharing
-    final file = File('${dir.path}/$fileName');
     final bytes = excel.encode();
+    debugPrint("EXCEL_BYTES: ${bytes?.length ?? 0}");
     if (bytes != null) {
+      if (kIsWeb) {
+        // ✅ Web-specific download logic (triggers browser download)
+        debugPrint("EXCEL: Triggering Web download for $fileName");
+        excel.save(fileName: fileName);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("✅ $fileName download started")),
+          );
+        }
+        return;
+      }
+
+      // ✅ Mobile/Desktop logic
+      final dir = await getTemporaryDirectory(); // Use temporary directory for sharing
+      final file = File('${dir.path}/$fileName');
       await file.writeAsBytes(bytes);
       // Share the file so user can save it to Downloads / any location
       await Share.shareXFiles(

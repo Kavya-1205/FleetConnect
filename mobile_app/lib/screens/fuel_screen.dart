@@ -220,8 +220,11 @@ class _FuelScreenState extends State<FuelScreen> {
     try {
       String? base64Image;
       if (activeBillImage != null) {
+        debugPrint("FUEL_UPLOAD: Reading image bytes...");
         final bytes = await activeBillImage!.readAsBytes();
+        debugPrint("FUEL_UPLOAD: Image size = ${bytes.length} bytes");
         base64Image = base64Encode(bytes);
+        debugPrint("FUEL_UPLOAD: Base64 length = ${base64Image.length}");
       }
       await ApiService.addFuelEntry(
         tripId: activeTripId,
