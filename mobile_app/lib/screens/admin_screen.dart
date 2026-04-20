@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -1814,6 +1815,7 @@ class _AdminReportsScreenState extends State<AdminReportsScreen>
     required String title,
     String? subtitle,
     Widget? headerCorner,
+    Widget? bottomWidget,
     required Map<String, String> fields,
   }) {
     return Container(
@@ -1892,6 +1894,7 @@ class _AdminReportsScreenState extends State<AdminReportsScreen>
               }
             ),
           ),
+          if (bottomWidget != null) bottomWidget,
         ],
       ),
     );
@@ -1935,7 +1938,78 @@ class _AdminReportsScreenState extends State<AdminReportsScreen>
       "Amount": "Rs. ${f['amount'] ?? '—'}", 
       "Type": f['fuel_type'] ?? '—',
     },
+    bottomWidget: (f['bill_image'] != null && f['bill_image'].toString().isNotEmpty)
+      ? Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("FUEL RECEIPT", style: TextStyle(fontSize: 10, color: Colors.grey, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
+              const SizedBox(height: 8),
+              GestureDetector(
+                onTap: () => _viewFullImage(f['bill_image']),
+                child: Container(
+                  height: 150,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade200),
+                    image: DecorationImage(
+                      image: MemoryImage(base64Decode(f['bill_image'])),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.fullscreen, color: Colors.white, size: 18),
+                          SizedBox(width: 4),
+                          Text("Tap to View", style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      : null,
   );
+
+  void _viewFullImage(String base64) {
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            Expanded(
+              child: InteractiveViewer(
+                child: Image.memory(base64Decode(base64)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _issueCard(Map i) => _fancyCard(
     icon: Icons.report_problem,

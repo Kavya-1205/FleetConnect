@@ -388,7 +388,7 @@ class ApiService {
     required String fuelCardNumber,
     String? billImage,
   }) async {
-    await http.post(Uri.parse('$baseUrl/fuel-entries'),
+    final response = await http.post(Uri.parse('$baseUrl/fuel-entries'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "trip_id": tripId,
@@ -400,6 +400,9 @@ class ApiService {
           "fuel_card_number": fuelCardNumber,
           "bill_image": billImage,
         }));
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception("Failed to add fuel entry: ${response.statusCode}");
+    }
   }
 
   // ─────────────────────────────────────────────
