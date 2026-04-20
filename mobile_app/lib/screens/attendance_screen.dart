@@ -45,9 +45,14 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Future<void> _loadAttendance() async {
-    setState(() => isLoading = true);
-    final result = await ApiService.getTodayAttendance(widget.driverId);
-    if (mounted) setState(() { attendance = result; isLoading = false; });
+    try {
+      setState(() => isLoading = true);
+      final result = await ApiService.getTodayAttendance(widget.driverId);
+      if (mounted) setState(() { attendance = result; isLoading = false; });
+    } catch (e) {
+      debugPrint("Error loading attendance: $e");
+      if (mounted) setState(() => isLoading = false);
+    }
   }
 
   bool get _isPunchedIn =>
@@ -79,19 +84,25 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Future<void> _handlePunch() async {
-    setState(() => isProcessing = true);
-    Map<String, dynamic>? result;
-    if (!_isPunchedIn) {
-      result = await ApiService.punchIn(widget.driverId);
-    } else if (!_isPunchedOut) {
-      result = await ApiService.punchOut(widget.driverId);
-    }
-    if (result != null) {
-      setState(() { attendance = result; isProcessing = false; });
-      _showSnack(_isPunchedOut ? '✅ Punched Out Successfully' : '✅ Punched In Successfully');
-    } else {
+    try {
+      setState(() => isProcessing = true);
+      Map<String, dynamic>? result;
+      if (!_isPunchedIn) {
+        result = await ApiService.punchIn(widget.driverId);
+      } else if (!_isPunchedOut) {
+        result = await ApiService.punchOut(widget.driverId);
+      }
+      if (result != null) {
+        setState(() { attendance = result; isProcessing = false; });
+        _showSnack(_isPunchedOut ? '✅ Punched Out Successfully' : '✅ Punched In Successfully');
+      } else {
+        setState(() => isProcessing = false);
+        _showSnack('⚠️ Action failed. Try again.');
+      }
+    } catch (e) {
+      debugPrint("Punch error: $e");
       setState(() => isProcessing = false);
-      _showSnack('⚠️ Action failed. Try again.');
+      _showSnack('⚠️ Connection error. Try again.');
     }
   }
 

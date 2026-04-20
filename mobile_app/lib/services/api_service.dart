@@ -20,11 +20,17 @@ class ApiService {
           "role": role.toLowerCase(),
         }),
       );
+
+      debugPrint("LOGIN STATUS: ${response.statusCode}");
+      debugPrint("LOGIN BODY: ${response.body}");
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data["success"] == true) return data["user"];
       }
-    } catch (e) { debugPrint("login error: $e"); }
+    } catch (e) {
+      debugPrint("LOGIN ERROR: $e");
+    }
     return null;
   }
 

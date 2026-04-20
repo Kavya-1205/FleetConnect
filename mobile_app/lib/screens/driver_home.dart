@@ -38,22 +38,31 @@ class _DriverHomeState extends State<DriverHome> {
   }
 
   Future<void> _fetchAllocation() async {
-    final allocation = await ApiService.getAllocationForDriver(widget.driverId);
-    if (mounted) {
-      setState(() {
-        if (allocation != null) {
-          assignedVin = allocation['vin'];
-          assignedRoute = allocation['route_name'];
-          assignedShift = allocation['shift'];
-        }
-        isLoading = false;
-      });
+    try {
+      final allocation = await ApiService.getAllocationForDriver(widget.driverId);
+      if (mounted) {
+        setState(() {
+          if (allocation != null) {
+            assignedVin = allocation['vin'];
+            assignedRoute = allocation['route_name'];
+            assignedShift = allocation['shift'];
+          }
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      debugPrint("Error fetching allocation: $e");
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
   Future<void> _fetchAttendance() async {
-    final att = await ApiService.getTodayAttendance(widget.driverId);
-    if (mounted) setState(() => _todayAttendance = att);
+    try {
+      final att = await ApiService.getTodayAttendance(widget.driverId);
+      if (mounted) setState(() => _todayAttendance = att);
+    } catch (e) {
+      debugPrint("Error fetching attendance: $e");
+    }
   }
 
   String _getInitials(String name) {

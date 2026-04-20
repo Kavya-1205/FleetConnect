@@ -33,8 +33,12 @@ class _RepairScreenState extends State<RepairScreen> {
   }
 
   void _loadVehicles() async {
-    final v = await ApiService.getVehicles();
-    setState(() => vehicles = v);
+    try {
+      final v = await ApiService.getVehicles();
+      setState(() => vehicles = v);
+    } catch (e) {
+      debugPrint("Error loading vehicles: $e");
+    }
   }
 
   Future<void> _pickDate() async {

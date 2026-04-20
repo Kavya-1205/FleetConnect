@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:excel/excel.dart' hide Border;
 import 'package:path_provider/path_provider.dart';
@@ -29,16 +30,29 @@ Future<void> downloadAsXlsx(BuildContext context, String sheetName,
       sheet.appendRow(row.map((c) => TextCellValue(c)).toList());
     }
 
-    final dir = await getApplicationDocumentsDirectory();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final fileName = '${sheetName}_$timestamp.xlsx';
+
+    if (kIsWeb) {
+      // ✅ Web-specific download logic (triggers browser download)
+      excel.save(fileName: fileName);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("✅ $fileName download started")),
+        );
+      }
+      return;
+    }
+
+    // ✅ Mobile/Desktop logic
+    final dir = await getTemporaryDirectory(); // Use temporary directory for sharing
     final file = File('${dir.path}/$fileName');
     final bytes = excel.encode();
     if (bytes != null) {
       await file.writeAsBytes(bytes);
       // Share the file so user can save it to Downloads / any location
       await Share.shareXFiles(
-        [XFile(file.path)],
+        [XFile(file.path, mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')],
         subject: 'Download $sheetName',
       );
       if (context.mounted) {

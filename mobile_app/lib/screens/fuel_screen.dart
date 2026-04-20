@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
 
@@ -57,44 +58,67 @@ class _FuelScreenState extends State<FuelScreen> {
   }
 
   void _loadTripStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final tripId = prefs.getInt('driver_${widget.driverId}_trip_id');
-    final vehicleId = prefs.getInt('driver_${widget.driverId}_vehicle_id');
-    final vin = prefs.getString('driver_${widget.driverId}_vin') ?? "";
-    setState(() {
-      tripActive = tripId != null;
-      activeTripId = tripId;
-      activeTripVehicleId = vehicleId;
-      activeTripVin = vin;
-      _selectedTab = tripId != null ? 0 : 1;
-    });
-    if (vehicleId != null) {
-      final fc = await ApiService.getFuelCardForVehicle(vehicleId);
-      setState(() => activePrimaryFC = fc);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final tripId = prefs.getInt('driver_${widget.driverId}_trip_id');
+      final vehicleId = prefs.getInt('driver_${widget.driverId}_vehicle_id');
+      final vin = prefs.getString('driver_${widget.driverId}_vin') ?? "";
+      setState(() {
+        tripActive = tripId != null;
+        activeTripId = tripId;
+        activeTripVehicleId = vehicleId;
+        activeTripVin = vin;
+        _selectedTab = tripId != null ? 0 : 1;
+      });
+      if (vehicleId != null) {
+        final fc = await ApiService.getFuelCardForVehicle(vehicleId);
+        setState(() => activePrimaryFC = fc);
+      }
+    } catch (e) {
+      debugPrint("Error loading trip status: $e");
     }
   }
 
   void _loadVehicles() async {
-    final v = await ApiService.getVehicles();
-    setState(() => vehicles = v);
+    try {
+      final v = await ApiService.getVehicles();
+      setState(() => vehicles = v);
+    } catch (e) {
+      debugPrint("Error loading vehicles: $e");
+    }
   }
 
   void _loadAllFuelCards() async {
-    final cards = await ApiService.getAllFuelCards();
-    setState(() => allFuelCards = cards);
+    try {
+      final cards = await ApiService.getAllFuelCards();
+      setState(() => allFuelCards = cards);
+    } catch (e) {
+      debugPrint("Error loading all fuel cards: $e");
+    }
   }
 
   void _loadInactiveFuelCard(int vehicleId) async {
-    final fc = await ApiService.getFuelCardForVehicle(vehicleId);
-    setState(() {
-      inactivePrimaryFC = fc;
-      inactiveSecondaryFC = null;
-    });
+    try {
+      final fc = await ApiService.getFuelCardForVehicle(vehicleId);
+      setState(() {
+        inactivePrimaryFC = fc;
+        inactiveSecondaryFC = null;
+      });
+    } catch (e) {
+      debugPrint("Error loading inactive fuel card: $e");
+    }
   }
 
   Future<File?> _pickImage(ImageSource source) async {
+    if (source == ImageSource.camera) {
+      await Permission.camera.request();
+    } else {
+      await Permission.photos.request();
+    }
+
     final picker = ImagePicker();
-    final picked = await picker.pickImage(source: source, imageQuality: 70);
+    final picked = await picker.pickImage(source: source, imageQuality: 30);
+
     if (picked != null) return File(picked.path);
     return null;
   }
@@ -192,6 +216,7 @@ class _FuelScreenState extends State<FuelScreen> {
       return;
     }
     setState(() => activeSubmitting = true);
+    print("Image: $activeBillImage");
     try {
       String? base64Image;
       if (activeBillImage != null) {
