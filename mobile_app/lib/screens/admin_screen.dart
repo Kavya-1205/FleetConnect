@@ -1644,7 +1644,7 @@ class _AdminReportsScreenState extends State<AdminReportsScreen>
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Driver Interface", style: TextStyle(
+            const Text("Driver Interface v1.1", style: TextStyle(
                 color: Color(0xFF1A1A2E), fontWeight: FontWeight.bold, fontSize: 18)),
             Text("Activity & Performance Reports", style: TextStyle(
                 color: Colors.grey.shade600, fontSize: 11, fontWeight: FontWeight.w500)),
@@ -2940,7 +2940,7 @@ class _AdminAttendanceScreenState extends State<AdminAttendanceScreen> {
           Expanded(child: ElevatedButton.icon(
             onPressed: _loadData,
             icon: const Icon(Icons.refresh, color: Colors.white, size: 18),
-            label: const Text("Refresh Data", style: TextStyle(
+            label: const Text("Refresh Reports v1.1", style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold)),
             style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF1A2E2A),
