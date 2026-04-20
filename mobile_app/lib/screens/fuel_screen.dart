@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
 
@@ -37,14 +37,14 @@ class _FuelScreenState extends State<FuelScreen> {
 
   // ── Active trip form ──
   String activeFuelType = "Diesel";
-  File? activeBillImage;
+  XFile? activeBillImage;
   bool activeSubmitting = false;
   final TextEditingController activeLitresCtrl = TextEditingController();
   final TextEditingController activeAmountCtrl = TextEditingController();
 
   // ── Inactive trip form ──
   String inactiveFuelType = "Diesel";
-  File? inactiveBillImage;
+  XFile? inactiveBillImage;
   bool inactiveSubmitting = false;
   final TextEditingController inactiveLitresCtrl = TextEditingController();
   final TextEditingController inactiveAmountCtrl = TextEditingController();
@@ -109,21 +109,22 @@ class _FuelScreenState extends State<FuelScreen> {
     }
   }
 
-  Future<File?> _pickImage(ImageSource source) async {
-    if (source == ImageSource.camera) {
-      await Permission.camera.request();
-    } else {
-      await Permission.photos.request();
+  Future<XFile?> _pickImage(ImageSource source) async {
+    try {
+      final picker = ImagePicker();
+      return await picker.pickImage(source: source, imageQuality: 30);
+    } catch (e) {
+      debugPrint("Image picker error: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Could not open camera/gallery: $e")),
+        );
+      }
+      return null;
     }
-
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(source: source, imageQuality: 30);
-
-    if (picked != null) return File(picked.path);
-    return null;
   }
 
-  void _showImageOptions(Function(File) onPicked) {
+  void _showImageOptions(Function(XFile) onPicked) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -338,7 +339,7 @@ class _FuelScreenState extends State<FuelScreen> {
     );
   }
 
-  Widget _photoBox(File? image, VoidCallback onTap) {
+  Widget _photoBox(XFile? image, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -352,7 +353,9 @@ class _FuelScreenState extends State<FuelScreen> {
         child: image != null
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.file(image, fit: BoxFit.cover))
+                child: kIsWeb
+                    ? Image.network(image.path, fit: BoxFit.cover)
+                    : Image.file(File(image.path), fit: BoxFit.cover))
             : const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:mobile_app/login_screen.dart';
 import '../services/api_service.dart';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' if (dart.library.io) 'package:mobile_app/stub_html.dart' as html;
 
 // ─────────────────────────────────────────────
 // EXCEL DOWNLOAD HELPER (uses share_plus)
@@ -37,31 +40,41 @@ Future<void> downloadAsXlsx(BuildContext context, String sheetName,
     debugPrint("EXCEL_BYTES: ${bytes?.length ?? 0}");
     if (bytes != null) {
       if (kIsWeb) {
-        // ✅ Web-specific download logic (triggers browser download)
+        // ✅ Web download: create an anchor tag and click it
         debugPrint("EXCEL: Triggering Web download for $fileName");
-        excel.save(fileName: fileName);
+        final blob = html.Blob(
+          [Uint8List.fromList(bytes)],
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        );
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement(href: url)
+          ..setAttribute('download', fileName)
+          ..click();
+        html.Url.revokeObjectUrl(url);
+        anchor.remove();
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("✅ $fileName download started")),
+            SnackBar(content: Text("✅ $fileName downloading to your device...")),
           );
         }
         return;
       }
 
-      // ✅ Mobile/Desktop logic
-      final dir = await getTemporaryDirectory(); // Use temporary directory for sharing
+      // ✅ Mobile APK logic — share sheet so user can save to Downloads
+      final dir = await getTemporaryDirectory();
       final file = File('${dir.path}/$fileName');
       await file.writeAsBytes(bytes);
-      // Share the file so user can save it to Downloads / any location
+      debugPrint("EXCEL: Saved to ${file.path}, sharing now...");
       await Share.shareXFiles(
         [XFile(file.path, mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')],
         subject: 'Download $sheetName',
+        text: '$sheetName Report',
       );
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("✅ $fileName ready to save"),
-            duration: const Duration(seconds: 3),
+            content: Text("✅ $fileName — save it from the share sheet!"),
+            duration: const Duration(seconds: 4),
           ),
         );
       }
