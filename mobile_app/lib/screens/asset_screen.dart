@@ -48,107 +48,151 @@ class AssetScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
+          ),
         ),
-        title: const Text("Asset Tracking",
-            style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 18)),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Track vehicle instrumentation & hardware",
-                style: TextStyle(color: Colors.grey, fontSize: 13)),
-            const SizedBox(height: 16),
-            const Text("Select Category",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E))),
-            const SizedBox(height: 12),
-            Expanded(
-              child: ListView.separated(
-                itemCount: categories.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 10),
-                itemBuilder: (context, index) {
-                  final cat = categories[index];
-                  final isTCPlate = cat['isTCPlate'] == true;
-
-                  return GestureDetector(
-                    onTap: () {
-                      if (isTCPlate) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                TCPlateScreen(driverId: driverId),
-                          ),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AssetFormScreen(
-                              driverId: driverId,
-                              categoryTitle: cat['title'],
-                              categoryIcon: cat['icon'],
-                              categoryColor: cat['color'],
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.grey.shade200),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Custom AppBar
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xFF1A1A2E),
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: (cat['color'] as Color)
-                                  .withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              cat['icon'] as IconData,
-                              color: cat['color'] as Color,
-                              size: 22,
-                            ),
-                          ),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: Text(cat['title'],
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF1A1A2E))),
-                          ),
-                          const Icon(Icons.arrow_forward_ios,
-                              size: 14, color: Colors.grey),
-                        ],
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "ASSET TRACKING",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
                       ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Track vehicle instrumentation & hardware",
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        "Select Category",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1A1A2E),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: ListView.separated(
+                          itemCount: categories.length,
+                          separatorBuilder: (_, _) =>
+                              const SizedBox(height: 10),
+                          itemBuilder: (context, index) {
+                            final cat = categories[index];
+                            final isTCPlate = cat['isTCPlate'] == true;
+
+                            return GestureDetector(
+                              onTap: () {
+                                if (isTCPlate) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          TCPlateScreen(driverId: driverId),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => AssetFormScreen(
+                                        driverId: driverId,
+                                        categoryTitle: cat['title'],
+                                        categoryIcon: cat['icon'],
+                                        categoryColor: cat['color'],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 14,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Colors.grey.shade200,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: (cat['color'] as Color)
+                                            .withValues(alpha: 0.1),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Icon(
+                                        cat['icon'] as IconData,
+                                        color: cat['color'] as Color,
+                                        size: 22,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 14),
+                                    Expanded(
+                                      child: Text(
+                                        cat['title'],
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF1A1A2E),
+                                        ),
+                                      ),
+                                    ),
+                                    const Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -180,12 +224,9 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
   bool isSubmitting = false;
   DateTime? selectedDate;
 
-  final TextEditingController requestedByController =
-      TextEditingController();
-  final TextEditingController fittedByController =
-      TextEditingController();
-  final TextEditingController assetNumberController =
-      TextEditingController();
+  final TextEditingController requestedByController = TextEditingController();
+  final TextEditingController fittedByController = TextEditingController();
+  final TextEditingController assetNumberController = TextEditingController();
   final TextEditingController odoController = TextEditingController();
 
   @override
@@ -226,8 +267,7 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         contentPadding: const EdgeInsets.all(24),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -238,12 +278,15 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
               size: 56,
             ),
             const SizedBox(height: 12),
-            Text(title,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E)),
-                textAlign: TextAlign.center),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A2E),
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
@@ -252,10 +295,10 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                child: const Text("OK",
-                    style: TextStyle(color: Colors.white)),
+                child: const Text("OK", style: TextStyle(color: Colors.white)),
               ),
             ),
           ],
@@ -332,8 +375,10 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
           hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
           prefixIcon: Icon(icon, color: Colors.grey, size: 20),
           border: InputBorder.none,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 14,
+            horizontal: 14,
+          ),
         ),
       ),
     );
@@ -350,11 +395,14 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(widget.categoryTitle,
-            style: const TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 16)),
+        title: Text(
+          widget.categoryTitle,
+          style: const TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -362,19 +410,25 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Asset Details header
-            const Text("Asset Details",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Asset Details",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 20),
 
             // Vehicle VIN
-            const Text("Vehicle VIN",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Vehicle VIN",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -386,36 +440,43 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
                   isExpanded: true,
-                  hint: const Text("Select VIN",
-                      style:
-                          TextStyle(color: Colors.grey, fontSize: 14)),
+                  hint: const Text(
+                    "Select VIN",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
                   value: selectedVehicle,
                   items: vehicles.map<DropdownMenuItem<int>>((v) {
                     return DropdownMenuItem<int>(
                       value: v['id'],
-                      child: Text(v['vin'] ?? "",
-                          style: const TextStyle(fontSize: 14)),
+                      child: Text(
+                        v['vin'] ?? "",
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     );
                   }).toList(),
-                  onChanged: (value) =>
-                      setState(() => selectedVehicle = value),
+                  onChanged: (value) => setState(() => selectedVehicle = value),
                 ),
               ),
             ),
             const SizedBox(height: 16),
 
             // Installation Date
-            const Text("Installation / Allocation Date",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Installation / Allocation Date",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: _pickDate,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 14, vertical: 16),
+                  horizontal: 14,
+                  vertical: 16,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(10),
@@ -423,18 +484,22 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_today,
-                        color: Colors.grey, size: 18),
+                    const Icon(
+                      Icons.calendar_today,
+                      color: Colors.grey,
+                      size: 18,
+                    ),
                     const SizedBox(width: 10),
                     Text(
                       selectedDate != null
                           ? "${selectedDate!.year}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}"
                           : "YYYY-MM-DD",
                       style: TextStyle(
-                          fontSize: 14,
-                          color: selectedDate != null
-                              ? const Color(0xFF1A1A2E)
-                              : Colors.grey),
+                        fontSize: 14,
+                        color: selectedDate != null
+                            ? const Color(0xFF1A1A2E)
+                            : Colors.grey,
+                      ),
                     ),
                   ],
                 ),
@@ -443,11 +508,14 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             const SizedBox(height: 16),
 
             // Requested By
-            const Text("Requested By",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Requested By",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             _buildField(
               controller: requestedByController,
@@ -457,11 +525,14 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             const SizedBox(height: 16),
 
             // Fitted By
-            const Text("Fitted / Placed By",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Fitted / Placed By",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             _buildField(
               controller: fittedByController,
@@ -471,11 +542,14 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             const SizedBox(height: 16),
 
             // Asset Number
-            const Text("Asset Number",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Asset Number",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             _buildField(
               controller: assetNumberController,
@@ -485,11 +559,14 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             const SizedBox(height: 16),
 
             // ODO Reading
-            const Text("ODO Reading",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "ODO Reading",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             _buildField(
               controller: odoController,
@@ -510,17 +587,24 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                            color: Colors.white, strokeWidth: 2))
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
                     : const Icon(Icons.lock_outline, color: Colors.white),
-                label: const Text("Submit Asset Allocation",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600)),
+                label: const Text(
+                  "Submit Asset Allocation",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
             ),
@@ -587,8 +671,7 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         contentPadding: const EdgeInsets.all(24),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -599,12 +682,15 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
               size: 56,
             ),
             const SizedBox(height: 12),
-            Text(title,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E)),
-                textAlign: TextAlign.center),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A2E),
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
@@ -613,10 +699,10 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                child: const Text("OK",
-                    style: TextStyle(color: Colors.white)),
+                child: const Text("OK", style: TextStyle(color: Colors.white)),
               ),
             ),
           ],
@@ -684,29 +770,36 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("TC Plate Allocation",
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18)),
-            Text("Assign TC Plate to Vehicle",
-                style: TextStyle(color: Colors.grey, fontSize: 12)),
+            Text(
+              "TC Plate Allocation",
+              style: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              "Assign TC Plate to Vehicle",
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
           ],
         ),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 16, top: 10, bottom: 10),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
               color: const Color(0xFFE65100).withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Text("NEW ENTRY",
-                style: TextStyle(
-                    color: Color(0xFFE65100),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 11)),
+            child: const Text(
+              "NEW ENTRY",
+              style: TextStyle(
+                color: Color(0xFFE65100),
+                fontWeight: FontWeight.bold,
+                fontSize: 11,
+              ),
+            ),
           ),
         ],
       ),
@@ -718,24 +811,29 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
             // Section header
             Row(
               children: [
-                Container(
-                    width: 4, height: 20, color: const Color(0xFFE65100)),
+                Container(width: 4, height: 20, color: const Color(0xFFE65100)),
                 const SizedBox(width: 8),
-                const Text("Allocation Details",
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1A1A2E))),
+                const Text(
+                  "Allocation Details",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1A1A2E),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 24),
 
             // TC Plate Number
-            const Text("TC Plate Number",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "TC Plate Number",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
@@ -747,10 +845,12 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
                 controller: tcPlateController,
                 decoration: const InputDecoration(
                   hintText: "Enter TC Plate Number",
-                  hintStyle:
-                      TextStyle(color: Colors.grey, fontSize: 14),
-                  prefixIcon: Icon(Icons.credit_card_outlined,
-                      color: Colors.grey, size: 20),
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                  prefixIcon: Icon(
+                    Icons.credit_card_outlined,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -759,11 +859,14 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
             const SizedBox(height: 24),
 
             // Assigned to VIN
-            const Text("Assigned to VIN",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Assigned to VIN",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -775,36 +878,43 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
                   isExpanded: true,
-                  hint: const Text("Select Vehicle VIN",
-                      style:
-                          TextStyle(color: Colors.grey, fontSize: 14)),
+                  hint: const Text(
+                    "Select Vehicle VIN",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
                   value: selectedVehicle,
                   items: vehicles.map<DropdownMenuItem<int>>((v) {
                     return DropdownMenuItem<int>(
                       value: v['id'],
-                      child: Text(v['vin'] ?? "",
-                          style: const TextStyle(fontSize: 14)),
+                      child: Text(
+                        v['vin'] ?? "",
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     );
                   }).toList(),
-                  onChanged: (value) =>
-                      setState(() => selectedVehicle = value),
+                  onChanged: (value) => setState(() => selectedVehicle = value),
                 ),
               ),
             ),
             const SizedBox(height: 24),
 
             // Allocation Date
-            const Text("Allocation Date",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E))),
+            const Text(
+              "Allocation Date",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A2E),
+              ),
+            ),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: _pickDate,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 18),
+                  horizontal: 16,
+                  vertical: 18,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(10),
@@ -818,13 +928,17 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
                           ? "${selectedDate!.day.toString().padLeft(2, '0')}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.year}"
                           : "Select Date",
                       style: TextStyle(
-                          fontSize: 14,
-                          color: selectedDate != null
-                              ? const Color(0xFF1A1A2E)
-                              : Colors.grey),
+                        fontSize: 14,
+                        color: selectedDate != null
+                            ? const Color(0xFF1A1A2E)
+                            : Colors.grey,
+                      ),
                     ),
-                    const Icon(Icons.calendar_today,
-                        color: Colors.grey, size: 20),
+                    const Icon(
+                      Icons.calendar_today,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
                   ],
                 ),
               ),
@@ -842,18 +956,27 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                            color: Colors.white, strokeWidth: 2))
-                    : const Icon(Icons.check_circle_outline,
-                        color: Colors.white),
-                label: const Text("Submit Allocation",
-                    style: TextStyle(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.check_circle_outline,
                         color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600)),
+                      ),
+                label: const Text(
+                  "Submit Allocation",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
             ),

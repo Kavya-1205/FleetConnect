@@ -239,7 +239,7 @@ app.post('/drivers', async (req, res) => {
     const result = await pool.query(
       `INSERT INTO users (employee_id, name, password, role, experience, dl_number, dl_expiry, joining_date)
        VALUES ($1,$2,$3,'driver',$4,$5,$6,$7) RETURNING *`,
-      [employee_id, name, password, experience, dl_number, dl_expiry, joining_date]
+      [employee_id, name, password, experience, dl_number, dl_expiry || null, joining_date || null]
     );
     res.json(result.rows[0]);
   } catch (err) { res.status(500).send('Error'); }
@@ -251,7 +251,7 @@ app.put('/drivers/:id', async (req, res) => {
     const result = await pool.query(
       `UPDATE users SET employee_id=$1, name=$2, password=$3, experience=$4,
        dl_number=$5, dl_expiry=$6, active=$7, joining_date=$8 WHERE id=$9 RETURNING *`,
-      [employee_id, name, password, experience, dl_number, dl_expiry, active, joining_date, req.params.id]
+      [employee_id, name, password, experience, dl_number, dl_expiry || null, active, joining_date || null, req.params.id]
     );
     res.json(result.rows[0]);
   } catch (err) { res.status(500).send('Error'); }
@@ -527,12 +527,12 @@ app.delete('/assets/:id', async (req, res) => {
 // FUEL ENTRIES POST (driver logs fuel)
 // ─────────────────────────────────────────────
 app.post('/fuel-entries', async (req, res) => {
-  const { trip_id, driver_id, vehicle_id, litres, amount, fuel_type, fuel_card_number, bill_image } = req.body;
+  const { trip_id, driver_id, vehicle_id, litres, amount, fuel_type, fuel_card_number, bill_image, odo_reading } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO fuel_entries (trip_id, driver_id, vehicle_id, litres, amount, fuel_type, fuel_card_number, bill_image, created_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,NOW()) RETURNING *`,
-      [trip_id, driver_id, vehicle_id, litres, amount, fuel_type, fuel_card_number, bill_image]
+      `INSERT INTO fuel_entries (trip_id, driver_id, vehicle_id, litres, amount, fuel_type, fuel_card_number, bill_image, odo_reading, created_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,NOW()) RETURNING *`,
+      [trip_id, driver_id, vehicle_id, litres, amount, fuel_type, fuel_card_number, bill_image, odo_reading || null]
     );
     res.json(result.rows[0]);
   } catch (err) { console.error(err); res.status(500).send('Error'); }

@@ -35,7 +35,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     _clockTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (mounted) setState(() => _now = DateTime.now());
     });
-
   }
 
   @override
@@ -48,7 +47,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     try {
       setState(() => isLoading = true);
       final result = await ApiService.getTodayAttendance(widget.driverId);
-      if (mounted) setState(() { attendance = result; isLoading = false; });
+      if (mounted)
+        setState(() {
+          attendance = result;
+          isLoading = false;
+        });
     } catch (e) {
       debugPrint("Error loading attendance: $e");
       if (mounted) setState(() => isLoading = false);
@@ -65,7 +68,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     try {
       final dt = DateTime.parse(val.toString()).toLocal();
       return '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-    } catch (_) { return '--:--'; }
+    } catch (_) {
+      return '--:--';
+    }
   }
 
   String _totalHours() {
@@ -93,8 +98,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         result = await ApiService.punchOut(widget.driverId);
       }
       if (result != null) {
-        setState(() { attendance = result; isProcessing = false; });
-        _showSnack(_isPunchedOut ? '✅ Punched Out Successfully' : '✅ Punched In Successfully');
+        setState(() {
+          attendance = result;
+          isProcessing = false;
+        });
+        _showSnack(
+          _isPunchedOut
+              ? '✅ Punched Out Successfully'
+              : '✅ Punched In Successfully',
+        );
       } else {
         setState(() => isProcessing = false);
         _showSnack('⚠️ Action failed. Try again.');
@@ -125,12 +137,33 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   String _weekday() {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
     return days[_now.weekday - 1];
   }
 
   String _dateStr() {
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return '${_weekday()}, ${_now.day} ${months[_now.month - 1]} ${_now.year}';
   }
 
@@ -163,285 +196,370 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A2E2A),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text('Attendance',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white70),
-            onPressed: _loadAttendance,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
-        ],
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator(color: Color(0xFF1A2E2A)))
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  // ── Hero Date/Time Card ──
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Color(0xFF1A2E2A), Color(0xFF2D5016)],
+        ),
+        child: SafeArea(
+          child: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: Color(0xFF1A2E2A)),
+                )
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      // Top Bar
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF1A1A2E),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          const Text(
+                            "ATTENDANCE",
+                            style: TextStyle(
+                              fontSize: 18,
+                              letterSpacing: 1.2,
+                              fontWeight: FontWeight.w900,
+                              color: Color(0xFF1A1A2E),
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.refresh,
+                              color: Color(0xFF1A1A2E),
+                            ),
+                            onPressed: _loadAttendance,
+                          ),
+                        ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF1A2E2A).withValues(alpha: 0.4),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Text(_dateStr(),
-                                  style: const TextStyle(color: Colors.white60, fontSize: 13)),
-                              const SizedBox(height: 6),
-                              Text(_timeStr(),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 2,
-                                      fontFamily: 'monospace')),
-                            ]),
-                            CircleAvatar(
-                              radius: 28,
-                              backgroundColor: Colors.white.withValues(alpha: 0.15),
-                              child: Text(_getInitials(widget.driverName),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
+                      const SizedBox(height: 20),
+                      // ── Hero Date/Time Card ──
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [Color(0xFF1A2E2A), Color(0xFF2D5016)],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(
+                                0xFF1A2E2A,
+                              ).withValues(alpha: 0.4),
+                              blurRadius: 20,
+                              offset: const Offset(0, 8),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
-                        const Divider(color: Colors.white24),
-                        const SizedBox(height: 12),
-                        Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.person_outline, color: Colors.white60, size: 16),
-                            const SizedBox(width: 8),
-                            Text(widget.driverName,
-                                style: const TextStyle(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _dateStr(),
+                                      style: const TextStyle(
+                                        color: Colors.white60,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      _timeStr(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 36,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 2,
+                                        fontFamily: 'monospace',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                CircleAvatar(
+                                  radius: 28,
+                                  backgroundColor: Colors.white.withValues(
+                                    alpha: 0.15,
+                                  ),
+                                  child: Text(
+                                    _getInitials(widget.driverName),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            const Divider(color: Colors.white24),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.person_outline,
+                                  color: Colors.white60,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  widget.driverName,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
-                                    fontWeight: FontWeight.w600)),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        // Status badge
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: _isPunchedOut
-                                ? Colors.blueGrey.withValues(alpha: 0.25)
-                                : _isPunchedIn
-                                    ? const Color(0xFF4CAF50).withValues(alpha: 0.2)
-                                    : Colors.red.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: _isPunchedOut
-                                  ? Colors.blueGrey
-                                  : _isPunchedIn
-                                      ? const Color(0xFF4CAF50)
-                                      : Colors.red.shade300,
-                            ),
-                          ),
-                          child: Text(
-                            _isPunchedOut
-                                ? '✅ Shift Completed'
-                                : _isPunchedIn
-                                    ? '🟢 Currently Punched In'
-                                    : '🔴 Not Punched In',
-                            style: TextStyle(
-                              color: _isPunchedOut
-                                  ? Colors.blueGrey.shade200
-                                  : _isPunchedIn
-                                      ? const Color(0xFF4CAF50)
-                                      : Colors.red.shade300,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 36),
-
-                  // ── Login Button ──
-                  if (!_isPunchedOut) ...[
-                    SizedBox(
-                      width: 200,
-                      height: 56,
-                      child: ElevatedButton.icon(
-                        onPressed: isProcessing ? null : _handlePunch,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: _btnColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          elevation: 4,
-                        ),
-                        icon: isProcessing
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              )
-                            : Icon(_btnIcon, color: Colors.white),
-                        label: Text(
-                          _btnLabel,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.2,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _isPunchedIn ? 'Tap to punch out' : 'Tap to punch in',
-                      style: const TextStyle(color: Color(0xFF6B7280), fontSize: 13),
-                    ),
-                  ] else ...[
-                    // Completed state icon
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.green.shade50,
-                        border: Border.all(color: Colors.green.shade300, width: 2),
-                      ),
-                      child: Icon(Icons.verified_rounded,
-                          color: Colors.green.shade600, size: 52),
-                    ),
-                    const SizedBox(height: 12),
-                    Text('Shift Completed for Today',
-                        style: TextStyle(
-                            color: Colors.green.shade700,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15)),
-                  ],
-
-                  const SizedBox(height: 32),
-
-                  // ── Today's Timeline Card ──
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.06),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("Today's Summary",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1A1A2E))),
-                        const SizedBox(height: 16),
-                        // Login row
-                        _timelineRow(
-                          icon: Icons.login_rounded,
-                          iconColor: Colors.green.shade600,
-                          label: 'Punch-In Time',
-                          time: _fmt(attendance?['punch_in']),
-                          bg: Colors.green.shade50,
-                        ),
-                        const SizedBox(height: 8),
-                        // Vertical connector
-                        Padding(
-                          padding: const EdgeInsets.only(left: 23),
-                          child: Container(
-                            width: 2,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(2),
+                              ],
                             ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        // Logout row
-                        _timelineRow(
-                          icon: Icons.logout_rounded,
-                          iconColor: Colors.red.shade600,
-                          label: 'Punch-Out Time',
-                          time: _fmt(attendance?['punch_out']),
-                          bg: Colors.red.shade50,
-                        ),
-                        const Divider(height: 28, color: Color(0xFFF0F0F0)),
-                        // Total hours
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(children: [
-                              Icon(Icons.timer_outlined,
-                                  color: const Color(0xFF1A2E2A), size: 20),
-                              const SizedBox(width: 10),
-                              const Text('Total Hours',
-                                  style: TextStyle(
-                                      color: Color(0xFF6B7280),
-                                      fontWeight: FontWeight.w500)),
-                            ]),
+                            const SizedBox(height: 6),
+                            // Status badge
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF1A2E2A),
-                                borderRadius: BorderRadius.circular(20),
+                                horizontal: 12,
+                                vertical: 4,
                               ),
-                              child: Text(_totalHours(),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13)),
+                              decoration: BoxDecoration(
+                                color: _isPunchedOut
+                                    ? Colors.blueGrey.withValues(alpha: 0.25)
+                                    : _isPunchedIn
+                                    ? const Color(
+                                        0xFF4CAF50,
+                                      ).withValues(alpha: 0.2)
+                                    : Colors.red.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: _isPunchedOut
+                                      ? Colors.blueGrey
+                                      : _isPunchedIn
+                                      ? const Color(0xFF4CAF50)
+                                      : Colors.red.shade300,
+                                ),
+                              ),
+                              child: Text(
+                                _isPunchedOut
+                                    ? '✅ Shift Completed'
+                                    : _isPunchedIn
+                                    ? '🟢 Currently Punched In'
+                                    : '🔴 Not Punched In',
+                                style: TextStyle(
+                                  color: _isPunchedOut
+                                      ? Colors.blueGrey.shade200
+                                      : _isPunchedIn
+                                      ? const Color(0xFF4CAF50)
+                                      : Colors.red.shade300,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
                           ],
                         ),
+                      ),
+                      const SizedBox(height: 36),
+
+                      // ── Login Button ──
+                      if (!_isPunchedOut) ...[
+                        SizedBox(
+                          width: 200,
+                          height: 56,
+                          child: ElevatedButton.icon(
+                            onPressed: isProcessing ? null : _handlePunch,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _btnColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              elevation: 4,
+                            ),
+                            icon: isProcessing
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Icon(_btnIcon, color: Colors.white),
+                            label: Text(
+                              _btnLabel,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          _isPunchedIn ? 'Tap to punch out' : 'Tap to punch in',
+                          style: const TextStyle(
+                            color: Color(0xFF6B7280),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ] else ...[
+                        // Completed state icon
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.green.shade50,
+                            border: Border.all(
+                              color: Colors.green.shade300,
+                              width: 2,
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.verified_rounded,
+                            color: Colors.green.shade600,
+                            size: 52,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Shift Completed for Today',
+                          style: TextStyle(
+                            color: Colors.green.shade700,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
                       ],
-                    ),
+
+                      const SizedBox(height: 32),
+
+                      // ── Today's Timeline Card ──
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.06),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Today's Summary",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF1A1A2E),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            // Login row
+                            _timelineRow(
+                              icon: Icons.login_rounded,
+                              iconColor: Colors.green.shade600,
+                              label: 'Punch-In Time',
+                              time: _fmt(attendance?['punch_in']),
+                              bg: Colors.green.shade50,
+                            ),
+                            const SizedBox(height: 8),
+                            // Vertical connector
+                            Padding(
+                              padding: const EdgeInsets.only(left: 23),
+                              child: Container(
+                                width: 2,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            // Logout row
+                            _timelineRow(
+                              icon: Icons.logout_rounded,
+                              iconColor: Colors.red.shade600,
+                              label: 'Punch-Out Time',
+                              time: _fmt(attendance?['punch_out']),
+                              bg: Colors.red.shade50,
+                            ),
+                            const Divider(height: 28, color: Color(0xFFF0F0F0)),
+                            // Total hours
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.timer_outlined,
+                                      color: const Color(0xFF1A2E2A),
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Text(
+                                      'Total Hours',
+                                      style: TextStyle(
+                                        color: Color(0xFF6B7280),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF1A2E2A),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    _totalHours(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                ],
-              ),
-            ),
+                ),
+        ),
+      ),
     );
   }
 
@@ -462,17 +580,24 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         ),
         const SizedBox(width: 16),
         Expanded(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(label,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+              ),
+              Text(
+                time,
                 style: const TextStyle(
-                    fontSize: 12, color: Color(0xFF6B7280))),
-            Text(time,
-                style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E),
-                    letterSpacing: 1)),
-          ]),
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1A1A2E),
+                  letterSpacing: 1,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

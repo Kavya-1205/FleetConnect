@@ -87,12 +87,15 @@ class _TripScreenState extends State<TripScreen> {
               size: 56,
             ),
             const SizedBox(height: 12),
-            Text(title,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A2E2A)),
-                textAlign: TextAlign.center),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A2E2A),
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
@@ -101,7 +104,8 @@ class _TripScreenState extends State<TripScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 child: const Text("OK", style: TextStyle(color: Colors.white)),
               ),
@@ -149,16 +153,28 @@ class _TripScreenState extends State<TripScreen> {
       await prefs.setBool("${keyPrefix}trip_started", true);
       await prefs.setInt("${keyPrefix}trip_id", id);
       await prefs.setInt("${keyPrefix}vehicle_id", selectedVehicle!);
-      await prefs.setString("${keyPrefix}vehicle_vin", selectedVehicleVin ?? '');
+      await prefs.setString(
+        "${keyPrefix}vehicle_vin",
+        selectedVehicleVin ?? '',
+      );
       await prefs.setInt("${keyPrefix}route_id", selectedRoute!);
       await prefs.setString("${keyPrefix}route_name", selectedRouteName ?? '');
       await prefs.setString("${keyPrefix}shift", selectedShift!);
-      await prefs.setInt("${keyPrefix}start_odo", int.parse(startOdoController.text));
-      
+      await prefs.setInt(
+        "${keyPrefix}start_odo",
+        int.parse(startOdoController.text),
+      );
+
       // Keep these for backward compatibility if needed by other screens
       await prefs.setInt("driver_${widget.driverId}_trip_id", id);
-      await prefs.setInt("driver_${widget.driverId}_vehicle_id", selectedVehicle!);
-      await prefs.setString("driver_${widget.driverId}_vin", selectedVehicleVin ?? '');
+      await prefs.setInt(
+        "driver_${widget.driverId}_vehicle_id",
+        selectedVehicle!,
+      );
+      await prefs.setString(
+        "driver_${widget.driverId}_vin",
+        selectedVehicleVin ?? '',
+      );
 
       if (!mounted) return;
       _showDialog("Trip Started! 🚀", true);
@@ -224,9 +240,10 @@ class _TripScreenState extends State<TripScreen> {
           children: [
             Icon(icon, color: const Color(0xFF6B7280), size: 22),
             const SizedBox(height: 6),
-            Text(label,
-                style:
-                    const TextStyle(fontSize: 11, color: Color(0xFF9CA3AF))),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 11, color: Color(0xFF9CA3AF)),
+            ),
             const SizedBox(height: 4),
             Text(
               value != null && value.isNotEmpty ? value : "Not Set",
@@ -255,11 +272,14 @@ class _TripScreenState extends State<TripScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label,
-            style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF1A2E2A))),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1A2E2A),
+          ),
+        ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -292,10 +312,8 @@ class _TripScreenState extends State<TripScreen> {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle:
-              const TextStyle(color: Color(0xFF6B7280), fontSize: 13),
-          prefixIcon:
-              const Icon(Icons.speed, color: Colors.grey, size: 20),
+          labelStyle: const TextStyle(color: Color(0xFF6B7280), fontSize: 13),
+          prefixIcon: const Icon(Icons.speed, color: Colors.grey, size: 20),
           suffixIcon: readOnly
               ? null
               : const Icon(Icons.edit, color: Colors.grey, size: 18),
@@ -308,211 +326,299 @@ class _TripScreenState extends State<TripScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
+          ),
         ),
-        title: const Text("Trip Management",
-            style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 18)),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            // ✅ Top summary: VIN | Route | Shift (order changed)
-            const Text("Assigned Schedule",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                _summaryBox(Icons.directions_car, "Vehicle", selectedVehicleVin),
-                const SizedBox(width: 10),
-                _summaryBox(Icons.location_on, "Route", selectedRouteName),
-                const SizedBox(width: 10),
-                _summaryBox(Icons.access_time, "Shift", selectedShift),
-              ],
-            ),
-            const SizedBox(height: 20),
-
-            // Trip Configuration section
-            const Text("Trip Configuration",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
-            const SizedBox(height: 12),
-
-            // ✅ Order: VIN → Route → Shift
-            // VEHICLE VIN
-            _dropdownField(
-              label: "Vehicle VIN",
-              hint: "Select VIN",
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<int>(
-                  isExpanded: true,
-                  hint: const Text("Select VIN",
-                      style: TextStyle(color: Colors.grey, fontSize: 14)),
-                  value: selectedVehicle,
-                  items: vehicles.map<DropdownMenuItem<int>>((v) {
-                    return DropdownMenuItem<int>(
-                      value: v['id'],
-                      child: Text(v['vin'] ?? "",
-                          style: const TextStyle(fontSize: 14)),
-                    );
-                  }).toList(),
-                  onChanged: tripStarted
-                      ? null
-                      : (value) {
-                          setState(() {
-                            selectedVehicle = value;
-                            final v = vehicles.firstWhere(
-                                (v) => v['id'] == value,
-                                orElse: () => null);
-                            selectedVehicleVin =
-                                v != null ? (v['vin'] ?? '') : '';
-                          });
-                        },
-                ),
-              ),
-            ),
-            const SizedBox(height: 14),
-
-            // ASSIGNED ROUTE
-            _dropdownField(
-              label: "Assigned Route",
-              hint: "Select Route",
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<int>(
-                  isExpanded: true,
-                  hint: const Text("Select Route",
-                      style: TextStyle(color: Colors.grey, fontSize: 14)),
-                  value: selectedRoute,
-                  items: routes.map<DropdownMenuItem<int>>((r) {
-                    return DropdownMenuItem<int>(
-                      value: r['id'],
-                      child: Text(r['route_name'] ?? "",
-                          style: const TextStyle(fontSize: 14)),
-                    );
-                  }).toList(),
-                  onChanged: tripStarted
-                      ? null
-                      : (value) {
-                          setState(() {
-                            selectedRoute = value;
-                            final r = routes.firstWhere(
-                                (r) => r['id'] == value,
-                                orElse: () => null);
-                            selectedRouteName =
-                                r != null ? (r['route_name'] ?? '') : '';
-                          });
-                        },
-                ),
-              ),
-            ),
-            const SizedBox(height: 14),
-
-            // SHIFT
-            _dropdownField(
-              label: "Shift",
-              hint: "Select Shift",
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  hint: const Text("Select Shift", // ✅ null default = Not Set
-                      style: TextStyle(color: Colors.grey, fontSize: 14)),
-                  value: selectedShift,
-                  items: ["Shift-1", "Shift-2"].map((s) {
-                    return DropdownMenuItem(
-                        value: s,
-                        child: Text(s,
-                            style: const TextStyle(fontSize: 14)));
-                  }).toList(),
-                  onChanged: tripStarted
-                      ? null
-                      : (value) => setState(() => selectedShift = value),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // ODO LOGS
-            const Text("Odometer Logs",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
-            const SizedBox(height: 10),
-
-            _odoField(
-              label: "Start Odometer (km)",
-              controller: startOdoController,
-              readOnly: tripStarted,
-            ),
-            const SizedBox(height: 10),
-
-            if (tripStarted)
-              _odoField(
-                label: "End Odometer (km)",
-                controller: endOdoController,
-                readOnly: false,
-              ),
-
-            const SizedBox(height: 24),
-
-            // ACTION BUTTON
-            if (!tripStarted)
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton.icon(
-                  onPressed: startTrip,
-                  icon: const Icon(Icons.play_arrow, color: Colors.white),
-                  label: const Text("Start Trip",
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Custom AppBar
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "TRIP MANAGEMENT",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1A2E2A),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ✅ Top summary: VIN | Route | Shift (order changed)
+                      const Text(
+                        "Assigned Schedule",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1A2E2A),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          _summaryBox(
+                            Icons.directions_car,
+                            "Vehicle",
+                            selectedVehicleVin,
+                          ),
+                          const SizedBox(width: 10),
+                          _summaryBox(
+                            Icons.location_on,
+                            "Route",
+                            selectedRouteName,
+                          ),
+                          const SizedBox(width: 10),
+                          _summaryBox(
+                            Icons.access_time,
+                            "Shift",
+                            selectedShift,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Trip Configuration section
+                      const Text(
+                        "Trip Configuration",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1A2E2A),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      // ✅ Order: VIN → Route → Shift
+                      // VEHICLE VIN
+                      _dropdownField(
+                        label: "Vehicle VIN",
+                        hint: "Select VIN",
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<int>(
+                            isExpanded: true,
+                            hint: const Text(
+                              "Select VIN",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                            ),
+                            value: selectedVehicle,
+                            items: vehicles.map<DropdownMenuItem<int>>((v) {
+                              return DropdownMenuItem<int>(
+                                value: v['id'],
+                                child: Text(
+                                  v['vin'] ?? "",
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: tripStarted
+                                ? null
+                                : (value) {
+                                    setState(() {
+                                      selectedVehicle = value;
+                                      final v = vehicles.firstWhere(
+                                        (v) => v['id'] == value,
+                                        orElse: () => null,
+                                      );
+                                      selectedVehicleVin = v != null
+                                          ? (v['vin'] ?? '')
+                                          : '';
+                                    });
+                                  },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+
+                      // ASSIGNED ROUTE
+                      _dropdownField(
+                        label: "Assigned Route",
+                        hint: "Select Route",
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<int>(
+                            isExpanded: true,
+                            hint: const Text(
+                              "Select Route",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                            ),
+                            value: selectedRoute,
+                            items: routes.map<DropdownMenuItem<int>>((r) {
+                              return DropdownMenuItem<int>(
+                                value: r['id'],
+                                child: Text(
+                                  r['route_name'] ?? "",
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: tripStarted
+                                ? null
+                                : (value) {
+                                    setState(() {
+                                      selectedRoute = value;
+                                      final r = routes.firstWhere(
+                                        (r) => r['id'] == value,
+                                        orElse: () => null,
+                                      );
+                                      selectedRouteName = r != null
+                                          ? (r['route_name'] ?? '')
+                                          : '';
+                                    });
+                                  },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+
+                      // SHIFT
+                      _dropdownField(
+                        label: "Shift",
+                        hint: "Select Shift",
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            hint: const Text(
+                              "Select Shift", // ✅ null default = Not Set
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                            ),
+                            value: selectedShift,
+                            items: ["Shift-1", "Shift-2"].map((s) {
+                              return DropdownMenuItem(
+                                value: s,
+                                child: Text(
+                                  s,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: tripStarted
+                                ? null
+                                : (value) =>
+                                      setState(() => selectedShift = value),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // ODO LOGS
+                      const Text(
+                        "Odometer Logs",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1A2E2A),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      _odoField(
+                        label: "Start Odometer (km)",
+                        controller: startOdoController,
+                        readOnly: tripStarted,
+                      ),
+                      const SizedBox(height: 10),
+
+                      if (tripStarted)
+                        _odoField(
+                          label: "End Odometer (km)",
+                          controller: endOdoController,
+                          readOnly: false,
+                        ),
+
+                      const SizedBox(height: 24),
+
+                      // ACTION BUTTON
+                      if (!tripStarted)
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: ElevatedButton.icon(
+                            onPressed: startTrip,
+                            icon: const Icon(
+                              Icons.play_arrow,
+                              color: Colors.white,
+                            ),
+                            label: const Text(
+                              "Start Trip",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1A2E2A),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: ElevatedButton.icon(
+                            onPressed: endTrip,
+                            icon: const Icon(
+                              Icons.stop_circle_outlined,
+                              color: Colors.white,
+                            ),
+                            label: const Text(
+                              "End Trip & Submit",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red.shade600,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
-              )
-            else
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton.icon(
-                  onPressed: endTrip,
-                  icon: const Icon(Icons.stop_circle_outlined,
-                      color: Colors.white),
-                  label: const Text("End Trip & Submit",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red.shade600,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
               ),
-            const SizedBox(height: 20),
-          ],
+            ],
+          ),
         ),
       ),
     );

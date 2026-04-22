@@ -59,8 +59,7 @@ class _IssueScreenState extends State<IssueScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         contentPadding: const EdgeInsets.all(24),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -71,12 +70,15 @@ class _IssueScreenState extends State<IssueScreen> {
               size: 56,
             ),
             const SizedBox(height: 12),
-            Text(title,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A2E2A)),
-                textAlign: TextAlign.center),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A2E2A),
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
@@ -85,10 +87,10 @@ class _IssueScreenState extends State<IssueScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                child:
-                    const Text("OK", style: TextStyle(color: Colors.white)),
+                child: const Text("OK", style: TextStyle(color: Colors.white)),
               ),
             ),
           ],
@@ -153,24 +155,29 @@ class _IssueScreenState extends State<IssueScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text("Issue / Observation",
-            style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 18)),
+        title: const Text(
+          "Issue / Observation",
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // ✅ Label changed: "Select VIN" (not "Select Vehicle (VIN)")
-            const Text("Select VIN",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
+            const Text(
+              "Select VIN",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A2E2A),
+              ),
+            ),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -182,14 +189,18 @@ class _IssueScreenState extends State<IssueScreen> {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: const Text("Select VIN",
-                      style: TextStyle(color: Colors.grey, fontSize: 14)),
+                  hint: const Text(
+                    "Select VIN",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
                   value: selectedVin,
                   items: vehicles.map<DropdownMenuItem<String>>((v) {
                     return DropdownMenuItem<String>(
                       value: v['vin'],
-                      child: Text(v['vin'] ?? "No Vehicle",
-                          style: const TextStyle(fontSize: 14)),
+                      child: Text(
+                        v['vin'] ?? "No Vehicle",
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     );
                   }).toList(),
                   onChanged: (value) => setState(() => selectedVin = value),
@@ -199,17 +210,22 @@ class _IssueScreenState extends State<IssueScreen> {
             const SizedBox(height: 16),
 
             // Date Picker
-            const Text("Date",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
+            const Text(
+              "Date",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A2E2A),
+              ),
+            ),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: _pickDate,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 14, vertical: 16),
+                  horizontal: 14,
+                  vertical: 16,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -217,13 +233,18 @@ class _IssueScreenState extends State<IssueScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_today,
-                        color: Color(0xFF1A2E2A), size: 20),
+                    const Icon(
+                      Icons.calendar_today,
+                      color: Color(0xFF1A2E2A),
+                      size: 20,
+                    ),
                     const SizedBox(width: 10),
                     Text(
                       "${selectedDate.day.toString().padLeft(2, '0')}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.year}",
                       style: const TextStyle(
-                          fontSize: 14, color: Color(0xFF1A1A2E)),
+                        fontSize: 14,
+                        color: Color(0xFF1A1A2E),
+                      ),
                     ),
                     const Spacer(),
                     const Icon(Icons.arrow_drop_down, color: Colors.grey),
@@ -234,11 +255,14 @@ class _IssueScreenState extends State<IssueScreen> {
             const SizedBox(height: 16),
 
             // ✅ NEW: ODO Entry
-            const Text("ODO Entry",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
+            const Text(
+              "ODO Entry",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A2E2A),
+              ),
+            ),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
@@ -252,22 +276,26 @@ class _IssueScreenState extends State<IssueScreen> {
                 decoration: const InputDecoration(
                   hintText: "Current odometer reading",
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
-                  prefixIcon:
-                      Icon(Icons.speed, color: Colors.grey, size: 20),
+                  prefixIcon: Icon(Icons.speed, color: Colors.grey, size: 20),
                   border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 14,
+                    horizontal: 14,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 16),
 
             // Issue Description
-            const Text("Issue / Observation",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2E2A))),
+            const Text(
+              "Issue / Observation",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1A2E2A),
+              ),
+            ),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
@@ -279,8 +307,7 @@ class _IssueScreenState extends State<IssueScreen> {
                 controller: issueController,
                 maxLines: 6,
                 decoration: const InputDecoration(
-                  hintText:
-                      "Describe the issue or observation in detail...",
+                  hintText: "Describe the issue or observation in detail...",
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(14),
@@ -300,17 +327,24 @@ class _IssueScreenState extends State<IssueScreen> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                            color: Colors.white, strokeWidth: 2))
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
                     : const Icon(Icons.send, color: Colors.white),
-                label: const Text("Submit Issue",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600)),
+                label: const Text(
+                  "Submit Issue",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1A2E2A),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ),

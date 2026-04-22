@@ -39,7 +39,9 @@ class _DriverHomeState extends State<DriverHome> {
 
   Future<void> _fetchAllocation() async {
     try {
-      final allocation = await ApiService.getAllocationForDriver(widget.driverId);
+      final allocation = await ApiService.getAllocationForDriver(
+        widget.driverId,
+      );
       if (mounted) {
         setState(() {
           if (allocation != null) {
@@ -114,8 +116,9 @@ class _DriverHomeState extends State<DriverHome> {
                         padding: const EdgeInsets.all(24),
                         decoration: const BoxDecoration(
                           color: Color(0xFF1A2E2A),
-                          borderRadius:
-                              BorderRadius.only(topLeft: Radius.circular(20)),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,27 +128,36 @@ class _DriverHomeState extends State<DriverHome> {
                               children: [
                                 CircleAvatar(
                                   radius: 30,
-                                  backgroundColor:
-                                      Colors.white.withValues(alpha: 0.2),
-                                  child: Text(initials,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
+                                  backgroundColor: Colors.white.withValues(
+                                    alpha: 0.2,
+                                  ),
+                                  child: Text(
+                                    initials,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.close,
-                                      color: Colors.white70),
+                                  icon: const Icon(
+                                    Icons.close,
+                                    color: Colors.white70,
+                                  ),
                                   onPressed: () => Navigator.pop(context),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 12),
-                            Text(widget.driverName,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
+                            Text(
+                              widget.driverName,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -155,38 +167,51 @@ class _DriverHomeState extends State<DriverHome> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Personal Details",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xFF1A2E2A))),
+                              const Text(
+                                "Personal Details",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF1A2E2A),
+                                ),
+                              ),
                               const SizedBox(height: 16),
                               Container(
                                 padding: const EdgeInsets.all(14),
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade50,
                                   borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Colors.grey.shade200),
+                                  border: Border.all(
+                                    color: Colors.grey.shade200,
+                                  ),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.badge_outlined,
-                                        color: Color(0xFF1A2E2A), size: 20),
+                                    const Icon(
+                                      Icons.badge_outlined,
+                                      color: Color(0xFF1A2E2A),
+                                      size: 20,
+                                    ),
                                     const SizedBox(width: 12),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Employee ID",
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey)),
-                                        Text(widget.employeeId,
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color(0xFF1A1A2E))),
+                                        const Text(
+                                          "Employee ID",
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          widget.employeeId,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF1A1A2E),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -198,27 +223,37 @@ class _DriverHomeState extends State<DriverHome> {
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade50,
                                   borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Colors.grey.shade200),
+                                  border: Border.all(
+                                    color: Colors.grey.shade200,
+                                  ),
                                 ),
                                 child: Row(
                                   children: const [
-                                    Icon(Icons.directions_car,
-                                        color: Color(0xFF1A2E2A), size: 20),
+                                    Icon(
+                                      Icons.directions_car,
+                                      color: Color(0xFF1A2E2A),
+                                      size: 20,
+                                    ),
                                     SizedBox(width: 12),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Role",
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey)),
-                                        Text("Driver",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color(0xFF1A1A2E))),
+                                        Text(
+                                          "Role",
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Driver",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF1A1A2E),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -234,19 +269,24 @@ class _DriverHomeState extends State<DriverHome> {
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => const LoginScreen()),
+                                        builder: (_) => const LoginScreen(),
+                                      ),
                                       (route) => false,
                                     );
                                   },
-                                  icon: const Icon(Icons.logout,
-                                      color: Colors.white),
-                                  label: const Text("Logout",
-                                      style: TextStyle(color: Colors.white)),
+                                  icon: const Icon(
+                                    Icons.logout,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    "Logout",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red.shade600,
                                     shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -270,252 +310,349 @@ class _DriverHomeState extends State<DriverHome> {
     final initials = _getInitials(widget.driverName);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: _fetchAllocation,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Top Bar
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("FleetConnect",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1A1A2E))),
-                        Text("Welcome back, ${widget.driverName}",
-                            style: const TextStyle(
-                                fontSize: 13, color: Color(0xFF6B7280))),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () => _openProfileDrawer(context),
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: const Color(0xFF1A2E2A),
-                        child: Text(initials,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14)),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                // Current Vehicle Card
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1A2E2A),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
+          ),
+        ),
+        child: SafeArea(
+          child: RefreshIndicator(
+            onRefresh: _fetchAllocation,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Top Bar
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Current Vehicle",
-                              style:
-                                  TextStyle(color: Colors.white70, fontSize: 13)),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF4CAF50).withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(20),
-                              border:
-                                  Border.all(color: const Color(0xFF4CAF50)),
-                            ),
-                            child: const Text("active",
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/logo.png',
+                                height: 32,
+                                width: 32,
+                              ),
+                              const SizedBox(width: 10),
+                              const Text(
+                                "FLEETCONNECT",
                                 style: TextStyle(
-                                    color: Color(0xFF4CAF50),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600)),
+                                  fontSize: 16,
+                                  letterSpacing: 1.2,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF1A1A2E),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Welcome back, ${widget.driverName}",
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF6B7280),
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Text(assignedVin ?? "No Assignment",
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 4),
-                      Text(
-                          assignedVin != null
-                              ? "$assignedShift, $assignedRoute"
-                              : "No Shift/Route Assigned",
-                          style: const TextStyle(
-                              color: Colors.white70, fontSize: 14)),
-                      const SizedBox(height: 16),
                       GestureDetector(
-                        onTap: () =>
-                            _navigate(context, TripScreen(driverId: widget.driverId)),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.play_arrow, color: Colors.white, size: 18),
-                              SizedBox(width: 6),
-                              Text("Start New Trip",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600)),
-                            ],
+                        onTap: () => _openProfileDrawer(context),
+                        child: CircleAvatar(
+                          radius: 22,
+                          backgroundColor: const Color(0xFF1A2E2A),
+                          child: Text(
+                            initials,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                // ── Attendance Banner Card ──
-                GestureDetector(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AttendanceScreen(
-                          driverId: widget.driverId,
-                          driverName: widget.driverName,
-                        ),
-                      ),
-                    );
-                    _fetchAttendance();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(18),
+                  // Current Vehicle Card
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: _todayAttendance == null
-                            ? [const Color(0xFFE53935), const Color(0xFFB71C1C)]
-                            : _todayAttendance!['punch_out'] != null
-                                ? [const Color(0xFF1565C0), const Color(0xFF0D47A1)]
-                                : [const Color(0xFF2E7D32), const Color(0xFF1B5E20)],
-                      ),
+                      color: const Color(0xFF1A2E2A),
                       borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: (_todayAttendance == null
-                              ? const Color(0xFFE53935)
-                              : _todayAttendance!['punch_out'] != null
-                                  ? const Color(0xFF1565C0)
-                                  : const Color(0xFF2E7D32)).withValues(alpha: 0.35),
-                          blurRadius: 16,
-                          offset: const Offset(0, 6),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Current Vehicle",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                  0xFF4CAF50,
+                                ).withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: const Color(0xFF4CAF50),
+                                ),
+                              ),
+                              child: const Text(
+                                "active",
+                                style: TextStyle(
+                                  color: Color(0xFF4CAF50),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          assignedVin ?? "No Assignment",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          assignedVin != null
+                              ? "$assignedShift, $assignedRoute"
+                              : "No Shift/Route Assigned",
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        GestureDetector(
+                          onTap: () => _navigate(
+                            context,
+                            TripScreen(driverId: widget.driverId),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  "Start New Trip",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 52,
-                          height: 52,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white.withValues(alpha: 0.15),
-                          ),
-                          child: Icon(
-                            _todayAttendance == null
-                                ? Icons.fingerprint
-                                : _todayAttendance!['punch_out'] != null
-                                    ? Icons.check_circle_outline
-                                    : Icons.access_time_rounded,
-                            color: Colors.white,
-                            size: 28,
+                  ),
+                  const SizedBox(height: 20),
+
+                  // ── Attendance Banner Card ──
+                  GestureDetector(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AttendanceScreen(
+                            driverId: widget.driverId,
+                            driverName: widget.driverName,
                           ),
                         ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('ATTENDANCE',
+                      );
+                      _fetchAttendance();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: _todayAttendance == null
+                              ? [
+                                  const Color(0xFFE53935),
+                                  const Color(0xFFB71C1C),
+                                ]
+                              : _todayAttendance!['punch_out'] != null
+                              ? [
+                                  const Color(0xFF1565C0),
+                                  const Color(0xFF0D47A1),
+                                ]
+                              : [
+                                  const Color(0xFF2E7D32),
+                                  const Color(0xFF1B5E20),
+                                ],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                (_todayAttendance == null
+                                        ? const Color(0xFFE53935)
+                                        : _todayAttendance!['punch_out'] != null
+                                        ? const Color(0xFF1565C0)
+                                        : const Color(0xFF2E7D32))
+                                    .withValues(alpha: 0.35),
+                            blurRadius: 16,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 52,
+                            height: 52,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withValues(alpha: 0.15),
+                            ),
+                            child: Icon(
+                              _todayAttendance == null
+                                  ? Icons.fingerprint
+                                  : _todayAttendance!['punch_out'] != null
+                                  ? Icons.check_circle_outline
+                                  : Icons.access_time_rounded,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'ATTENDANCE',
                                   style: TextStyle(
-                                      color: Colors.white60,
-                                      fontSize: 11,
-                                      letterSpacing: 1.2,
-                                      fontWeight: FontWeight.w600)),
-                              const SizedBox(height: 2),
-                              Text(
-                                _todayAttendance == null
-                                    ? 'Tap to Punch In'
-                                    : _todayAttendance!['punch_out'] != null
-                                        ? 'Shift Completed ✓'
-                                        : 'On Duty — Tap to Punch Out',
-                                style: const TextStyle(
+                                    color: Colors.white60,
+                                    fontSize: 11,
+                                    letterSpacing: 1.2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  _todayAttendance == null
+                                      ? 'Tap to Punch In'
+                                      : _todayAttendance!['punch_out'] != null
+                                      ? 'Shift Completed ✓'
+                                      : 'On Duty — Tap to Punch Out',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Icon(Icons.chevron_right, color: Colors.white60, size: 24),
-                      ],
+                          const Icon(
+                            Icons.chevron_right,
+                            color: Colors.white60,
+                            size: 24,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
-                const Center(
-                  child: Text("Fleet Services",
+                  const Center(
+                    child: Text(
+                      "Fleet Services",
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1A1A2E))),
-                ),
-                const SizedBox(height: 14),
-
-                // 4 cards — no Assets
-                GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 14,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    _buildCard(context, Icons.route, "Trips",
-                        TripScreen(driverId: widget.driverId)),
-                    _buildCard(context, Icons.local_gas_station, "Fuel",
-                        FuelScreen(driverId: widget.driverId)),
-                    _buildCard(context, Icons.warning_amber_rounded, "Issues",
-                        IssueScreen(driverId: widget.driverId)),
-                    _buildCard(context, Icons.history, "Repair",
-                        RepairScreen(driverId: widget.driverId)),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                const Center(
-                  child: Text(
-                    "Fleet Management System v2.4 • Secure Session",
-                    style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 11),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 14),
+
+                  // 4 cards — no Assets
+                  GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 14,
+                    mainAxisSpacing: 14,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _buildCard(
+                        context,
+                        Icons.route,
+                        "Trips",
+                        TripScreen(driverId: widget.driverId),
+                      ),
+                      _buildCard(
+                        context,
+                        Icons.local_gas_station,
+                        "Fuel",
+                        FuelScreen(driverId: widget.driverId),
+                      ),
+                      _buildCard(
+                        context,
+                        Icons.warning_amber_rounded,
+                        "Issues",
+                        IssueScreen(driverId: widget.driverId),
+                      ),
+                      _buildCard(
+                        context,
+                        Icons.history,
+                        "Repair",
+                        RepairScreen(driverId: widget.driverId),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  const Center(
+                    child: Text(
+                      "Fleet Management System v2.4 • Secure Session",
+                      style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 11),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -524,25 +661,46 @@ class _DriverHomeState extends State<DriverHome> {
   }
 
   Widget _buildCard(
-      BuildContext context, IconData icon, String label, Widget screen) {
+    BuildContext context,
+    IconData icon,
+    String label,
+    Widget screen,
+  ) {
     return GestureDetector(
       onTap: () => _navigate(context, screen),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: Colors.grey.shade200),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Colors.grey.shade100, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 32, color: const Color(0xFF6B7280)),
-            const SizedBox(height: 10),
-            Text(label,
-                style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF6B7280),
-                    fontWeight: FontWeight.w500)),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A2E2A).withValues(alpha: 0.05),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, size: 30, color: const Color(0xFF1A2E2A)),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Color(0xFF1A1A2E),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
       ),

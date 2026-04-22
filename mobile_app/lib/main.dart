@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/login_screen.dart';
 import 'services/api_service.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
