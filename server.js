@@ -28,7 +28,7 @@ const pool = new Pool({
 
 // ✅ Test API
 app.get('/', (req, res) => {
-  res.send('Backend running 🚀');
+  res.send('Backend running 🚀 - Version: 2026-04-22-14-35');
 });
 
 // ─────────────────────────────────────────────
@@ -109,7 +109,10 @@ app.post('/vehicles', async (req, res) => {
       [vin, brand, variant, engine_type, gearbox_type, project_code, batch, sv_number, powertrain_type]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("ADD VEHICLE ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.put('/vehicles/:id', async (req, res) => {
@@ -121,14 +124,20 @@ app.put('/vehicles/:id', async (req, res) => {
       [vin, brand, variant, engine_type, gearbox_type, active, project_code, batch, sv_number, powertrain_type, req.params.id]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("UPDATE VEHICLE ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.delete('/vehicles/:id', async (req, res) => {
   try {
     await pool.query('DELETE FROM vehicles WHERE id=$1', [req.params.id]);
     res.json({ success: true });
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("DELETE VEHICLE ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 // ─────────────────────────────────────────────
@@ -158,7 +167,10 @@ app.post('/routes', async (req, res) => {
       [route_name, circuit_type, kms_coverage]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("ADD ROUTE ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.put('/routes/:id', async (req, res) => {
@@ -211,7 +223,10 @@ app.post('/users', async (req, res) => {
       [employee_id, name, password, role]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("ADD USER ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.put('/users/:id', async (req, res) => {
@@ -242,7 +257,10 @@ app.post('/drivers', async (req, res) => {
       [employee_id, name, password, experience, dl_number, dl_expiry || null, joining_date || null]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("ADD DRIVER ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.put('/drivers/:id', async (req, res) => {
@@ -254,7 +272,10 @@ app.put('/drivers/:id', async (req, res) => {
       [employee_id, name, password, experience, dl_number, dl_expiry || null, active, joining_date || null, req.params.id]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("UPDATE DRIVER ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 // ─────────────────────────────────────────────
