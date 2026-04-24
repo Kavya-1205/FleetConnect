@@ -440,11 +440,10 @@ class _AdminScreenState extends State<AdminScreen> {
                             Row(
                               children: [
                                 Image.asset(
-                                  'assets/images/renault_diamond.jpg',
+                                  'assets/images/renault_logo.png',
                                   height: 34,
                                   width: 34,
-                                  colorBlendMode: BlendMode.darken,
-                                  color: const Color(0xFFF5F5F5), // Match the scaffold background
+                                  fit: BoxFit.contain,
                                 ),
                                 const SizedBox(width: 10),
                                 const Text(

@@ -89,18 +89,16 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                // SizedBox removed to minimise top gap
                 Center(
                   child: Image.asset(
-                    'assets/images/renault_diamond.jpg',
-                    height: 140, // Increased size
+                    'assets/images/renault_logo.png',
+                    height: 100, // Reduced slightly to save space
                     fit: BoxFit.contain,
-                    colorBlendMode: BlendMode.darken,
-                    color: Colors.white,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
                         Icons.business,
