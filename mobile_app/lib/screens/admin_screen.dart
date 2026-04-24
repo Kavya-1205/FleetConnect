@@ -436,6 +436,8 @@ class _AdminScreenState extends State<AdminScreen> {
                               'assets/images/renault_diamond.jpg',
                               height: 34,
                               width: 34,
+                              colorBlendMode: BlendMode.multiply,
+                              color: const Color(0xFFF5F5F5), // Match the scaffold background
                             ),
                             const SizedBox(width: 10),
                             const Text(

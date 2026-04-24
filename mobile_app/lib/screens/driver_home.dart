@@ -336,7 +336,7 @@ class _DriverHomeState extends State<DriverHome> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
+            colors: [Colors.white, Color(0xFFF0F2F5)],
           ),
         ),
         child: SafeArea(
@@ -361,6 +361,8 @@ class _DriverHomeState extends State<DriverHome> {
                                 'assets/images/renault_diamond.jpg',
                                 height: 32,
                                 width: 32,
+                                colorBlendMode: BlendMode.multiply,
+                                color: Colors.white,
                               ),
                               const SizedBox(width: 10),
                               const Text(

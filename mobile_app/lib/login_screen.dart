@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Center(
                   child: Image.asset(
                     'assets/images/renault_diamond.jpg',
-                    height: 100,
+                    height: 140, // Increased size
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
