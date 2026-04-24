@@ -138,7 +138,6 @@ class _RepairScreenState extends State<RepairScreen> {
         softwareFlashing: softwareFlashing, // ✅ NEW
         repairType: repairType,
       );
-      );
 
       setState(() => isSubmitting = false);
       if (!mounted) return;
@@ -155,7 +154,6 @@ class _RepairScreenState extends State<RepairScreen> {
         partRemovalRefit = false; // ✅ reset
         softwareFlashing = false; // ✅ reset
         repairType = "Non-Safety";
-      });
       });
 
       _showDialog("Repair Log Submitted! 🛠️", true);
@@ -261,6 +259,83 @@ class _RepairScreenState extends State<RepairScreen> {
                     "No",
                     style: TextStyle(
                       color: !value ? Colors.white : Colors.black87,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ✅ NEW: Safety Toggle widget
+  Widget _safetyToggle(String label, String value, ValueChanged<String> onChanged) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 14, color: Color(0xFF1A1A2E)),
+          ),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () => onChanged("Safety"),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: value == "Safety"
+                        ? Colors.red.shade600
+                        : Colors.grey.shade100,
+                    borderRadius: const BorderRadius.horizontal(
+                      left: Radius.circular(8),
+                    ),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Text(
+                    "Safety",
+                    style: TextStyle(
+                      color: value == "Safety" ? Colors.white : Colors.black87,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => onChanged("Non-Safety"),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: value == "Non-Safety"
+                        ? const Color(0xFF1A2E2A)
+                        : Colors.grey.shade100,
+                    borderRadius: const BorderRadius.horizontal(
+                      right: Radius.circular(8),
+                    ),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Text(
+                    "Non-Safety",
+                    style: TextStyle(
+                      color: value == "Non-Safety" ? Colors.white : Colors.black87,
                       fontWeight: FontWeight.w600,
                       fontSize: 13,
                     ),
