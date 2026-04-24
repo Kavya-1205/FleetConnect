@@ -103686,34 +103686,34 @@ A.avL.prototype={
 $0(){return this.a.e=!1},
 $S:0}
 A.avM.prototype={
-$2(a,b){var s,r,q,p,o,n,m,l,k=null,j="driver_name",i="vehicle_number",h=J.a0(this.b,b),g=this.a.a.c,f="ON TRIP"
-if(g==="trips"){g=J.a9(h)
-s="Trip ID: "+A.k(g.h(h,"id"))
-r="Driver: "+A.k(g.h(h,j))+" | Vehicle: "+A.k(g.h(h,i))
-q=B.cD}else if(g==="denied"){g=J.a9(h)
-s="Allocation ID: "+A.k(g.h(h,"id"))
-p=A.k(g.h(h,j))
-g=g.h(h,"reason")
-r="Driver: "+p+" | Reason: "+A.k(g==null?"Not specified":g)
-f="DENIED"
-q=B.aQ}else if(g==="vehicles"){g=J.a9(h)
-s="Vehicle: "+A.k(g.h(h,i))
-r="Type: "+A.k(g.h(h,"vehicle_type"))+" | Reg: "+A.k(g.h(h,"registration_number"))
-f="ACTIVE"
-q=B.dp}else if(g==="drivers"){g=J.a9(h)
-s=g.h(h,"name")
+$2(a,b){var s,r,q,p,o,n,m,l,k=null,j="driver_name",i=J.a0(this.b,b),h=this.a.a.c,g="ON TRIP"
+if(h==="trips"){h=J.a9(i)
+s="Trip ID: "+A.k(h.h(i,"id"))
+r="Driver: "+A.k(h.h(i,j))+" | Vehicle: "+A.k(h.h(i,"vin"))
+q=B.cD}else if(h==="denied"){h=J.a9(i)
+s="Allocation ID: "+A.k(h.h(i,"id"))
+p=A.k(h.h(i,j))
+h=h.h(i,"reason")
+r="Driver: "+p+" | Reason: "+A.k(h==null?"Not specified":h)
+g="DENIED"
+q=B.aQ}else if(h==="vehicles"){h=J.a9(i)
+s="Vehicle: "+A.k(h.h(i,"vin"))
+r="Type: "+A.k(h.h(i,"vehicle_type"))+" | Reg: "+A.k(h.h(i,"registration_number"))
+g="ACTIVE"
+q=B.dp}else if(h==="drivers"){h=J.a9(i)
+s=h.h(i,"name")
 if(s==null)s="Unknown Driver"
-r="Emp ID: "+A.k(g.h(h,"employee_id"))
+r="Emp ID: "+A.k(h.h(i,"employee_id"))
 q=B.Yk}else{s=""
 r=""
-f=""
-q=B.cD}g=A.ab(12)
+g=""
+q=B.cD}h=A.ab(12)
 p=A.aq(k,k,B.k,k,k,new A.am(q,k,k,A.ab(2),k,k,B.r),k,40,k,k,k,k,4)
 o=t.p
 n=A.ck(A.aN(A.b([A.a3(s,k,k,k,k,B.p1,k,k,k),B.bg,A.a3(r,k,k,k,k,A.c4(k,k,B.c5,k,k,k,k,k,k,k,k,14,k,k,k,k,k,!0,k,k,k,k,k,k,k,k),k,k,k)],o),B.K,B.j,B.l),1)
 m=q.bY(0.1)
 l=A.ab(12)
-return new A.Pp(0,new A.by(g,new A.b8(B.aZ,1,B.H,-1)),B.rw,new A.bt(B.br,A.aT(A.b([p,B.cg,n,A.aq(k,A.a3(f,k,k,k,k,A.c4(k,k,q,k,k,k,k,k,k,k,k,10,k,k,B.Q,k,k,!0,k,k,k,k,k,k,k,k),k,k,k),B.k,k,k,new A.am(m,k,k,l,k,k,B.r),k,k,k,B.rz,k,k,k)],o),B.o,B.j,B.l,0),k),k)},
+return new A.Pp(0,new A.by(h,new A.b8(B.aZ,1,B.H,-1)),B.rw,new A.bt(B.br,A.aT(A.b([p,B.cg,n,A.aq(k,A.a3(g,k,k,k,k,A.c4(k,k,q,k,k,k,k,k,k,k,k,10,k,k,B.Q,k,k,!0,k,k,k,k,k,k,k,k),k,k,k),B.k,k,k,new A.am(m,k,k,l,k,k,B.r),k,k,k,B.rz,k,k,k)],o),B.o,B.j,B.l,0),k),k)},
 $S:51}
 A.aO_.prototype={
 $1(a){return new A.h8(new A.ol(a,null,null))},

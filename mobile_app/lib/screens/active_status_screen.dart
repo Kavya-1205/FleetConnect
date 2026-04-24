@@ -99,7 +99,7 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
 
     if (widget.statusType == 'trips') {
       title = "Trip ID: ${item['id']}";
-      subtitle = "Driver: ${item['driver_name']} | Vehicle: ${item['vehicle_number']}";
+      subtitle = "Driver: ${item['driver_name']} | Vehicle: ${item['vin']}";
       badge = "ON TRIP";
       badgeColor = Colors.blue;
     } else if (widget.statusType == 'denied') {
@@ -108,7 +108,7 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
       badge = "DENIED";
       badgeColor = Colors.red;
     } else if (widget.statusType == 'vehicles') {
-      title = "Vehicle: ${item['vehicle_number']}";
+      title = "Vehicle: ${item['vin']}";
       subtitle = "Type: ${item['vehicle_type']} | Reg: ${item['registration_number']}";
       badge = "ACTIVE";
       badgeColor = Colors.green;
