@@ -118,7 +118,6 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> with SingleTick
                   ),
                 ],
               ),
-      ),
     );
   }
 
@@ -220,9 +219,11 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> with SingleTick
             color: Colors.blue,
           );
         }
-      },
-    );
-  }
+        },
+      ),
+    ),
+  );
+}
 
   Widget _statusCard({
     required String title,
