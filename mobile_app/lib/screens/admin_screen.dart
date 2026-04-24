@@ -14,6 +14,7 @@ import '../services/api_service.dart';
 import 'dart:html'
     if (dart.library.io) 'package:mobile_app/stub_html.dart'
     as html;
+import 'active_status_screen.dart';
 
 // ─────────────────────────────────────────────
 // EXCEL DOWNLOAD HELPER (uses share_plus)
@@ -572,6 +573,8 @@ class _AdminScreenState extends State<AdminScreen> {
                               Icons.directions_car,
                               "Active Trips",
                               stats["active_trips"].toString(),
+                              onTap: () => _goto(const ActiveStatusScreen()),
+                              showToggle: true,
                             ),
                           ),
                         ],
@@ -764,6 +767,7 @@ class _AdminScreenState extends State<AdminScreen> {
     String label,
     String value, {
     VoidCallback? onTap,
+    bool showToggle = false,
   }) {
     Widget pill = Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -773,6 +777,25 @@ class _AdminScreenState extends State<AdminScreen> {
       ),
       child: Row(
         children: [
+          if (showToggle)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF4CAF50),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF4CAF50),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                    )
+                  ],
+                ),
+              ),
+            ),
           Icon(icon, color: Colors.white70, size: 18),
           const SizedBox(width: 8),
           Column(

@@ -25,6 +25,7 @@ class _RepairScreenState extends State<RepairScreen> {
   bool partReplacement = false;
   bool partRemovalRefit = false;
   bool softwareFlashing = false;
+  String repairType = "Non-Safety"; // Default
 
   @override
   void initState() {
@@ -135,6 +136,8 @@ class _RepairScreenState extends State<RepairScreen> {
         partReplacement: partReplacement, // ✅ NEW
         partRemovalRefit: partRemovalRefit, // ✅ NEW
         softwareFlashing: softwareFlashing, // ✅ NEW
+        repairType: repairType,
+      );
       );
 
       setState(() => isSubmitting = false);
@@ -151,6 +154,8 @@ class _RepairScreenState extends State<RepairScreen> {
         partReplacement = false; // ✅ reset
         partRemovalRefit = false; // ✅ reset
         softwareFlashing = false; // ✅ reset
+        repairType = "Non-Safety";
+      });
       });
 
       _showDialog("Repair Log Submitted! 🛠️", true);
@@ -541,13 +546,36 @@ class _RepairScreenState extends State<RepairScreen> {
                       ),
                       const SizedBox(height: 20),
 
-                      // ✅ NEW: Repair Type Section with Yes/No toggles
+                      // ✅ NEW: Type of Repair Section
+                      Row(
+                        children: [
+                          Container(width: 4, height: 18, color: Colors.red),
+                          const SizedBox(width: 8),
+                          const Text(
+                            "Type of Repair",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF1A2E2A),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      _safetyToggle(
+                        "Safety Status",
+                        repairType,
+                        (v) => setState(() => repairType = v),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Repair Categories Section
                       Row(
                         children: [
                           Container(width: 4, height: 18, color: Colors.orange),
                           const SizedBox(width: 8),
                           const Text(
-                            "Repair Type",
+                            "Repair Categories",
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,

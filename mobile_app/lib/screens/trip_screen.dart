@@ -480,6 +480,28 @@ class _TripScreenState extends State<TripScreen> {
                     children: [
                       if (currentAllocation != null && !tripStarted) ...[
                         _allocationStatusCard(),
+                        if (currentAllocation!['status'] == 'CANCELLED')
+                          Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.red.shade200),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.warning_amber_rounded, color: Colors.red.shade700),
+                                const SizedBox(width: 10),
+                                const Expanded(
+                                  child: Text(
+                                    "You declined the assigned trip. Please wait for the admin to re-assign a new allocation.",
+                                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 13),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         const SizedBox(height: 20),
                       ],
                       // ✅ Top summary: VIN | Route | Shift (order changed)
@@ -551,7 +573,7 @@ class _TripScreenState extends State<TripScreen> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: tripStarted
+                            onChanged: (tripStarted || (currentAllocation != null && currentAllocation!['status'] == 'CANCELLED'))
                                 ? null
                                 : (value) {
                                     setState(() {
@@ -594,7 +616,7 @@ class _TripScreenState extends State<TripScreen> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: tripStarted
+                            onChanged: (tripStarted || (currentAllocation != null && currentAllocation!['status'] == 'CANCELLED'))
                                 ? null
                                 : (value) {
                                     setState(() {
@@ -637,7 +659,7 @@ class _TripScreenState extends State<TripScreen> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: tripStarted
+                            onChanged: (tripStarted || (currentAllocation != null && currentAllocation!['status'] == 'CANCELLED'))
                                 ? null
                                 : (value) =>
                                       setState(() => selectedShift = value),
@@ -679,21 +701,25 @@ class _TripScreenState extends State<TripScreen> {
                           width: double.infinity,
                           height: 52,
                           child: ElevatedButton.icon(
-                            onPressed: startTrip,
+                            onPressed: (currentAllocation != null && currentAllocation!['status'] == 'CANCELLED') ? null : startTrip,
                             icon: const Icon(
                               Icons.play_arrow,
                               color: Colors.white,
                             ),
-                            label: const Text(
-                              "Start Trip",
-                              style: TextStyle(
+                            label: Text(
+                              (currentAllocation != null && currentAllocation!['status'] == 'CANCELLED')
+                                  ? "Denied - Wait for Admin"
+                                  : "Start Trip",
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1A2E2A),
+                              backgroundColor: (currentAllocation != null && currentAllocation!['status'] == 'CANCELLED')
+                                  ? Colors.grey
+                                  : const Color(0xFF1A2E2A),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),

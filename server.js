@@ -376,14 +376,24 @@ app.post('/trip-allocations', async (req, res) => {
     const drivers = [driver_id, driver_id_2, driver_id_3].filter(id => id != null);
     
     // Check if any of the drivers are in an active trip
-    const activeTrips = await pool.query(
+    const activeTripsDrivers = await pool.query(
       "SELECT driver_id FROM trips WHERE driver_id = ANY($1) AND trip_status = 'STARTED'",
       [drivers]
     );
 
-    if (activeTrips.rows.length > 0) {
-      const busyIds = activeTrips.rows.map(r => r.driver_id).join(', ');
+    if (activeTripsDrivers.rows.length > 0) {
+      const busyIds = activeTripsDrivers.rows.map(r => r.driver_id).join(', ');
       return res.status(400).json({ error: `Driver(s) ${busyIds} are already in an active trip!` });
+    }
+
+    // Check if the VIN is already in an active trip
+    const activeTripsVehicle = await pool.query(
+      "SELECT vehicle_id FROM trips WHERE vehicle_id = $1 AND trip_status = 'STARTED'",
+      [vehicle_id]
+    );
+
+    if (activeTripsVehicle.rows.length > 0) {
+      return res.status(400).json({ error: `Vehicle (VIN) is already in an active trip!` });
     }
 
     const result = await pool.query(
@@ -395,6 +405,49 @@ app.post('/trip-allocations', async (req, res) => {
   } catch (err) {
     console.error("ADD ALLOCATION ERROR:", err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/active-status', async (req, res) => {
+  try {
+    const activeTrips = await pool.query(`
+      SELECT t.*, u.name as driver_name, v.vin, r.route_name
+      FROM trips t
+      JOIN users u ON t.driver_id = u.id
+      JOIN vehicles v ON t.vehicle_id = v.id
+      JOIN routes r ON t.route_id = r.id
+      WHERE t.trip_status = 'STARTED'
+    `);
+
+    const deniedAllocations = await pool.query(`
+      SELECT ta.*, u.name as driver_name, v.vin, r.route_name
+      FROM trip_allocations ta
+      JOIN users u ON ta.driver_id = u.id
+      JOIN vehicles v ON ta.vehicle_id = v.id
+      JOIN routes r ON ta.route_id = r.id
+      WHERE ta.status = 'CANCELLED'
+    `);
+
+    const activeVehicles = await pool.query(`
+      SELECT v.* FROM vehicles v
+      WHERE EXISTS (SELECT 1 FROM trips t WHERE t.vehicle_id = v.id AND t.trip_status = 'STARTED')
+    `);
+
+    const activeDrivers = await pool.query(`
+      SELECT u.* FROM users u
+      WHERE u.role = 'driver'
+      AND EXISTS (SELECT 1 FROM trips t WHERE t.driver_id = u.id AND t.trip_status = 'STARTED')
+    `);
+
+    res.json({
+      active_trips: activeTrips.rows,
+      denied_allocations: deniedAllocations.rows,
+      active_vehicles: activeVehicles.rows,
+      active_drivers: activeDrivers.rows
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error');
   }
 });
 
@@ -644,15 +697,15 @@ app.post('/issues', async (req, res) => {
 app.post('/repairs', async (req, res) => {
   const { driver_id, vehicle_id, service_date, requested_by, performed_by,
     odo_reading, repair_details, notes,
-    part_replacement, part_removal_refit, software_flashing } = req.body;
+    part_replacement, part_removal_refit, software_flashing, repair_type } = req.body;
   try {
     const result = await pool.query(
       `INSERT INTO repair_history (driver_id, vehicle_id, service_date, requested_by, performed_by,
-        odo_reading, repair_details, notes, part_replacement, part_removal_refit, software_flashing)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+        odo_reading, repair_details, notes, part_replacement, part_removal_refit, software_flashing, repair_type)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
       [driver_id, vehicle_id, service_date, requested_by, performed_by,
         odo_reading, repair_details, notes,
-        part_replacement, part_removal_refit, software_flashing]
+        part_replacement, part_removal_refit, software_flashing, repair_type]
     );
     res.json(result.rows[0]);
   } catch (err) { console.error(err); res.status(500).send('Error'); }
@@ -679,6 +732,11 @@ pool.query(`
   ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'OPEN',
   ADD COLUMN IF NOT EXISTS closed_at TIMESTAMPTZ;
 `).catch(err => console.error('asset_tracking schema update error:', err));
+
+pool.query(`
+  ALTER TABLE repair_history 
+  ADD COLUMN IF NOT EXISTS repair_type VARCHAR(50);
+`).catch(err => console.error('repair_history schema update error:', err));
 
 // Get today's attendance for a driver
 app.get('/attendance/today/:driver_id', async (req, res) => {

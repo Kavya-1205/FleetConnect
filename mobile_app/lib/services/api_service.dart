@@ -607,6 +607,7 @@ class ApiService {
     required bool partReplacement,
     required bool partRemovalRefit,
     required bool softwareFlashing,
+    required String repairType,
   }) async {
     await http.post(
       Uri.parse('$baseUrl/repairs'),
@@ -623,6 +624,7 @@ class ApiService {
         "part_replacement": partReplacement,
         "part_removal_refit": partRemovalRefit,
         "software_flashing": softwareFlashing,
+        "repair_type": repairType,
       }),
     );
   }
@@ -702,5 +704,20 @@ class ApiService {
       debugPrint("getAllAttendance error: $e");
     }
     return [];
+  }
+
+  static Future<Map<String, dynamic>> getActiveStatus() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/active-status'));
+      if (response.statusCode == 200) return jsonDecode(response.body);
+    } catch (e) {
+      debugPrint("getActiveStatus error: $e");
+    }
+    return {
+      "active_trips": [],
+      "denied_allocations": [],
+      "active_vehicles": [],
+      "active_drivers": []
+    };
   }
 }
