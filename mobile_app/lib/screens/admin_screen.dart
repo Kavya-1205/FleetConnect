@@ -433,7 +433,7 @@ class _AdminScreenState extends State<AdminScreen> {
                         Row(
                           children: [
                             Image.asset(
-                              'assets/images/logo.png',
+                              'assets/images/renault_diamond.jpg',
                               height: 34,
                               width: 34,
                             ),
@@ -2629,15 +2629,19 @@ class _TripAllocationScreenState extends State<TripAllocationScreen> {
                                 vertical: 3,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
+                                color: a['status'] == 'ACCEPTED'
+                                    ? Colors.green.shade50
+                                    : (a['status'] == 'CANCELLED' ? Colors.red.shade50 : Colors.blue.shade50),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const Text(
-                                "ASSIGNED",
+                              child: Text(
+                                a['status']?.toUpperCase() ?? "ASSIGNED",
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue,
+                                  color: a['status'] == 'ACCEPTED'
+                                      ? Colors.green
+                                      : (a['status'] == 'CANCELLED' ? Colors.red : Colors.blue),
                                 ),
                               ),
                             ),

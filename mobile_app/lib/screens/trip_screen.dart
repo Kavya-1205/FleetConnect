@@ -70,6 +70,12 @@ class _TripScreenState extends State<TripScreen> {
         selectedRoute = allocation['route_id'];
         selectedRouteName = allocation['route_name'];
         selectedShift = allocation['shift'];
+      } else if (!tripStarted) {
+        selectedVehicle = null;
+        selectedVehicleVin = null;
+        selectedRoute = null;
+        selectedRouteName = null;
+        selectedShift = null;
       }
     });
   }

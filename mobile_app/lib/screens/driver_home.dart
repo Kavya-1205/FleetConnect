@@ -46,7 +46,7 @@ class _DriverHomeState extends State<DriverHome> {
       );
       if (mounted) {
         setState(() {
-          if (allocation != null) {
+          if (allocation != null && allocation['status'] != 'CANCELLED') {
             assignedVin = allocation['vin'];
             assignedRoute = allocation['route_name'];
             assignedShift = allocation['shift'];
@@ -358,7 +358,7 @@ class _DriverHomeState extends State<DriverHome> {
                           Row(
                             children: [
                               Image.asset(
-                                'assets/images/logo.png',
+                                'assets/images/renault_diamond.jpg',
                                 height: 32,
                                 width: 32,
                               ),
