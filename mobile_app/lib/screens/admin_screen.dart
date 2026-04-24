@@ -418,7 +418,7 @@ class _AdminScreenState extends State<AdminScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
+            colors: [Colors.white, Color(0xFFF0F2F5)],
           ),
         ),
         child: SafeArea(
@@ -440,7 +440,7 @@ class _AdminScreenState extends State<AdminScreen> {
                             Row(
                               children: [
                                 Image.asset(
-                                  'assets/images/renault_logo.png',
+                                  'assets/images/logo.png',
                                   height: 34,
                                   width: 34,
                                   fit: BoxFit.contain,

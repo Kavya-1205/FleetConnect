@@ -96,8 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 // SizedBox removed to minimise top gap
                 Center(
                   child: Image.asset(
-                    'assets/images/renault_logo.png',
-                    height: 100, // Reduced slightly to save space
+                    'assets/images/logo.png',
+                    height: 90, // Slightly smaller to look sharper
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
