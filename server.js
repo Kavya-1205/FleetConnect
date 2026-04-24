@@ -28,7 +28,7 @@ const pool = new Pool({
 
 // ✅ Test API
 app.get('/', (req, res) => {
-  res.send('Backend running 🚀 - Version: 2026-04-22-14-35');
+  res.send('Backend running 🚀 - Version: 3.2.2');
 });
 
 // ─────────────────────────────────────────────
