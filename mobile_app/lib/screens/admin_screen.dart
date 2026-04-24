@@ -409,6 +409,7 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     final initials = _initials(adminName);
     return Scaffold(
@@ -422,121 +423,102 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // ✅ Top bar with admin name
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    // ✅ Top bar with admin name
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(
-                              'assets/images/renault_diamond.jpg',
-                              height: 34,
-                              width: 34,
-                              colorBlendMode: BlendMode.darken,
-                              color: const Color(0xFFF5F5F5), // Match the scaffold background
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/images/renault_diamond.jpg',
+                                  height: 34,
+                                  width: 34,
+                                  colorBlendMode: BlendMode.darken,
+                                  color: const Color(0xFFF5F5F5), // Match the scaffold background
+                                ),
+                                const SizedBox(width: 10),
+                                const Text(
+                                  "FLEETCONNECT",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    letterSpacing: 1.2,
+                                    fontWeight: FontWeight.w900,
+                                    color: Color(0xFF1A1A2E),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              "FLEETCONNECT",
-                              style: TextStyle(
-                                fontSize: 18,
-                                letterSpacing: 1.2,
-                                fontWeight: FontWeight.w900,
-                                color: Color(0xFF1A1A2E),
+                            Text(
+                              "Welcome, $adminName",
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF6B7280),
                               ),
                             ),
                           ],
                         ),
-                        Text(
-                          "Welcome, $adminName",
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF6B7280),
+                        GestureDetector(
+                          onTap: _openProfileDrawer,
+                          child: CircleAvatar(
+                            radius: 22,
+                            backgroundColor: const Color(0xFF1A2E2A),
+                            child: Text(
+                              initials,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: _openProfileDrawer,
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: const Color(0xFF1A2E2A),
-                        child: Text(
-                          initials,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                // ✅ Overview card with Active Drivers + Active Vehicles
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1A2E2A),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "System Overview",
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 13,
-                            ),
+                    // ── System Overview Container ──
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1A2E2A),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF1A2E2A).withValues(alpha: 0.3),
+                            blurRadius: 15,
+                            offset: const Offset(0, 8),
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(
-                                0xFF4CAF50,
-                              ).withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: const Color(0xFF4CAF50),
-                              ),
-                            ),
-                            child: const Text(
-                              "Live",
-                              style: TextStyle(
-                                color: Color(0xFF4CAF50),
-                                fontSize: 12,
-                              const SizedBox(height: 4),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
                               const Text(
-                                'View Driver Punch-In & Out',
+                                "System Overview",
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70,
+                                  fontSize: 13,
                                 ),
                               ),
-                              const SizedBox(height: 6),
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 3,
+                                  horizontal: 12,
+                                  vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
                                   color: const Color(
@@ -548,104 +530,241 @@ class _AdminScreenState extends State<AdminScreen> {
                                   ),
                                 ),
                                 child: const Text(
-                                  'Live Tracking',
+                                  "Live",
                                   style: TextStyle(
                                     color: Color(0xFF4CAF50),
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white54,
-                          size: 18,
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Fleet Operations",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          // ✅ Grid of 5 Status Boxes
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              // On wide screens (laptops), show all 5 in a row
+                              // On narrow screens (phones), show 2 per row
+                              final isWide = constraints.maxWidth > 800;
+                              final boxWidth = isWide 
+                                  ? (constraints.maxWidth - 40) / 5 
+                                  : (constraints.maxWidth - 10) / 2;
+                              
+                              return Wrap(
+                                spacing: 10,
+                                runSpacing: 10,
+                                children: [
+                                  SizedBox(
+                                    width: boxWidth,
+                                    child: _statPill(
+                                      Icons.people,
+                                      "Active Drivers",
+                                      stats["active_drivers_in_trip"]?.toString() ?? "0",
+                                      onTap: () => _goto(const ActiveStatusScreen()),
+                                      showToggle: true,
+                                      toggleColor: Colors.blue,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: boxWidth,
+                                    child: _statPill(
+                                      Icons.local_shipping,
+                                      "Active Vehicles",
+                                      stats["active_vehicles_in_trip"]?.toString() ?? "0",
+                                      onTap: () => _goto(const ActiveStatusScreen()),
+                                      showToggle: true,
+                                      toggleColor: Colors.orange,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: boxWidth,
+                                    child: _statPill(
+                                      Icons.directions_car,
+                                      "Active Trips",
+                                      stats["active_trips"]?.toString() ?? "0",
+                                      onTap: () => _goto(const ActiveStatusScreen()),
+                                      showToggle: true,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: boxWidth,
+                                    child: _statPill(
+                                      Icons.cancel_outlined,
+                                      "Denied Alloc.",
+                                      stats["denied_allocations"]?.toString() ?? "0",
+                                      onTap: () => _goto(const ActiveStatusScreen()),
+                                      showToggle: true,
+                                      toggleColor: Colors.red,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: isWide ? boxWidth : constraints.maxWidth,
+                                    child: _statPill(
+                                      Icons.assignment_turned_in,
+                                      "Trip Alloc.",
+                                      stats["total_allocations"]?.toString() ?? "0",
+                                      onTap: () => _goto(const TripAllocationScreen()),
+                                      showToggle: false,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-                const Center(
-                  child: Text(
-                    "Management Modules",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1A1A2E),
+                    // ── Attendance Banner ──
+                    GestureDetector(
+                      onTap: () => _goto(const AdminAttendanceScreen()),
+                      child: Container(
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF1A2E2A), Color(0xFF2E4D46)],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF1A2E2A).withValues(alpha: 0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(Icons.person_pin_circle, color: Colors.white, size: 24),
+                            ),
+                            const SizedBox(width: 16),
+                            const Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "ATTENDANCE RECORDS",
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.1,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "View Driver Punch-In & Out",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(Icons.chevron_right, color: Colors.white70),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 14),
+                    const SizedBox(height: 24),
 
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final crossAxisCount = constraints.maxWidth > 600 ? 4 : 2;
-                    return GridView.count(
-                      crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: 14,
-                      mainAxisSpacing: 14,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        _moduleCard(
-                          Icons.admin_panel_settings,
-                          "Admins",
-                          stats["total_admins"].toString(),
-                          () => _goto(const AdminsScreen()),
+                    const Center(
+                      child: Text(
+                        "Management Modules",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1A1A2E),
                         ),
-                        _moduleCard(
-                          Icons.person_search,
-                          "Drivers",
-                          stats["total_drivers"].toString(),
-                          () => _goto(const DriversScreen()),
-                        ),
-                        _moduleCard(
-                          Icons.local_shipping,
-                          "Vehicles",
-                          stats["total_vehicles"].toString(),
-                          () => _goto(const VehiclesScreen()),
-                        ),
-                        _moduleCard(
-                          Icons.alt_route,
-                          "Routes",
-                          stats["total_routes"].toString(),
-                          () => _goto(const RoutesScreen()),
-                        ),
-                        _moduleCard(
-                          Icons.credit_card,
-                          "Fuel Cards",
-                          stats["active_fuel_cards"]?.toString() ?? "",
-                          () => _goto(const FuelCardsScreen()),
-                        ),
-                        _moduleCard(
-                          Icons.assignment_turned_in,
-                          "Trips Allocation",
-                          stats["total_allocations"].toString(),
-                          () => _goto(const TripAllocationScreen()),
-                        ),
-                        _moduleCard(
-                          Icons.monitor,
-                          "Driver Interface",
-                          "",
-                          () => _goto(const AdminReportsScreen()),
-                        ),
-                        _moduleCard(
-                          Icons.track_changes,
-                          "Asset Tracking",
-                          "",
-                          () => _goto(const AssetTrackingScreen()),
-                        ),
-                      ],
-                    );
-                  }
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final crossAxisCount = constraints.maxWidth > 800 ? 4 : 2;
+                        return GridView.count(
+                          crossAxisCount: crossAxisCount,
+                          crossAxisSpacing: 14,
+                          mainAxisSpacing: 14,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            _moduleCard(
+                              Icons.admin_panel_settings,
+                              "Admins",
+                              stats["total_admins"]?.toString() ?? "0",
+                              () => _goto(const AdminsScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.person_search,
+                              "Drivers",
+                              stats["total_drivers"]?.toString() ?? "0",
+                              () => _goto(const DriversScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.local_shipping,
+                              "Vehicles",
+                              stats["total_vehicles"]?.toString() ?? "0",
+                              () => _goto(const VehiclesScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.alt_route,
+                              "Routes",
+                              stats["total_routes"]?.toString() ?? "0",
+                              () => _goto(const RoutesScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.credit_card,
+                              "Fuel Cards",
+                              stats["active_fuel_cards"]?.toString() ?? "0",
+                              () => _goto(const FuelCardsScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.assignment_turned_in,
+                              "Trips Allocation",
+                              stats["total_allocations"]?.toString() ?? "0",
+                              () => _goto(const TripAllocationScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.monitor,
+                              "Driver Interface",
+                              "",
+                              () => _goto(const AdminReportsScreen()),
+                            ),
+                            _moduleCard(
+                              Icons.track_changes,
+                              "Asset Tracking",
+                              "",
+                              () => _goto(const AssetTrackingScreen()),
+                            ),
+                          ],
+                        );
+                      }
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 20),
-              ],
+              ),
             ),
           ),
         ),
