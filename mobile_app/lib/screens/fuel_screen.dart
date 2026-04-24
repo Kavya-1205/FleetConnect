@@ -28,6 +28,8 @@ class _FuelScreenState extends State<FuelScreen> {
   int? selectedVehicle;
   String? inactivePrimaryFC;
   String? inactiveSecondaryFC;
+  bool activeFuelTypeFixed = false;
+  bool inactiveFuelTypeFixed = false;
 
   // ── Tab selection ──
   int _selectedTab = 0;
@@ -74,7 +76,24 @@ class _FuelScreenState extends State<FuelScreen> {
       });
       if (vehicleId != null) {
         final fc = await ApiService.getFuelCardForVehicle(vehicleId);
-        setState(() => activePrimaryFC = fc);
+        final vehicle = await ApiService.getVehicleById(vehicleId);
+        setState(() {
+          activePrimaryFC = fc;
+          if (vehicle['engine_type'] != null) {
+            final engine = vehicle['engine_type'].toString().toLowerCase();
+            if (engine.contains('gas') || engine.contains('petrol')) {
+              activeFuelType = "Petrol";
+              activeFuelTypeFixed = true;
+            } else if (engine.contains('diesel')) {
+              activeFuelType = "Diesel";
+              activeFuelTypeFixed = true;
+            } else {
+              activeFuelTypeFixed = false;
+            }
+          } else {
+            activeFuelTypeFixed = false;
+          }
+        });
       }
     } catch (e) {
       debugPrint("Error loading trip status: $e");
@@ -102,12 +121,27 @@ class _FuelScreenState extends State<FuelScreen> {
   void _loadInactiveFuelCard(int vehicleId) async {
     try {
       final fc = await ApiService.getFuelCardForVehicle(vehicleId);
+      final vehicle = await ApiService.getVehicleById(vehicleId);
       setState(() {
         inactivePrimaryFC = fc;
         inactiveSecondaryFC = null;
+        if (vehicle['engine_type'] != null) {
+          final engine = vehicle['engine_type'].toString().toLowerCase();
+          if (engine.contains('gas') || engine.contains('petrol')) {
+            inactiveFuelType = "Petrol";
+            inactiveFuelTypeFixed = true;
+          } else if (engine.contains('diesel')) {
+            inactiveFuelType = "Diesel";
+            inactiveFuelTypeFixed = true;
+          } else {
+            inactiveFuelTypeFixed = false;
+          }
+        } else {
+          inactiveFuelTypeFixed = false;
+        }
       });
     } catch (e) {
-      debugPrint("Error loading inactive fuel card: $e");
+      debugPrint("Error loading inactive fuel card/vehicle: $e");
     }
   }
 
@@ -333,27 +367,29 @@ class _FuelScreenState extends State<FuelScreen> {
   }
 
   // ── Reusable fuel form ──
-  Widget _fuelTypeRow(String selected, ValueChanged<String> onChanged) {
+  Widget _fuelTypeRow(String selected, ValueChanged<String> onChanged, {bool isFixed = false}) {
     return Row(
       children: ["Petrol", "Diesel"].map((type) {
         final isSelected = selected == type;
         return Expanded(
           child: GestureDetector(
-            onTap: () => onChanged(type),
+            onTap: isFixed ? null : () => onChanged(type),
             child: Container(
               margin: EdgeInsets.only(right: type == "Petrol" ? 8 : 0),
               padding: const EdgeInsets.symmetric(vertical: 14),
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFF1A2E2A) : Colors.white,
+                color: isSelected 
+                    ? (isFixed ? const Color(0xFF1A2E2A).withOpacity(0.7) : const Color(0xFF1A2E2A))
+                    : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: isSelected && isFixed ? Colors.blue.shade200 : Colors.grey.shade300),
               ),
               child: Column(
                 children: [
                   Icon(
-                    Icons.local_gas_station,
+                    isSelected && isFixed ? Icons.lock : Icons.local_gas_station,
                     color: isSelected ? Colors.white : Colors.grey,
-                    size: 24,
+                    size: 20,
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -866,6 +902,7 @@ class _FuelScreenState extends State<FuelScreen> {
                           _fuelTypeRow(
                             activeFuelType,
                             (v) => setState(() => activeFuelType = v),
+                            isFixed: activeFuelTypeFixed,
                           ),
                           const SizedBox(height: 12),
 
@@ -1084,6 +1121,7 @@ class _FuelScreenState extends State<FuelScreen> {
                         _fuelTypeRow(
                           inactiveFuelType,
                           (v) => setState(() => inactiveFuelType = v),
+                          isFixed: inactiveFuelTypeFixed,
                         ),
                         const SizedBox(height: 12),
 

@@ -144,12 +144,15 @@ class _AdminScreenState extends State<AdminScreen> {
   String adminName = "Admin";
   String adminEmpId = "";
   Map<String, dynamic> stats = {
-    "active_drivers": 0,
-    "active_vehicles": 0,
-    "active_admins": 0,
-    "active_routes": 0,
     "active_trips": 0,
-    "trip_allocations": 0,
+    "denied_allocations": 0,
+    "active_vehicles_in_trip": 0,
+    "active_drivers_in_trip": 0,
+    "total_drivers": 0,
+    "total_admins": 0,
+    "total_vehicles": 0,
+    "total_routes": 0,
+    "total_allocations": 0,
   };
   Timer? _refreshTimer;
 
@@ -541,17 +544,22 @@ class _AdminScreenState extends State<AdminScreen> {
                         children: [
                           Expanded(
                             child: _statPill(
-                              Icons.people,
-                              "Active Drivers",
-                              stats["active_drivers"].toString(),
+                              Icons.directions_car,
+                              "Active Trips",
+                              stats["active_trips"].toString(),
+                              onTap: () => _goto(const ActiveStatusScreen()),
+                              showToggle: true,
                             ),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
                             child: _statPill(
-                              Icons.local_shipping,
-                              "Active Vehicles",
-                              stats["active_vehicles"].toString(),
+                              Icons.cancel_outlined,
+                              "Denied Alloc.",
+                              stats["denied_allocations"].toString(),
+                              onTap: () => _goto(const ActiveStatusScreen()),
+                              showToggle: true,
+                              toggleColor: Colors.red,
                             ),
                           ),
                         ],
@@ -561,20 +569,23 @@ class _AdminScreenState extends State<AdminScreen> {
                         children: [
                           Expanded(
                             child: _statPill(
-                              Icons.assignment_turned_in,
-                              "Trip Allocations",
-                              stats["trip_allocations"].toString(),
-                              onTap: () => _goto(const TripAllocationScreen()),
+                              Icons.local_shipping,
+                              "Vehicles in Trip",
+                              stats["active_vehicles_in_trip"].toString(),
+                              onTap: () => _goto(const ActiveStatusScreen()),
+                              showToggle: true,
+                              toggleColor: Colors.orange,
                             ),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
                             child: _statPill(
-                              Icons.directions_car,
-                              "Active Trips",
-                              stats["active_trips"].toString(),
+                              Icons.people,
+                              "Drivers in Trip",
+                              stats["active_drivers_in_trip"].toString(),
                               onTap: () => _goto(const ActiveStatusScreen()),
                               showToggle: true,
+                              toggleColor: Colors.blue,
                             ),
                           ),
                         ],
@@ -696,62 +707,67 @@ class _AdminScreenState extends State<AdminScreen> {
                 ),
                 const SizedBox(height: 14),
 
-                GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 14,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    _moduleCard(
-                      Icons.admin_panel_settings,
-                      "Admins",
-                      stats["active_admins"].toString(),
-                      () => _goto(const AdminsScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.person_search,
-                      "Drivers",
-                      stats["active_drivers"].toString(),
-                      () => _goto(const DriversScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.local_shipping,
-                      "Vehicles",
-                      stats["active_vehicles"].toString(),
-                      () => _goto(const VehiclesScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.alt_route,
-                      "Routes",
-                      stats["active_routes"].toString(),
-                      () => _goto(const RoutesScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.credit_card,
-                      "Fuel Cards",
-                      stats["active_fuel_cards"]?.toString() ?? "",
-                      () => _goto(const FuelCardsScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.assignment_turned_in,
-                      "Trips Allocation",
-                      stats["trip_allocations"].toString(),
-                      () => _goto(const TripAllocationScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.monitor,
-                      "Driver Interface",
-                      "",
-                      () => _goto(const AdminReportsScreen()),
-                    ),
-                    _moduleCard(
-                      Icons.track_changes,
-                      "Asset Tracking",
-                      "",
-                      () => _goto(const AssetTrackingScreen()),
-                    ),
-                  ],
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final crossAxisCount = constraints.maxWidth > 600 ? 4 : 2;
+                    return GridView.count(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 14,
+                      mainAxisSpacing: 14,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        _moduleCard(
+                          Icons.admin_panel_settings,
+                          "Admins",
+                          stats["total_admins"].toString(),
+                          () => _goto(const AdminsScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.person_search,
+                          "Drivers",
+                          stats["total_drivers"].toString(),
+                          () => _goto(const DriversScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.local_shipping,
+                          "Vehicles",
+                          stats["total_vehicles"].toString(),
+                          () => _goto(const VehiclesScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.alt_route,
+                          "Routes",
+                          stats["total_routes"].toString(),
+                          () => _goto(const RoutesScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.credit_card,
+                          "Fuel Cards",
+                          stats["active_fuel_cards"]?.toString() ?? "",
+                          () => _goto(const FuelCardsScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.assignment_turned_in,
+                          "Trips Allocation",
+                          stats["total_allocations"].toString(),
+                          () => _goto(const TripAllocationScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.monitor,
+                          "Driver Interface",
+                          "",
+                          () => _goto(const AdminReportsScreen()),
+                        ),
+                        _moduleCard(
+                          Icons.track_changes,
+                          "Asset Tracking",
+                          "",
+                          () => _goto(const AssetTrackingScreen()),
+                        ),
+                      ],
+                    );
+                  }
                 ),
                 const SizedBox(height: 20),
               ],
@@ -768,6 +784,7 @@ class _AdminScreenState extends State<AdminScreen> {
     String value, {
     VoidCallback? onTap,
     bool showToggle = false,
+    Color toggleColor = const Color(0xFF4CAF50),
   }) {
     Widget pill = Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -783,12 +800,12 @@ class _AdminScreenState extends State<AdminScreen> {
               child: Container(
                 width: 8,
                 height: 8,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF4CAF50),
+                decoration: BoxDecoration(
+                  color: toggleColor,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF4CAF50),
+                      color: toggleColor,
                       blurRadius: 4,
                       spreadRadius: 1,
                     )

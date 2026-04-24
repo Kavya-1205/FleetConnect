@@ -67,20 +67,30 @@ app.post("/login", async (req, res) => {
 // ─────────────────────────────────────────────
 app.get('/stats', async (req, res) => {
   try {
-    const drivers = await pool.query("SELECT COUNT(*) FROM users WHERE role='driver' AND active=true");
-    const admins = await pool.query("SELECT COUNT(*) FROM users WHERE role='admin'");
-    const vehicles = await pool.query("SELECT COUNT(*) FROM vehicles WHERE active=true");
-    const routes = await pool.query("SELECT COUNT(*) FROM routes WHERE active=true");
     const activeTrips = await pool.query("SELECT COUNT(*) FROM trips WHERE trip_status='STARTED'");
-    const allocations = await pool.query("SELECT COUNT(*) FROM trip_allocations");
+    const deniedAllocations = await pool.query("SELECT COUNT(*) FROM trip_allocations WHERE status='CANCELLED'");
+    const activeVehicles = await pool.query("SELECT COUNT(DISTINCT vehicle_id) FROM trips WHERE trip_status='STARTED'");
+    const activeDrivers = await pool.query("SELECT COUNT(DISTINCT driver_id) FROM trips WHERE trip_status='STARTED'");
+    
+    // Original counts for management modules
+    const totalDrivers = await pool.query("SELECT COUNT(*) FROM users WHERE role='driver' AND active=true");
+    const totalAdmins = await pool.query("SELECT COUNT(*) FROM users WHERE role='admin'");
+    const totalVehicles = await pool.query("SELECT COUNT(*) FROM vehicles WHERE active=true");
+    const totalRoutes = await pool.query("SELECT COUNT(*) FROM routes WHERE active=true");
+    const totalAllocations = await pool.query("SELECT COUNT(*) FROM trip_allocations");
 
     res.json({
-      active_drivers: parseInt(drivers.rows[0].count),
-      active_admins: parseInt(admins.rows[0].count),
-      active_vehicles: parseInt(vehicles.rows[0].count),
-      active_routes: parseInt(routes.rows[0].count),
       active_trips: parseInt(activeTrips.rows[0].count),
-      trip_allocations: parseInt(allocations.rows[0].count),
+      denied_allocations: parseInt(deniedAllocations.rows[0].count),
+      active_vehicles_in_trip: parseInt(activeVehicles.rows[0].count),
+      active_drivers_in_trip: parseInt(activeDrivers.rows[0].count),
+      
+      // For the management modules
+      total_drivers: parseInt(totalDrivers.rows[0].count),
+      total_admins: parseInt(totalAdmins.rows[0].count),
+      total_vehicles: parseInt(totalVehicles.rows[0].count),
+      total_routes: parseInt(totalRoutes.rows[0].count),
+      total_allocations: parseInt(totalAllocations.rows[0].count),
     });
   } catch (err) {
     console.error(err);
@@ -103,6 +113,14 @@ app.get('/vehicles/all', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM vehicles ORDER BY id');
     res.json(result.rows);
+  } catch (err) { res.status(500).send('Error'); }
+});
+
+app.get('/vehicles/:id', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM vehicles WHERE id=$1', [req.params.id]);
+    if (result.rows.length === 0) return res.status(404).send('Vehicle not found');
+    res.json(result.rows[0]);
   } catch (err) { res.status(500).send('Error'); }
 });
 

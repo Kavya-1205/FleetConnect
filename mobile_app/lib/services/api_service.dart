@@ -49,18 +49,27 @@ class ApiService {
       debugPrint("getStats error: $e");
     }
     return {
-      "active_drivers": 0,
-      "active_vehicles": 0,
-      "active_admins": 0,
-      "active_routes": 0,
       "active_trips": 0,
-      "trip_allocations": 0,
+      "denied_allocations": 0,
+      "active_vehicles_in_trip": 0,
+      "active_drivers_in_trip": 0,
+      "total_drivers": 0,
+      "total_admins": 0,
+      "total_vehicles": 0,
+      "total_routes": 0,
+      "total_allocations": 0,
     };
   }
 
   // ─────────────────────────────────────────────
   // VEHICLES
   // ─────────────────────────────────────────────
+  static Future<Map<String, dynamic>> getVehicleById(int id) async {
+    final response = await http.get(Uri.parse('$baseUrl/vehicles/$id'));
+    if (response.statusCode == 200) return jsonDecode(response.body);
+    throw Exception('Failed to load vehicle details');
+  }
+
   static Future<List<dynamic>> getVehicles() async {
     final response = await http.get(Uri.parse('$baseUrl/vehicles'));
     if (response.statusCode == 200) return jsonDecode(response.body);
