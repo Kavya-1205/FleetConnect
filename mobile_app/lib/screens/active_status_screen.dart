@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 
 class ActiveStatusScreen extends StatefulWidget {
-  const ActiveStatusScreen({super.key});
+  final int initialTabIndex;
+  const ActiveStatusScreen({super.key, this.initialTabIndex = 0});
 
   @override
   State<ActiveStatusScreen> createState() => _ActiveStatusScreenState();
 }
 
-class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
+class _ActiveStatusScreenState extends State<ActiveStatusScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   Map<String, dynamic>? data;
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 4, vsync: this, initialIndex: widget.initialTabIndex);
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadData() async {
@@ -34,30 +43,29 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "SYSTEM STATUS",
-            style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1.2),
-          ),
-          backgroundColor: const Color(0xFF1A2E2A),
-          foregroundColor: Colors.white,
-          bottom: const TabBar(
-            isScrollable: true,
-            indicatorColor: Colors.orange,
-            tabs: [
-              Tab(text: "Active Trips"),
-              Tab(text: "Denied Allocations"),
-              Tab(text: "Active Vehicles"),
-              Tab(text: "Active Drivers"),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "SYSTEM STATUS",
+          style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1.2),
         ),
-        body: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
+        backgroundColor: const Color(0xFF1A2E2A),
+        foregroundColor: Colors.white,
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          indicatorColor: Colors.orange,
+          tabs: const [
+            Tab(text: "Active Trips"),
+            Tab(text: "Denied Allocations"),
+            Tab(text: "Active Vehicles"),
+            Tab(text: "Active Drivers"),
+          ],
+        ),
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
                 children: [
                   const SizedBox(height: 16),
                   Padding(
@@ -99,6 +107,7 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
                   const Divider(height: 1),
                   Expanded(
                     child: TabBarView(
+                      controller: _tabController,
                       children: [
                         _buildList("active_trips"),
                         _buildList("denied_allocations"),
@@ -114,11 +123,12 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
   }
 
   Widget _topStatBox(int index, String label, int count, IconData icon, Color color) {
-    return Builder(
-      builder: (context) {
-        final isSelected = DefaultTabController.of(context).index == index;
+    return ListenableBuilder(
+      listenable: _tabController,
+      builder: (context, _) {
+        final isSelected = _tabController.index == index;
         return GestureDetector(
-          onTap: () => DefaultTabController.of(context).animateTo(index),
+          onTap: () => _tabController.animateTo(index),
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -152,7 +162,7 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> {
             ),
           ),
         );
-      }
+      },
     );
   }
 
