@@ -3669,9 +3669,12 @@ class AdminAssetFormScreen extends StatefulWidget {
 class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
   List vehicles = [];
   List assets = [];
+  List openAssets = [];
   int? selectedVehicle;
+  int adminId = 0;
   bool isSubmitting = false;
   bool loadingHistory = true;
+  bool isLoadingOpen = false;
   DateTime? selectedDate = DateTime.now();
 
   final TextEditingController requestedByController = TextEditingController();
@@ -3682,12 +3685,23 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
   @override
   void initState() {
     super.initState();
+    _loadSession();
     _refresh();
+  }
+
+  void _loadSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        adminId = prefs.getInt('session_id') ?? 0;
+      });
+    }
   }
 
   void _refresh() {
     _loadVehicles();
     _loadHistory();
+    _loadOpenAssets();
   }
 
   void _loadVehicles() async {
@@ -3695,18 +3709,37 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
     if (mounted) setState(() => vehicles = v);
   }
 
+  void _loadOpenAssets() async {
+    setState(() => isLoadingOpen = true);
+    try {
+      final all = await ApiService.getAllAssets();
+      if (mounted) {
+        setState(() {
+          openAssets = all
+              .where((a) =>
+                  a['category'] == widget.categoryTitle && a['status'] == 'OPEN')
+              .toList();
+          isLoadingOpen = false;
+        });
+      }
+    } catch (e) {
+      debugPrint("Error loading open assets: $e");
+      if (mounted) setState(() => isLoadingOpen = false);
+    }
+  }
+
   void _loadHistory() async {
     setState(() => loadingHistory = true);
     final all = await ApiService.getAllAssets();
     // Filter by this category
-    final mine = all
-        .where((a) => a['category'] == widget.categoryTitle)
-        .toList();
-    if (mounted)
+    final mine =
+        all.where((a) => a['category'] == widget.categoryTitle).toList();
+    if (mounted) {
       setState(() {
         assets = mine;
         loadingHistory = false;
       });
+    }
   }
 
   Future<void> _pickDate() async {
@@ -3772,6 +3805,20 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
     );
   }
 
+  void _closeAsset(int id) async {
+    try {
+      await ApiService.closeAsset(id);
+      _refresh();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Asset Closed successfully")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to close: $e")),
+      );
+    }
+  }
+
   void submitAsset() async {
     if (selectedVehicle == null) {
       _showResultDialog("Please select a VIN !", false);
@@ -3789,6 +3836,7 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
     setState(() => isSubmitting = true);
     try {
       await ApiService.addAsset(
+        driverId: adminId,
         vehicleId: selectedVehicle!,
         category: widget.categoryTitle,
         requestedBy: requestedByController.text.trim(),
@@ -3807,11 +3855,12 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
         selectedVehicle = null;
         selectedDate = null;
       });
+      _refresh();
       _showResultDialog("Asset Logged! 📦", true);
     } catch (e) {
       setState(() => isSubmitting = false);
       if (!mounted) return;
-      _showResultDialog("Failed to submit !", false);
+      _showResultDialog(e.toString().replaceAll("Exception: ", ""), false);
     }
   }
 
@@ -3906,8 +3955,72 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ── OPEN ASSETS SECTION ──
+            if (openAssets.isNotEmpty) ...[
+              const Row(
+                children: [
+                  Icon(Icons.assignment_turned_in,
+                      color: Color(0xFF2E7D32), size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    "Active Assignments (OPEN)",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E7D32),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ...openAssets.map((asset) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.green.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "VIN: ${asset['vin'] ?? 'Unknown'}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            Text(
+                              "Asset #: ${asset['asset_number']}",
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => _closeAsset(asset['id']),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade700,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          minimumSize: const Size(60, 32),
+                        ),
+                        child: const Text("CLOSE",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 11)),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              const Divider(height: 32),
+            ],
+
             const Text(
-              "Asset Details",
+              "New Allocation",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -4202,21 +4315,35 @@ class AdminTCPlateScreen extends StatefulWidget {
 class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
   List vehicles = [];
   List assets = [];
+  List openAssets = [];
   int? selectedVehicle;
+  int adminId = 0;
   bool isSubmitting = false;
   bool loadingHistory = true;
+  bool isLoadingOpen = false;
   DateTime? selectedDate = DateTime.now();
   final TextEditingController tcPlateController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _loadSession();
     _refresh();
+  }
+
+  void _loadSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        adminId = prefs.getInt('session_id') ?? 0;
+      });
+    }
   }
 
   void _refresh() {
     _loadVehicles();
     _loadHistory();
+    _loadOpenAssets();
   }
 
   void _loadVehicles() async {
@@ -4224,17 +4351,36 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
     if (mounted) setState(() => vehicles = v);
   }
 
+  void _loadOpenAssets() async {
+    setState(() => isLoadingOpen = true);
+    try {
+      final all = await ApiService.getAllAssets();
+      if (mounted) {
+        setState(() {
+          openAssets = all
+              .where((a) =>
+                  a['category'] == "TC Plate Allocation" && a['status'] == 'OPEN')
+              .toList();
+          isLoadingOpen = false;
+        });
+      }
+    } catch (e) {
+      debugPrint("Error loading open assets: $e");
+      if (mounted) setState(() => isLoadingOpen = false);
+    }
+  }
+
   void _loadHistory() async {
     setState(() => loadingHistory = true);
     final all = await ApiService.getAllAssets();
-    final mine = all
-        .where((a) => a['category'] == "TC Plate Allocation")
-        .toList();
-    if (mounted)
+    final mine =
+        all.where((a) => a['category'] == "TC Plate Allocation").toList();
+    if (mounted) {
       setState(() {
         assets = mine;
         loadingHistory = false;
       });
+    }
   }
 
   Future<void> _pickDate() async {
@@ -4300,6 +4446,20 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
     );
   }
 
+  void _closeAsset(int id) async {
+    try {
+      await ApiService.closeAsset(id);
+      _refresh();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("TC Plate Allocation Closed")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to close: $e")),
+      );
+    }
+  }
+
   void submitTCPlate() async {
     if (tcPlateController.text.trim().isEmpty) {
       _showResultDialog("Please enter TC Plate number !", false);
@@ -4317,6 +4477,7 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
     setState(() => isSubmitting = true);
     try {
       await ApiService.addAsset(
+        driverId: adminId,
         vehicleId: selectedVehicle!,
         category: "TC Plate Allocation",
         requestedBy: "",
@@ -4332,11 +4493,12 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
         selectedVehicle = null;
         selectedDate = null;
       });
+      _refresh();
       _showResultDialog("TC Plate Allocated! ✅", true);
     } catch (e) {
       setState(() => isSubmitting = false);
       if (!mounted) return;
-      _showResultDialog("Failed to submit !", false);
+      _showResultDialog(e.toString().replaceAll("Exception: ", ""), false);
     }
   }
 
@@ -4400,12 +4562,76 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ── OPEN ASSETS SECTION ──
+            if (openAssets.isNotEmpty) ...[
+              const Row(
+                children: [
+                  Icon(Icons.assignment_turned_in,
+                      color: Color(0xFF2E7D32), size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    "Active TC Plates (OPEN)",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E7D32),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ...openAssets.map((asset) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.green.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "VIN: ${asset['vin'] ?? 'Unknown'}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            Text(
+                              "TC Plate: ${asset['asset_number']}",
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => _closeAsset(asset['id']),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade700,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          minimumSize: const Size(60, 32),
+                        ),
+                        child: const Text("CLOSE",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 11)),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              const Divider(height: 32),
+            ],
+
             Row(
               children: [
                 Container(width: 4, height: 20, color: const Color(0xFFE65100)),
                 const SizedBox(width: 8),
                 const Text(
-                  "Allocation Details",
+                  "New Allocation",
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
