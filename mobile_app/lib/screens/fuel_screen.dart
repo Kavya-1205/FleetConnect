@@ -823,6 +823,22 @@ class _FuelScreenState extends State<FuelScreen> {
                           ),
                           const SizedBox(height: 12),
 
+                          _inputField(
+                            activeOdoCtrl,
+                            "Fuel Filling ODO",
+                            Icons.speed,
+                            isNumber: true,
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            "Current ODO reading at fuel station",
+                            style: TextStyle(
+                              color: Color(0xFF4A90A4),
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+
                           const Text(
                             "Receipt Photo",
                             style: TextStyle(
@@ -838,8 +854,6 @@ class _FuelScreenState extends State<FuelScreen> {
                               (f) => setState(() => activeBillImage = f),
                             ),
                           ),
-                          const SizedBox(height: 12),
-
                           const Text(
                             "Select Fuel Type",
                             style: TextStyle(
@@ -880,22 +894,6 @@ class _FuelScreenState extends State<FuelScreen> {
                           const SizedBox(height: 4),
                           const Text(
                             "Total cost as per receipt",
-                            style: TextStyle(
-                              color: Color(0xFF4A90A4),
-                              fontSize: 12,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-
-                          _inputField(
-                            activeOdoCtrl,
-                            "Fuel Filling ODO",
-                            Icons.speed,
-                            isNumber: true,
-                          ),
-                          const SizedBox(height: 4),
-                          const Text(
-                            "Current ODO reading at fuel station",
                             style: TextStyle(
                               color: Color(0xFF4A90A4),
                               fontSize: 12,
@@ -1043,6 +1041,22 @@ class _FuelScreenState extends State<FuelScreen> {
                         ),
                         const SizedBox(height: 12),
 
+                        _inputField(
+                          inactiveOdoCtrl,
+                          "Fuel Filling ODO",
+                          Icons.speed,
+                          isNumber: true,
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          "Current ODO reading at fuel station",
+                          style: TextStyle(
+                            color: Color(0xFF4A90A4),
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+
                         const Text(
                           "Receipt Photo",
                           style: TextStyle(
@@ -1058,8 +1072,6 @@ class _FuelScreenState extends State<FuelScreen> {
                             (f) => setState(() => inactiveBillImage = f),
                           ),
                         ),
-                        const SizedBox(height: 12),
-
                         const Text(
                           "Select Fuel Type",
                           style: TextStyle(
@@ -1100,22 +1112,6 @@ class _FuelScreenState extends State<FuelScreen> {
                         const SizedBox(height: 4),
                         const Text(
                           "Total cost as per receipt",
-                          style: TextStyle(
-                            color: Color(0xFF4A90A4),
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-
-                        _inputField(
-                          inactiveOdoCtrl,
-                          "Fuel Filling ODO",
-                          Icons.speed,
-                          isNumber: true,
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Current ODO reading at fuel station",
                           style: TextStyle(
                             color: Color(0xFF4A90A4),
                             fontSize: 12,

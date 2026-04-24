@@ -38,10 +38,16 @@ app.post("/login", async (req, res) => {
   const { emp_id, password, role } = req.body;
   console.log("LOGIN ATTEMPT - INPUT:", { emp_id, password, role });
   try {
-    const result = await pool.query(
-      "SELECT * FROM users WHERE employee_id=$1 AND password=$2 AND role=$3",
-      [emp_id, password, role]
-    );
+    let query = "SELECT * FROM users WHERE employee_id=$1 AND password=$2";
+    let params = [emp_id, password];
+
+    if (role === 'admin') {
+      query += " AND role='admin'";
+    } else {
+      query += " AND (role='driver' OR role='admin')";
+    }
+
+    const result = await pool.query(query, params);
     console.log("DB RESULT COUNT:", result.rows.length);
     if (result.rows.length > 0) {
       console.log("LOGIN SUCCESS for:", emp_id);
