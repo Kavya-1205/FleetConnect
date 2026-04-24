@@ -409,7 +409,6 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     final initials = _initials(adminName);
     return Scaffold(
