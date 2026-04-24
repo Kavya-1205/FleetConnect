@@ -361,7 +361,7 @@ class _DriverHomeState extends State<DriverHome> {
                                 'assets/images/renault_diamond.jpg',
                                 height: 32,
                                 width: 32,
-                                colorBlendMode: BlendMode.multiply,
+                                colorBlendMode: BlendMode.darken,
                                 color: Colors.white,
                               ),
                               const SizedBox(width: 10),
