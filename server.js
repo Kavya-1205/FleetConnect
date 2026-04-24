@@ -566,13 +566,39 @@ app.get('/assets', async (req, res) => {
 app.post('/assets', async (req, res) => {
   const { category, vehicle_id, asset_number, requested_by, fitted_by, installation_date, odo_reading } = req.body;
   try {
+    // Check if THIS asset is already OPEN on ANY VIN
+    const check = await pool.query(
+      "SELECT * FROM asset_tracking WHERE category=$1 AND asset_number=$2 AND status='OPEN'",
+      [category, asset_number]
+    );
+
+    if (check.rows.length > 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Asset ${asset_number} is already assigned to VIN ${check.rows[0].vehicle_id} and is still OPEN.` 
+      });
+    }
+
     const result = await pool.query(
-      `INSERT INTO asset_tracking (category, vehicle_id, asset_number, requested_by, fitted_by, installation_date, odo_reading)
-       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+      `INSERT INTO asset_tracking (category, vehicle_id, asset_number, requested_by, fitted_by, installation_date, odo_reading, status)
+       VALUES ($1,$2,$3,$4,$5,$6,$7, 'OPEN') RETURNING *`,
       [category, vehicle_id, asset_number, requested_by, fitted_by, installation_date, odo_reading]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error(err);
+    res.status(500).send('Error'); 
+  }
+});
+
+app.post('/assets/close/:id', async (req, res) => {
+  try {
+    await pool.query("UPDATE asset_tracking SET status='CLOSED', closed_at=NOW() WHERE id=$1", [req.params.id]);
+    res.json({ success: true });
+  } catch (err) { 
+    console.error(err);
+    res.status(500).send('Error'); 
+  }
 });
 
 app.delete('/assets/:id', async (req, res) => {
@@ -647,6 +673,12 @@ pool.query(`
     UNIQUE(driver_id, attendance_date)
   )
 `).catch(err => console.error('attendance table error:', err));
+
+pool.query(`
+  ALTER TABLE asset_tracking 
+  ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'OPEN',
+  ADD COLUMN IF NOT EXISTS closed_at TIMESTAMPTZ;
+`).catch(err => console.error('asset_tracking schema update error:', err));
 
 // Get today's attendance for a driver
 app.get('/attendance/today/:driver_id', async (req, res) => {

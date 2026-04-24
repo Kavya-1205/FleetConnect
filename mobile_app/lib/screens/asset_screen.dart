@@ -220,8 +220,10 @@ class AssetFormScreen extends StatefulWidget {
 
 class _AssetFormScreenState extends State<AssetFormScreen> {
   List vehicles = [];
+  List openAssets = [];
   int? selectedVehicle;
   bool isSubmitting = false;
+  bool isLoadingAssets = false;
   DateTime? selectedDate;
 
   final TextEditingController requestedByController = TextEditingController();
@@ -232,7 +234,12 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
   @override
   void initState() {
     super.initState();
+    _loadData();
+  }
+
+  void _loadData() async {
     _loadVehicles();
+    _loadOpenAssets();
   }
 
   void _loadVehicles() async {
@@ -241,6 +248,23 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
       setState(() => vehicles = v);
     } catch (e) {
       debugPrint("Error loading vehicles: $e");
+    }
+  }
+
+  void _loadOpenAssets() async {
+    setState(() => isLoadingAssets = true);
+    try {
+      final all = await ApiService.getAllAssets();
+      setState(() {
+        openAssets = all
+            .where((a) =>
+                a['category'] == widget.categoryTitle && a['status'] == 'OPEN')
+            .toList();
+        isLoadingAssets = false;
+      });
+    } catch (e) {
+      debugPrint("Error loading assets: $e");
+      setState(() => isLoadingAssets = false);
     }
   }
 
@@ -281,7 +305,7 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
             Text(
               title,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1A1A2E),
               ),
@@ -305,6 +329,20 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
         ),
       ),
     );
+  }
+
+  void _closeAsset(int id) async {
+    try {
+      await ApiService.closeAsset(id);
+      _loadOpenAssets();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Asset Closed successfully")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to close asset: $e")),
+      );
+    }
   }
 
   void submitAsset() async {
@@ -347,11 +385,12 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
         selectedDate = null;
       });
 
+      _loadOpenAssets();
       _showDialog("Asset Logged! 📦", true);
     } catch (e) {
       setState(() => isSubmitting = false);
       if (!mounted) return;
-      _showDialog("Failed to submit !", false);
+      _showDialog(e.toString().replaceAll("Exception: ", ""), false);
     }
   }
 
@@ -409,9 +448,73 @@ class _AssetFormScreenState extends State<AssetFormScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ── OPEN ASSETS SECTION ──
+            if (openAssets.isNotEmpty) ...[
+              const Row(
+                children: [
+                  Icon(Icons.assignment_turned_in,
+                      color: Color(0xFF2E7D32), size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    "Active Assignments (OPEN)",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E7D32),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ...openAssets.map((asset) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.green.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "VIN: ${asset['vin'] ?? 'Unknown'}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            Text(
+                              "Asset #: ${asset['asset_number']}",
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => _closeAsset(asset['id']),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade700,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          minimumSize: const Size(60, 32),
+                        ),
+                        child: const Text("CLOSE",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 11)),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              const Divider(height: 32),
+            ],
+
             // Asset Details header
             const Text(
-              "Asset Details",
+              "New Allocation",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -627,8 +730,10 @@ class TCPlateScreen extends StatefulWidget {
 
 class _TCPlateScreenState extends State<TCPlateScreen> {
   List vehicles = [];
+  List openAssets = [];
   int? selectedVehicle;
   bool isSubmitting = false;
+  bool isLoadingAssets = false;
   DateTime? selectedDate;
 
   final TextEditingController tcPlateController = TextEditingController();
@@ -636,7 +741,12 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
   @override
   void initState() {
     super.initState();
+    _loadData();
+  }
+
+  void _loadData() async {
     _loadVehicles();
+    _loadOpenAssets();
   }
 
   void _loadVehicles() async {
@@ -645,6 +755,23 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
       setState(() => vehicles = v);
     } catch (e) {
       debugPrint("Error loading vehicles: $e");
+    }
+  }
+
+  void _loadOpenAssets() async {
+    setState(() => isLoadingAssets = true);
+    try {
+      final all = await ApiService.getAllAssets();
+      setState(() {
+        openAssets = all
+            .where((a) =>
+                a['category'] == "TC Plate Allocation" && a['status'] == 'OPEN')
+            .toList();
+        isLoadingAssets = false;
+      });
+    } catch (e) {
+      debugPrint("Error loading assets: $e");
+      setState(() => isLoadingAssets = false);
     }
   }
 
@@ -685,7 +812,7 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
             Text(
               title,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1A1A2E),
               ),
@@ -709,6 +836,20 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
         ),
       ),
     );
+  }
+
+  void _closeAsset(int id) async {
+    try {
+      await ApiService.closeAsset(id);
+      _loadOpenAssets();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("TC Plate Allocation Closed")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to close: $e")),
+      );
+    }
   }
 
   void submitTCPlate() async {
@@ -748,11 +889,12 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
         selectedDate = null;
       });
 
+      _loadOpenAssets();
       _showDialog("TC Plate Allocated! ✅", true);
     } catch (e) {
       setState(() => isSubmitting = false);
       if (!mounted) return;
-      _showDialog("Failed to submit !", false);
+      _showDialog(e.toString().replaceAll("Exception: ", ""), false);
     }
   }
 
@@ -808,6 +950,70 @@ class _TCPlateScreenState extends State<TCPlateScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ── OPEN ASSETS SECTION ──
+            if (openAssets.isNotEmpty) ...[
+              const Row(
+                children: [
+                  Icon(Icons.assignment_turned_in,
+                      color: Color(0xFF2E7D32), size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    "Active TC Plates (OPEN)",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E7D32),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ...openAssets.map((asset) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.green.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "VIN: ${asset['vin'] ?? 'Unknown'}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            Text(
+                              "TC Plate: ${asset['asset_number']}",
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => _closeAsset(asset['id']),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade700,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          minimumSize: const Size(60, 32),
+                        ),
+                        child: const Text("CLOSE",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 11)),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              const Divider(height: 32),
+            ],
+
             // Section header
             Row(
               children: [

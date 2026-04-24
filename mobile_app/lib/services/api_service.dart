@@ -465,6 +465,7 @@ class ApiService {
   }
 
   static Future<void> addAsset({
+    required int driverId,
     required int vehicleId,
     required String category,
     required String requestedBy,
@@ -473,10 +474,11 @@ class ApiService {
     required DateTime installationDate,
     required String odoReading,
   }) async {
-    await http.post(
+    final response = await http.post(
       Uri.parse('$baseUrl/assets'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
+        "driver_id": driverId,
         "vehicle_id": vehicleId,
         "category": category,
         "requested_by": requestedBy,
@@ -486,6 +488,14 @@ class ApiService {
         "odo_reading": odoReading,
       }),
     );
+    if (response.statusCode == 400) {
+      final data = jsonDecode(response.body);
+      throw Exception(data['message'] ?? "Failed to add asset");
+    }
+  }
+
+  static Future<void> closeAsset(int id) async {
+    await http.post(Uri.parse('$baseUrl/assets/close/$id'));
   }
 
   static Future<void> deleteAsset(int id) async {
