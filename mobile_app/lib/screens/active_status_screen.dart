@@ -46,7 +46,7 @@ class _ActiveStatusScreenState extends State<ActiveStatusScreen> with SingleTick
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "SYSTEM STATUS",
+          "SYSTEM STATUS v3.2.2",
           style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1.2),
         ),
         backgroundColor: const Color(0xFF1A2E2A),

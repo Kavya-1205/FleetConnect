@@ -448,7 +448,7 @@ class _AdminScreenState extends State<AdminScreen> {
                                 ),
                                 const SizedBox(width: 10),
                                 const Text(
-                                  "FLEETCONNECT",
+                                  "FLEETCONNECT v3.2.2",
                                   style: TextStyle(
                                     fontSize: 18,
                                     letterSpacing: 1.2,

@@ -103644,7 +103644,7 @@ case 1:return A.r(p.at(-1),r)}})
 return A.u($async$AA,r)},
 N(a){var s,r,q,p=this,o=null,n=p.d
 n===$&&A.a()
-n=A.jH(o,B.u,A.aXb(n,B.dt,2,!0,o,o,B.U1,o),o,o,B.f,o,B.a9G)
+n=A.jH(o,B.u,A.aXb(n,B.dt,2,!0,o,o,B.U1,o),o,o,B.f,o,B.a96)
 if(p.f)s=B.lT
 else{s=A.E8(new A.avR(p))
 r=p.d
@@ -103794,7 +103794,7 @@ return A.q(A.bK(o,!1).hm(p),$async$h1)
 case 2:q.te()
 return A.t(null,r)}})
 return A.u($async$h1,r)},
-N(a){var s=this,r=null,q=s.W4(s.d),p=t.p,o=A.aT(A.b([A.aM(A.b([A.aT(A.b([A.aQa("assets/images/renault_diamond.jpg",B.ax,B.lG,r,r,34,34),B.b6,B.a9N],p),B.o,B.j,B.k,0),A.a3("Welcome, "+s.d,r,r,r,r,B.kM,r,r,r)],p),B.J,B.j,B.k),A.dv(r,A.wn(B.u,A.a3(q,r,r,r,r,B.ES,r,r,r),22),B.v,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,s.gaoW(),r,r,r,r,r,r,!1,B.aj)],p),B.o,B.aE,B.k,0),n=A.aa(20),m=t.V,l=A.b([new A.bi(0,B.N,B.u.c8(0.3),B.i8,15)],m),k=B.bn.c8(0.2),j=A.aa(20)
+N(a){var s=this,r=null,q=s.W4(s.d),p=t.p,o=A.aT(A.b([A.aM(A.b([A.aT(A.b([A.aQa("assets/images/renault_diamond.jpg",B.ax,B.lG,r,r,34,34),B.b6,B.a9n],p),B.o,B.j,B.k,0),A.a3("Welcome, "+s.d,r,r,r,r,B.kM,r,r,r)],p),B.J,B.j,B.k),A.dv(r,A.wn(B.u,A.a3(q,r,r,r,r,B.ES,r,r,r),22),B.v,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,s.gaoW(),r,r,r,r,r,r,!1,B.aj)],p),B.o,B.aE,B.k,0),n=A.aa(20),m=t.V,l=A.b([new A.bi(0,B.N,B.u.c8(0.3),B.i8,15)],m),k=B.bn.c8(0.2),j=A.aa(20)
 l=A.ap(r,A.aM(A.b([A.aT(A.b([B.a8E,A.ap(r,B.aaf,B.l,r,r,new A.ai(k,r,A.bI(B.bn,1),j,r,r,B.r),r,r,r,B.mB,r,r,r)],p),B.o,B.aE,B.k,0),B.W,B.a8K,B.a1,A.E8(new A.axg(s))],p),B.J,B.j,B.k),B.l,r,r,new A.ai(B.u,r,r,n,l,r,B.r),r,r,r,B.aR,r,r,1/0)
 n=A.aa(16)
 m=A.b([new A.bi(0,B.N,B.u.c8(0.2),B.d1,10)],m)
@@ -103836,7 +103836,7 @@ n=n.e
 n=A.ap(s,A.aT(A.b([B.tq,B.cG,A.aM(A.b([B.Fb,A.a3(n.length!==0?n:"\u2014",s,s,s,s,B.e1,s,s,s)],o),B.J,B.j,B.k)],o),B.o,B.j,B.k,0),B.l,s,s,new A.ai(B.dL,s,k,l,s,s,B.r),s,s,s,B.bo,s,s,s)
 l=A.aa(10)
 k=A.bI(B.aP,1)
-return A.od(new A.en(B.iP,s,s,A.h4(!1,B.O,!0,B.pQ,A.bY(A.iC(!0,A.aM(A.b([m,B.aW,new A.bw(B.rD,n,s),B.a1,new A.bw(B.rD,A.ap(s,A.aT(A.b([B.RN,B.cG,A.aM(A.b([B.F2,B.a9d],o),B.J,B.j,B.k)],o),B.o,B.j,B.k,0),B.l,s,s,new A.ai(B.dL,s,k,l,s,s,B.r),s,s,s,B.bo,s,s,s),s),B.d5,new A.bw(B.aR,A.bY(A.io(B.tp,B.EY,new A.ax0(a),A.dl(s,s,B.df,s,s,s,s,s,s,s,s,s,s,s,new A.bE(A.aa(10),B.q),s,s,s,s,s)),50,1/0),s)],o),B.o,B.j,B.k),B.ae,!0),1/0,p.a.a*0.75),B.l,B.f,0,s,s,s,s,s,B.cD),s),new A.aD(q,new A.aH(B.dV,B.m,r),r.i("aD<az.T>")),s,!0)},
+return A.od(new A.en(B.iP,s,s,A.h4(!1,B.O,!0,B.pQ,A.bY(A.iC(!0,A.aM(A.b([m,B.aW,new A.bw(B.rD,n,s),B.a1,new A.bw(B.rD,A.ap(s,A.aT(A.b([B.RN,B.cG,A.aM(A.b([B.F2,B.a9e],o),B.J,B.j,B.k)],o),B.o,B.j,B.k,0),B.l,s,s,new A.ai(B.dL,s,k,l,s,s,B.r),s,s,s,B.bo,s,s,s),s),B.d5,new A.bw(B.aR,A.bY(A.io(B.tp,B.EY,new A.ax0(a),A.dl(s,s,B.df,s,s,s,s,s,s,s,s,s,s,s,new A.bE(A.aa(10),B.q),s,s,s,s,s)),50,1/0),s)],o),B.o,B.j,B.k),B.ae,!0),1/0,p.a.a*0.75),B.l,B.f,0,s,s,s,s,s,B.cD),s),new A.aD(q,new A.aH(B.dV,B.m,r),r.i("aD<az.T>")),s,!0)},
 $S:254}
 A.ax_.prototype={
 $0(){A.bK(this.a,!1).bO(null)
@@ -104158,7 +104158,7 @@ i=this.c
 i.toString
 A.ig(k,k,!0,k,new A.aBx(j,this,a,new A.ce(new A.c2(h,B.aw,B.a7),s),new A.ce(new A.c2(r,B.aw,B.a7),s),new A.ce(new A.c2(q,B.aw,B.a7),s),new A.ce(new A.c2(p,B.aw,B.a7),s),new A.ce(new A.c2(o,B.aw,B.a7),s),new A.ce(new A.c2(n,B.aw,B.a7),s),new A.ce(new A.c2(m,B.aw,B.a7),s)),i,k,!0,t.z)},
 kJ(){return this.iQ(null)},
-N(a){var s,r=this,q=null,p=A.jH(q,B.f,q,q,0,q,A.d8(q,q,B.cU,q,q,new A.aBC(a),q,q,q),B.a9D)
+N(a){var s,r=this,q=null,p=A.jH(q,B.f,q,q,0,q,A.d8(q,q,B.cU,q,q,new A.aBC(a),q,q,q),B.a9F)
 if(r.e)s=B.db
 else s=J.fn(r.d)?B.IU:A.xF(new A.aBD(r,a),J.bT(r.d),B.fc)
 return A.fv(p,B.ax,A.aM(A.b([A.c4(s,1),A.NE(a,"Add New Driver",new A.aBE(r),r.gjf(),A.b(["Employee ID","Name","Experience","License No","License Expiry","Joining Date","Active"],t.s),new A.aBF(r),"Drivers")],t.p),B.o,B.j,B.k),q)}}
@@ -104345,7 +104345,7 @@ g=this.c
 g.toString
 A.ig(i,i,!0,i,new A.aM2(h,this,a,new A.ce(new A.c2(f,B.aw,B.a7),s),new A.ce(new A.c2(r,B.aw,B.a7),s),new A.ce(new A.c2(q,B.aw,B.a7),s),new A.ce(new A.c2(p,B.aw,B.a7),s),new A.ce(new A.c2(o,B.aw,B.a7),s),new A.ce(new A.c2(n,B.aw,B.a7),s),new A.ce(new A.c2(m,B.aw,B.a7),s),new A.ce(new A.c2(l,B.aw,B.a7),s),new A.ce(new A.c2(k,B.aw,B.a7),s)),g,i,!0,t.z)},
 kJ(){return this.iQ(null)},
-N(a){var s,r=this,q=null,p=A.jH(q,B.f,q,q,0,q,A.d8(q,q,B.cU,q,q,new A.aM7(a),q,q,q),B.a9t)
+N(a){var s,r=this,q=null,p=A.jH(q,B.f,q,q,0,q,A.d8(q,q,B.cU,q,q,new A.aM7(a),q,q,q),B.a9v)
 if(r.e)s=B.db
 else s=J.fn(r.d)?B.IS:A.xF(new A.aM8(r,a),J.bT(r.d),B.fc)
 return A.fv(p,B.ax,A.aM(A.b([A.c4(s,1),A.NE(a,"Add New Vehicle",new A.aM9(r),r.gjf(),A.b(["ID","VIN","Brand","Variant","Engine","Gearbox","Project Code","Batch","SV No","Powertrain","Active"],t.s),new A.aMa(r),"Vehicles")],t.p),B.o,B.j,B.k),q)}}
@@ -104838,7 +104838,7 @@ q=A.b([r,B.a2d,A.nk(A.h2(l,new A.et(4,A.aa(10),B.c4),l,l,l,l,l,l,!0,l,l,l,l,l,l,
 if(s.f>=2){r=s.d
 n=o.i("e7<1,dd<n>>")
 n=A.Y(new A.e7(new A.aO(i,new A.aL5(s),o.i("aO<1>")),new A.aL6(),n),n.i("o.E"))
-B.b.P(q,A.b([B.W,A.nk(A.h2(l,new A.et(4,A.aa(10),B.c4),l,l,l,l,l,l,!0,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,"Driver 2",!0,!0,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,l),B.a9L,l,n,new A.aL7(s,b),r,p)],m))}if(s.f>=3){r=s.c
+B.b.P(q,A.b([B.W,A.nk(A.h2(l,new A.et(4,A.aa(10),B.c4),l,l,l,l,l,l,!0,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,"Driver 2",!0,!0,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,l),B.a9M,l,n,new A.aL7(s,b),r,p)],m))}if(s.f>=3){r=s.c
 n=o.i("e7<1,dd<n>>")
 o=A.Y(new A.e7(new A.aO(i,new A.aL8(s),o.i("aO<1>")),new A.aL9(),n),n.i("o.E"))
 B.b.P(q,A.b([B.W,A.nk(A.h2(l,new A.et(4,A.aa(10),B.c4),l,l,l,l,l,l,!0,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,"Driver 3",!0,!0,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,l),B.a8C,l,o,new A.aLa(s,b),r,p)],m))}q.push(B.W)
@@ -104858,7 +104858,7 @@ p=t.fo
 p=A.Y(new A.a6(A.b(["Shift-1","Shift-2"],t.s),new A.aL_(),p),p.i("af.E"))
 q.push(A.nk(A.h2(l,new A.et(4,A.aa(10),B.c4),l,l,l,l,l,l,!0,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,"Shift",!0,!0,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,l),B.aan,l,p,new A.aL0(s,b),r,t.N))
 r=A.hy(A.aM(q,B.o,B.j,B.an),l,B.v,l,l,B.Z)
-return A.j_(A.b([A.kf(B.eL,new A.aL1(a),l),A.h_(B.a91,new A.aL2(s,k,a),A.dl(l,l,B.u,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l))],m),r,l,new A.bE(j,B.q),B.a9j)},
+return A.j_(A.b([A.kf(B.eL,new A.aL1(a),l),A.h_(B.a91,new A.aL2(s,k,a),A.dl(l,l,B.u,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l))],m),r,l,new A.bE(j,B.q),B.a9k)},
 $S:66}
 A.aKT.prototype={
 $1(a){return!J.d(J.a_(a,"in_active_trip"),!0)},
@@ -104994,7 +104994,7 @@ $S:7}
 A.aKL.prototype={
 $1(a){var s=null,r=J.b_(this.b)
 r=A.a3(A.f9(r,"Exception: ",""),s,s,s,s,s,s,s,s)
-return A.j_(A.b([A.kf(B.a9J,new A.aKK(this.a),s)],t.p),r,s,s,B.a94)},
+return A.j_(A.b([A.kf(B.a9K,new A.aKK(this.a),s)],t.p),r,s,s,B.a94)},
 $S:50}
 A.aKK.prototype={
 $0(){var s=this.a.c
@@ -105129,7 +105129,7 @@ q=p.c
 q.toString
 A.oT(q,"Repairs",s,r)
 break}},
-N(a){var s,r,q=this,p=null,o=A.d8(p,p,B.hO,p,p,new A.awN(a),p,p,p),n=t.p,m=A.aM(A.b([B.a9p,A.a3("Activity & Performance Reports",p,p,p,p,A.c6(p,p,B.c5,p,p,p,p,p,p,p,p,11,p,p,B.ak,p,p,!0,p,p,p,p,p,p,p,p),p,p,p)],n),B.J,B.j,B.k),l=q.d
+N(a){var s,r,q=this,p=null,o=A.d8(p,p,B.hO,p,p,new A.awN(a),p,p,p),n=t.p,m=A.aM(A.b([B.a9r,A.a3("Activity & Performance Reports",p,p,p,p,A.c6(p,p,B.c5,p,p,p,p,p,p,p,p,11,p,p,B.ak,p,p,!0,p,p,p,p,p,p,p,p),p,p,p)],n),B.J,B.j,B.k),l=q.d
 l===$&&A.a()
 s=q.e
 r=A.a1(s).i("a6<1,lk>")
@@ -105163,7 +105163,7 @@ o.push(B.aW)
 B.b.P(p,o)}if(j.length!==0){o=A.b([],s)
 n=j.length
 if(!c)B.b.P(o,A.b([B.W,A.e_(A.io(B.RP,A.a3("VIEW HISTORY ("+n+")",i,i,i,i,i,i,i,i),new A.awE(d),A.dl(i,i,B.f,i,i,i,0,i,i,B.u,i,i,B.LY,i,new A.bE(A.aa(30),new A.ba(B.ac,1,B.I,-1)),i,i,i,i,i)),i,i),B.dZ],s))
-else{s=A.b([A.aT(A.b([this.Yg("ARCHIVE",n,!1),A.kf(B.a9f,new A.awF(d),i)],s),B.o,B.aE,B.k,0),B.a1],s)
+else{s=A.b([A.aT(A.b([this.Yg("ARCHIVE",n,!1),A.kf(B.a9g,new A.awF(d),i)],s),B.o,B.aE,B.k,0),B.a1],s)
 B.b.P(s,new A.a6(j,new A.awG(b),A.a1(j).i("a6<1,f>")))
 s.push(B.a2f)
 B.b.P(o,s)}B.b.P(p,o)}return A.aVD(p,B.bs,i,!1)},
@@ -105235,7 +105235,7 @@ k=A.a8(["Record Date",r+" "+q,"VIN",p,"FC Used",o,"Litres",n,"Amount","Rs. "+m,"
 if(g.h(a,h)!=null&&J.b_(g.h(a,h)).length!==0){r=A.aa(12)
 q=A.bI(B.aP,1)
 g=A.b56(B.q_,new A.nN(B.lM.cn(g.h(a,h)),1),j)
-r=new A.bw(B.LQ,A.aM(A.b([B.a9e,B.af,A.dv(j,A.ap(j,A.e_(A.ap(j,B.a02,B.l,j,j,new A.ai(B.t.c8(0.5),j,j,A.aa(20),j,j,B.r),j,j,j,B.LN,j,j,j),j,j),B.l,j,j,new A.ai(j,g,q,r,j,j,B.r),j,150,j,j,j,j,1/0),B.v,!1,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,new A.aww(this,a),j,j,j,j,j,j,!1,B.aj)],t.p),B.J,B.j,B.k),j)
+r=new A.bw(B.LQ,A.aM(A.b([B.a9f,B.af,A.dv(j,A.ap(j,A.e_(A.ap(j,B.a02,B.l,j,j,new A.ai(B.t.c8(0.5),j,j,A.aa(20),j,j,B.r),j,j,j,B.LN,j,j,j),j,j),B.l,j,j,new A.ai(j,g,q,r,j,j,B.r),j,150,j,j,j,j,1/0),B.v,!1,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,new A.aww(this,a),j,j,j,j,j,j,!1,B.aj)],t.p),B.J,B.j,B.k),j)
 g=r}else g=j
 return this.agW(g,k,B.jM,"Emp ID: "+s,f)},
 aut(a){var s=null,r=this.c
@@ -105476,7 +105476,7 @@ return null},
 $S:0}
 A.OT.prototype={
 N(a){var s=null,r=t.N,q=t.z,p=A.b([A.a8(["title","Dashcam Fixation","icon",B.RB,"color",B.f6],r,q),A.a8(["title","Datalogger Fixation","icon",B.Rz,"color",B.Ke],r,q),A.a8(["title","TC Plate Allocation","icon",B.Rs,"color",B.j_,"isTCPlate",!0],r,q),A.a8(["title","Puncture Repair Kit","icon",B.Rt,"color",B.K6],r,q),A.a8(["title","Emergency Kit Assignment","icon",B.Rx,"color",B.qR],r,q),A.a8(["title","Sandbag Allocation","icon",B.Rw,"color",B.JV],r,q)],t.H7)
-return A.fv(A.jH(s,B.f,s,s,0,s,A.d8(s,s,B.cU,s,s,new A.a9t(a),s,s,s),B.aaa),B.f,new A.bw(B.bs,A.aM(A.b([B.a9H,B.ar,B.a8O,B.a1,A.c4(A.ai_(new A.a9u(p),6,s,s,new A.a9v(),!1),1)],t.p),B.J,B.j,B.k),s),s)}}
+return A.fv(A.jH(s,B.f,s,s,0,s,A.d8(s,s,B.cU,s,s,new A.a9t(a),s,s,s),B.aaa),B.f,new A.bw(B.bs,A.aM(A.b([B.a9I,B.ar,B.a8O,B.a1,A.c4(A.ai_(new A.a9u(p),6,s,s,new A.a9v(),!1),1)],t.p),B.J,B.j,B.k),s),s)}}
 A.a9t.prototype={
 $0(){A.bK(this.a,!1).bO(null)
 return null},
@@ -105660,7 +105660,7 @@ if(o.f.length!==0){s=A.b([B.a00,B.a1],k)
 r=o.f
 B.b.P(s,new A.a6(r,new A.awa(o),A.a1(r).i("a6<1,f>")))
 s.push(B.ro)
-B.b.P(m,s)}m.push(B.a97)
+B.b.P(m,s)}m.push(B.a98)
 m.push(B.aW)
 m.push(B.a8M)
 m.push(B.af)
@@ -105671,7 +105671,7 @@ p=J.di(o.d,new A.awb(),t.kZ)
 p=A.Y(p,p.$ti.i("af.E"))
 m.push(A.ap(n,new A.im(A.po(B.iB,!0,p,new A.awc(o),q,t.S),n),B.l,n,n,new A.ai(B.ax,n,r,s,n,n,B.r),n,n,n,B.el,n,n,n))
 m.push(B.ar)
-m.push(B.a9q)
+m.push(B.a9s)
 m.push(B.af)
 s=A.aa(10)
 r=A.bI(B.ac,1)
@@ -105688,20 +105688,20 @@ m.push(B.aa1)
 m.push(B.af)
 m.push(o.HN(o.at,"Enter technician name",B.Rc))
 m.push(B.ar)
-m.push(B.a9n)
+m.push(B.a9p)
 m.push(B.af)
 m.push(o.HN(o.ax,"SN-XXXX-XXXX",B.Rh))
 m.push(B.ar)
-m.push(B.a9m)
+m.push(B.a9o)
 m.push(B.af)
 m.push(o.St(o.ay,"Current mileage",B.hN,B.fQ))
 m.push(B.oM)
 k=o.x
 s=k?n:o.ga7L()
 k=k?B.iv:B.RL
-m.push(A.bY(A.io(k,B.a9c,s,A.dl(n,n,B.u,n,n,n,n,n,n,n,n,n,n,n,new A.bE(A.aa(12),B.q),n,n,n,n,n)),52,1/0))
+m.push(A.bY(A.io(k,B.a9d,s,A.dl(n,n,B.u,n,n,n,n,n,n,n,n,n,n,n,new A.bE(A.aa(12),B.q),n,n,n,n,n)),52,1/0))
 m.push(B.dZ)
-m.push(B.a9A)
+m.push(B.a9C)
 m.push(B.a1)
 if(o.y)m.push(B.lT)
 else{k=o.e.length
@@ -106008,9 +106008,9 @@ s.push(B.dZ)
 k=n.x
 r=k?m:n.ga7P()
 k=k?B.iv:B.tr
-s.push(A.bY(A.io(k,B.a9g,r,A.dl(m,m,B.u,m,m,m,m,m,m,m,m,m,m,m,new A.bE(A.aa(12),B.q),m,m,m,m,m)),52,1/0))
+s.push(A.bY(A.io(k,B.a9h,r,A.dl(m,m,B.u,m,m,m,m,m,m,m,m,m,m,m,new A.bE(A.aa(12),B.q),m,m,m,m,m)),52,1/0))
 s.push(B.dZ)
-s.push(B.a9M)
+s.push(B.a9N)
 s.push(B.a1)
 if(n.y)s.push(B.lT)
 else{k=n.e.length
@@ -106330,7 +106330,7 @@ return"PUNCH-IN"},
 N(a){var s,r,q,p,o,n,m,l,k,j,i,h,g=this,f=null
 if(g.d)s=B.db
 else{s=t.p
-r=A.aT(A.b([A.d8(f,f,B.hO,f,f,new A.ayD(a),f,f,f),B.a9s,B.d5,A.d8(f,f,B.RX,f,f,g.gand(),f,f,f)],s),B.o,B.j,B.k,0)
+r=A.aT(A.b([A.d8(f,f,B.hO,f,f,new A.ayD(a),f,f,f),B.a9u,B.d5,A.d8(f,f,B.RX,f,f,g.gand(),f,f,f)],s),B.o,B.j,B.k,0)
 q=A.aa(20)
 p=t.V
 o=A.b([new A.bi(0,B.N,B.u.c8(0.4),B.i8,20)],p)
@@ -106882,7 +106882,7 @@ return A.ap(s,A.ll(s,B.bJ,!1,s,!0,B.A,s,A.mY(),a,s,s,s,s,s,2,A.h2(s,B.cp,s,B.bo,
 Uf(a){var s=null,r=a==null,q=!r,p=q?B.u.c8(0.05):B.ax,o=A.aa(10),n=A.bI(q?B.u.c8(0.3):B.ac,1),m=A.cB(B.hK,q?B.u:B.ah,s,20)
 r=r?"Select VIN to load fuel card":a
 r=A.b([m,B.b6,A.a3(r,s,s,s,s,A.c6(s,s,q?B.aC:B.ah,s,s,s,s,s,s,s,s,14,s,s,s,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.d5],t.p)
-if(q)r.push(B.a9y)
+if(q)r.push(B.a9A)
 return A.ap(s,A.aT(r,B.o,B.j,B.k,0),B.l,s,s,new A.ai(p,s,n,o,s,s,B.r),s,s,s,B.bo,s,s,s)},
 Yf(a,b,c){var s=null,r=A.aa(10),q=A.bI(B.ac,1),p=A.b([B.L7],t.oD),o=J.rk(this.ch,new A.aD3(b))
 B.b.P(p,new A.e7(o,new A.aD4(),o.$ti.i("e7<1,dd<h?>>")))
@@ -106897,7 +106897,7 @@ B.b.P(s,A.b([B.d5,A.ap(q,A.a3("Available",q,q,q,q,A.c6(q,q,B.mc,q,q,q,q,q,q,q,q,
 Sw(a,b,c,d){var s=null,r=this.ay===a,q=r?d:B.R,p=A.aa(10),o=A.cB(b,r?B.f:B.c5,s,15)
 return A.dv(s,A.a8w(A.aT(A.b([o,B.oK,A.a3(c,s,s,s,s,A.c6(s,s,r?B.f:B.c5,s,s,s,s,s,s,s,s,11,s,s,B.al,s,s,!0,s,s,s,s,s,s,s,s),s,s,s)],t.p),B.o,B.j,B.an,0),s,B.a8,new A.ai(q,s,s,p,s,s,B.r),B.O,s,s,B.LL,s),B.v,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.aCW(this,a),s,s,s,s,s,s,!1,B.aj)},
 N(a0){var s,r,q,p,o,n,m,l,k,j,i=this,h=null,g="Fuel Filling ODO",f="Litres Filled",e="Total Amount (Rs.)",d=A.d8(h,h,B.hO,h,h,new A.aDp(a0),h,h,h),c=A.aa(12),b=A.b([new A.bi(0,B.N,B.t.c8(0.05),B.m,4)],t.V),a=t.p
-b=A.aT(A.b([d,B.a9a,B.d5,A.ap(h,A.aT(A.b([i.Sw(0,B.dn,"Active",B.u),i.Sw(1,B.ti,"Non-Active",B.hp)],a),B.o,B.j,B.an,0),B.l,h,h,new A.ai(B.f,h,h,c,b,h,B.r),h,h,h,B.M_,h,h,h)],a),B.o,B.j,B.k,0)
+b=A.aT(A.b([d,B.a9b,B.d5,A.ap(h,A.aT(A.b([i.Sw(0,B.dn,"Active",B.u),i.Sw(1,B.ti,"Non-Active",B.hp)],a),B.o,B.j,B.an,0),B.l,h,h,new A.ai(B.f,h,h,c,b,h,B.r),h,h,h,B.M_,h,h,h)],a),B.o,B.j,B.k,0)
 c=A.b([],a)
 if(i.ay===0){d=A.b([i.Uy(!0),B.dY],a)
 if(!i.d){s=A.aa(10)
@@ -106917,7 +106917,7 @@ l=i.tb(i.dx,e,B.tl,!0)
 k=i.cy
 j=k?h:i.gasH()
 k=k?B.E6:B.tw
-B.b.P(d,A.b([B.aas,B.af,s,B.a1,B.Fa,B.af,r,B.bh,B.F6,B.a1,B.F0,B.af,q,B.bh,B.Fc,B.a1,p,B.bh,B.F8,B.a1,B.F4,B.af,o,B.F9,B.af,n,B.a1,m,B.bh,B.F_,B.W,l,B.bh,B.EX,B.ar,A.bY(A.io(k,B.a9C,j,A.dl(h,h,B.u,h,h,h,h,h,h,h,h,h,h,h,new A.bE(A.aa(10),B.q),h,h,h,h,h)),50,1/0)],a))}B.b.P(c,d)}if(i.ay===1){d=i.Uy(!1)
+B.b.P(d,A.b([B.aas,B.af,s,B.a1,B.Fa,B.af,r,B.bh,B.F6,B.a1,B.F0,B.af,q,B.bh,B.Fc,B.a1,p,B.bh,B.F8,B.a1,B.F4,B.af,o,B.F9,B.af,n,B.a1,m,B.bh,B.F_,B.W,l,B.bh,B.EX,B.ar,A.bY(A.io(k,B.a9E,j,A.dl(h,h,B.u,h,h,h,h,h,h,h,h,h,h,h,new A.bE(A.aa(10),B.q),h,h,h,h,h)),50,1/0)],a))}B.b.P(c,d)}if(i.ay===1){d=i.Uy(!1)
 s=A.aa(10)
 r=A.bI(B.ac,1)
 q=i.z
@@ -106936,7 +106936,7 @@ l=i.tb(i.id,e,B.tl,!0)
 k=i.fy
 j=k?h:i.gasI()
 k=k?B.E6:B.tw
-B.b.P(c,A.b([d,B.dY,B.F5,B.af,s,B.a1,B.Fa,B.af,r,B.bh,B.F6,B.a1,B.F0,B.af,q,B.bh,B.Fc,B.a1,p,B.bh,B.F8,B.a1,B.F4,B.af,o,B.F9,B.af,n,B.a1,m,B.bh,B.F_,B.W,l,B.bh,B.EX,B.ar,A.bY(A.io(k,B.a99,j,A.dl(h,h,B.hp,h,h,h,h,h,h,h,h,h,h,h,new A.bE(A.aa(10),B.q),h,h,h,h,h)),50,1/0),B.d4],a))}return A.fv(h,h,A.ap(h,A.iC(!0,A.aM(A.b([new A.bw(B.hF,b,h),A.c4(A.hy(A.aM(c,B.J,B.j,B.k),h,B.v,B.bs,h,B.Z),1)],a),B.o,B.j,B.k),B.ae,!0),B.l,h,h,B.hd,h,1/0,h,h,h,h,h),h)}}
+B.b.P(c,A.b([d,B.dY,B.F5,B.af,s,B.a1,B.Fa,B.af,r,B.bh,B.F6,B.a1,B.F0,B.af,q,B.bh,B.Fc,B.a1,p,B.bh,B.F8,B.a1,B.F4,B.af,o,B.F9,B.af,n,B.a1,m,B.bh,B.F_,B.W,l,B.bh,B.EX,B.ar,A.bY(A.io(k,B.a9a,j,A.dl(h,h,B.hp,h,h,h,h,h,h,h,h,h,h,h,new A.bE(A.aa(10),B.q),h,h,h,h,h)),50,1/0),B.d4],a))}return A.fv(h,h,A.ap(h,A.iC(!0,A.aM(A.b([new A.bw(B.hF,b,h),A.c4(A.hy(A.aM(c,B.J,B.j,B.k),h,B.v,B.bs,h,B.Z),1)],a),B.o,B.j,B.k),B.ae,!0),B.l,h,h,B.hd,h,1/0,h,h,h,h,h),h)}}
 A.aD0.prototype={
 $0(){var s=this,r=s.a,q=s.b,p=q!=null
 r.d=p
@@ -107242,7 +107242,7 @@ j=A.ap(o,A.ll(o,B.bJ,!1,o,!0,B.A,o,A.mY(),p.x,o,o,o,o,o,2,B.SG,B.v,!0,o,!0,o,!1,
 r=p.f
 q=r?o:p.ga7N()
 r=r?B.iv:B.RR
-return A.fv(n,B.ax,A.hy(A.aM(A.b([B.F5,B.af,m,B.ar,B.a8P,B.af,l,B.ar,B.a9r,B.af,k,B.ar,B.a9b,B.af,j,B.oL,A.bY(A.io(r,B.aaq,q,A.dl(o,o,B.u,o,o,o,o,o,o,o,o,o,o,o,new A.bE(A.aa(10),B.q),o,o,o,o,o)),52,1/0)],s),B.J,B.j,B.k),o,B.v,B.bs,o,B.Z),o)}}
+return A.fv(n,B.ax,A.hy(A.aM(A.b([B.F5,B.af,m,B.ar,B.a8P,B.af,l,B.ar,B.a9t,B.af,k,B.ar,B.a9c,B.af,j,B.oL,A.bY(A.io(r,B.aaq,q,A.dl(o,o,B.u,o,o,o,o,o,o,o,o,o,o,o,new A.bE(A.aa(10),B.q),o,o,o,o,o)),52,1/0)],s),B.J,B.j,B.k),o,B.v,B.bs,o,B.Z),o)}}
 A.aEJ.prototype={
 $0(){return this.a.d=this.b},
 $S:0}
@@ -107406,7 +107406,7 @@ k=m?B.u:B.ax
 s=A.bI(B.ac,1)
 r=t.p
 return A.ap(q,A.aT(A.b([n,A.aT(A.b([l,A.dv(q,A.ap(q,A.a3("Non-Safety",q,q,q,q,A.c6(q,q,m?B.f:B.a2,q,q,q,q,q,q,q,q,13,q,q,B.al,q,q,!0,q,q,q,q,q,q,q,q),q,q,q),B.l,q,q,new A.ai(k,q,s,B.pO,q,q,B.r),q,q,q,B.js,q,q,q),B.v,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,new A.aHJ(c),q,q,q,q,q,q,!1,B.aj)],r),B.o,B.j,B.k,0)],r),B.o,B.aE,B.k,0),B.l,q,q,new A.ai(B.f,q,o,p,q,q,B.r),q,q,q,B.mC,q,q,q)},
-N(a1){var s,r,q,p,o,n,m,l,k,j,i,h,g=this,f=null,e=t.p,d=A.aT(A.b([A.d8(f,f,B.hO,f,f,new A.aHT(a1),f,f,f),B.a9u],e),B.o,B.j,B.k,0),c=A.aa(10),b=A.bI(B.ac,1),a=g.e,a0=J.di(g.d,new A.aHU(),t.kZ)
+N(a1){var s,r,q,p,o,n,m,l,k,j,i,h,g=this,f=null,e=t.p,d=A.aT(A.b([A.d8(f,f,B.hO,f,f,new A.aHT(a1),f,f,f),B.a9w],e),B.o,B.j,B.k,0),c=A.aa(10),b=A.bI(B.ac,1),a=g.e,a0=J.di(g.d,new A.aHU(),t.kZ)
 a0=A.Y(a0,a0.$ti.i("af.E"))
 c=A.ap(f,new A.im(A.po(B.iB,!0,a0,new A.aHV(g),a,t.S),f),B.l,f,f,new A.ai(B.f,f,b,c,f,f,B.r),f,f,f,B.el,f,f,f)
 b=A.aa(10)
@@ -107417,7 +107417,7 @@ a0=s?""+A.bd(a0)+"-"+B.c.dn(B.e.j(A.bD(a0)),2,"0")+"-"+B.c.dn(B.e.j(A.cw(a0)),2,
 b=A.dv(f,A.ap(f,A.aT(A.b([B.tv,B.b6,A.a3(a0,f,f,f,f,A.c6(f,f,s?B.aC:B.ah,f,f,f,f,f,f,f,f,14,f,f,f,f,f,!0,f,f,f,f,f,f,f,f),f,f,f)],e),B.o,B.j,B.k,0),B.l,f,f,new A.ai(B.f,f,a,b,f,f,B.r),f,f,f,B.mD,f,f,f),B.v,!1,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,g.gaqF(),f,f,f,f,f,f,!1,B.aj)
 a=A.aT(A.b([A.ap(f,f,B.l,B.dt,f,f,f,18,f,f,f,f,4),B.ch,B.a8H],e),B.o,B.j,B.k,0)
 a0=A.aT(A.b([A.c4(A.aM(A.b([B.a92,B.dy,g.XD(g.w,"EMP Name",B.fq,"Requested By")],e),B.J,B.j,B.k),1),B.cG,A.c4(A.aM(A.b([B.a8D,B.dy,g.XD(g.x,"Technician/Shop",B.Ru,"Performed By")],e),B.J,B.j,B.k),1)],e),B.o,B.j,B.k,0)
-r=A.aT(A.b([A.ap(f,f,B.l,B.dt,f,f,f,18,f,f,f,f,4),B.ch,B.a9F],e),B.o,B.j,B.k,0)
+r=A.aT(A.b([A.ap(f,f,B.l,B.dt,f,f,f,18,f,f,f,f,4),B.ch,B.a9H],e),B.o,B.j,B.k,0)
 q=g.XE(g.y,"Current Mileage",B.hN,B.fQ,"ODO Reading")
 p=A.aa(10)
 o=A.bI(B.ac,1)
@@ -107434,7 +107434,7 @@ i=A.ap(f,A.ll(f,B.bJ,!1,f,!0,B.A,f,A.mY(),g.Q,f,f,f,f,f,2,B.SJ,B.v,!0,f,!0,f,!1,
 s=g.f
 h=s?f:g.ga7O()
 s=s?B.iv:B.tr
-return A.fv(f,f,A.ap(f,A.iC(!0,A.aM(A.b([new A.bw(B.hF,d,f),A.c4(A.hy(A.aM(A.b([B.aag,B.aW,B.aa3,B.af,c,B.ar,B.a9Q,B.af,b,B.aW,a,B.a1,a0,B.aW,r,B.a1,B.a9U,B.dy,q,B.dY,B.aae,B.dy,p,B.aW,o,B.a1,n,B.aW,m,B.a1,l,B.W,k,B.W,j,B.aW,B.aa4,B.dy,i,B.oL,A.bY(A.io(s,B.a96,h,A.dl(f,f,B.u,f,f,f,f,f,f,f,f,f,f,f,new A.bE(A.aa(10),B.q),f,f,f,f,f)),52,1/0),B.aW],e),B.J,B.j,B.k),f,B.v,B.bs,f,B.Z),1)],e),B.o,B.j,B.k),B.ae,!0),B.l,f,f,B.hd,f,1/0,f,f,f,f,f),f)}}
+return A.fv(f,f,A.ap(f,A.iC(!0,A.aM(A.b([new A.bw(B.hF,d,f),A.c4(A.hy(A.aM(A.b([B.aag,B.aW,B.aa3,B.af,c,B.ar,B.a9Q,B.af,b,B.aW,a,B.a1,a0,B.aW,r,B.a1,B.a9U,B.dy,q,B.dY,B.aae,B.dy,p,B.aW,o,B.a1,n,B.aW,m,B.a1,l,B.W,k,B.W,j,B.aW,B.aa4,B.dy,i,B.oL,A.bY(A.io(s,B.a97,h,A.dl(f,f,B.u,f,f,f,f,f,f,f,f,f,f,f,new A.bE(A.aa(10),B.q),f,f,f,f,f)),52,1/0),B.aW],e),B.J,B.j,B.k),f,B.v,B.bs,f,B.Z),1)],e),B.o,B.j,B.k),B.ae,!0),B.l,f,f,B.hd,f,1/0,f,f,f,f,f),f)}}
 A.aHF.prototype={
 $0(){return this.a.d=this.b},
 $S:0}
@@ -107760,7 +107760,7 @@ B.b.P(h,s)}h.push(B.aa7)
 h.push(B.W)
 h.push(A.aT(A.b([n.KM(B.dn,"Vehicle",n.r),B.b6,n.KM(B.R6,"Route",n.x),B.b6,n.KM(B.QN,"Shift",n.y)],j),B.o,B.j,B.k,0))
 h.push(B.aW)
-h.push(B.a9o)
+h.push(B.a9q)
 h.push(B.a1)
 s=n.f
 r=t.kZ
@@ -107777,7 +107777,7 @@ r=J.di(n.e,new A.aLx(),r)
 r=A.Y(r,r.$ti.i("af.E"))
 if(!n.Q){q=n.z
 q=q!=null&&J.d(J.a_(q,l),k)}else q=!0
-h.push(n.Iw(new A.im(A.po(B.a9x,!0,r,q?m:new A.aLy(n),s,o),m),"Select Route","Assigned Route"))
+h.push(n.Iw(new A.im(A.po(B.a9z,!0,r,q?m:new A.aLy(n),s,o),m),"Select Route","Assigned Route"))
 h.push(B.dY)
 s=n.y
 r=t.fo
@@ -107799,7 +107799,7 @@ r=n.z
 q=A.a3(r!=null&&J.d(J.a_(r,l),k)?"Denied - Wait for Admin":"Start Trip",m,m,m,m,B.fV,m,m,m)
 r=n.z
 r=r!=null&&J.d(J.a_(r,l),k)?B.ah:B.u
-h.push(A.bY(A.io(B.S3,q,s,A.dl(m,m,r,m,m,m,m,m,m,m,m,m,m,m,new A.bE(A.aa(10),B.q),m,m,m,m,m)),52,1/0))}else h.push(A.bY(A.io(B.RW,B.a9I,n.gazh(),A.dl(m,m,B.df,m,m,m,m,m,m,m,m,m,m,m,new A.bE(A.aa(10),B.q),m,m,m,m,m)),52,1/0))
+h.push(A.bY(A.io(B.S3,q,s,A.dl(m,m,r,m,m,m,m,m,m,m,m,m,m,m,new A.bE(A.aa(10),B.q),m,m,m,m,m)),52,1/0))}else h.push(A.bY(A.io(B.RW,B.a9J,n.gazh(),A.dl(m,m,B.df,m,m,m,m,m,m,m,m,m,m,m,new A.bE(A.aa(10),B.q),m,m,m,m,m)),52,1/0))
 h.push(B.aW)
 return A.fv(m,m,A.ap(m,A.iC(!0,A.aM(A.b([new A.bw(B.hF,i,m),A.c4(A.hy(A.aM(h,B.J,B.j,B.k),m,B.v,B.bs,m,B.Z),1)],j),B.o,B.j,B.k),B.ae,!0),B.l,m,m,B.hd,m,1/0,m,m,m,m,m),m)}}
 A.aLD.prototype={
@@ -113959,10 +113959,10 @@ B.IO=new A.BX(null,null,null,null,null,null,null)
 B.IP=new A.BY(null,null,null,null,null,null)
 B.a9R=new A.a7("No routes found",null,null,null,null,null,null,null,null,null,null)
 B.IQ=new A.eD(B.X,null,null,B.a9R,null)
-B.a9K=new A.a7("No attendance records found",null,null,null,null,null,null,null,null,null,null)
-B.IR=new A.eD(B.X,null,null,B.a9K,null)
-B.a9h=new A.a7("No vehicles found",null,null,null,null,null,null,null,null,null,null)
-B.IS=new A.eD(B.X,null,null,B.a9h,null)
+B.a9L=new A.a7("No attendance records found",null,null,null,null,null,null,null,null,null,null)
+B.IR=new A.eD(B.X,null,null,B.a9L,null)
+B.a9i=new A.a7("No vehicles found",null,null,null,null,null,null,null,null,null,null)
+B.IS=new A.eD(B.X,null,null,B.a9i,null)
 B.aR=new A.ak(20,20,20,20)
 B.dL=new A.D(1,0.9803921568627451,0.9803921568627451,0.9803921568627451,B.h)
 B.ax=new A.D(1,0.9607843137254902,0.9607843137254902,0.9607843137254902,B.h)
@@ -113985,8 +113985,8 @@ B.JK=new A.D(1,0.611764705882353,0.6392156862745098,0.6862745098039216,B.h)
 B.EO=new A.p(!0,B.JK,null,null,null,null,11,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.aad=new A.a7("Fleet Management System v2.4 \u2022 Secure Session",null,B.EO,null,null,null,null,null,null,null,null)
 B.IT=new A.eD(B.X,null,null,B.aad,null)
-B.a9i=new A.a7("No drivers found",null,null,null,null,null,null,null,null,null,null)
-B.IU=new A.eD(B.X,null,null,B.a9i,null)
+B.a9j=new A.a7("No drivers found",null,null,null,null,null,null,null,null,null,null)
+B.IU=new A.eD(B.X,null,null,B.a9j,null)
 B.ae0=new A.avS(0,"material")
 B.J2=new A.jJ(null,null,null,null,null,null,null,null,null,null)
 B.lT=new A.eD(B.X,null,null,B.J2,null)
@@ -113999,10 +113999,10 @@ B.aal=new A.a7("Management Modules",null,B.a72,null,null,null,null,null,null,nul
 B.IV=new A.eD(B.X,null,null,B.aal,null)
 B.al=new A.iq(600)
 B.a6G=new A.p(!0,B.aC,null,null,null,null,16,B.al,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a9B=new A.a7("Fleet Services",null,B.a6G,null,null,null,null,null,null,null,null)
-B.IW=new A.eD(B.X,null,null,B.a9B,null)
-B.a9z=new A.a7("No fuel cards found",null,null,null,null,null,null,null,null,null,null)
-B.IX=new A.eD(B.X,null,null,B.a9z,null)
+B.a9D=new A.a7("Fleet Services",null,B.a6G,null,null,null,null,null,null,null,null)
+B.IW=new A.eD(B.X,null,null,B.a9D,null)
+B.a9B=new A.a7("No fuel cards found",null,null,null,null,null,null,null,null,null,null)
+B.IX=new A.eD(B.X,null,null,B.a9B,null)
 B.a9V=new A.a7("No admins found",null,null,null,null,null,null,null,null,null,null)
 B.IY=new A.eD(B.X,null,null,B.a9V,null)
 B.IZ=new A.C0(null,null,null,null,null,null,null,null,null)
@@ -114136,8 +114136,8 @@ B.bi=new A.auv(1,"down")
 B.dC=new A.p(!0,B.a2,null,null,null,null,18,B.P,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a9W=new A.a7("TC Plate Allocation",null,B.dC,null,null,null,null,null,null,null,null)
 B.eJ=new A.p(!0,B.ah,null,null,null,null,12,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a9E=new A.a7("Assign TC Plate to Vehicle",null,B.eJ,null,null,null,null,null,null,null,null)
-B.W2=s([B.a9W,B.a9E],t.p)
+B.a9G=new A.a7("Assign TC Plate to Vehicle",null,B.eJ,null,null,null,null,null,null,null,null)
+B.W2=s([B.a9W,B.a9G],t.p)
 B.Ki=new A.lP(B.Z,B.j,B.k,B.J,null,B.bi,null,0,B.W2,null)
 B.dr=new A.pT(2,"center")
 B.o=new A.rO(2,"center")
@@ -114145,8 +114145,8 @@ B.QP=new A.aJ(57416,"MaterialIcons",!1)
 B.S2=new A.bW(B.QP,32,B.ah,null,null)
 B.dy=new A.cC(null,6,null,null)
 B.eK=new A.p(!0,B.ah,null,null,null,null,13,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a9l=new A.a7("Tap to upload bill",null,B.eK,null,null,null,null,null,null,null,null)
-B.UY=s([B.S2,B.dy,B.a9l],t.p)
+B.a9m=new A.a7("Tap to upload bill",null,B.eK,null,null,null,null,null,null,null,null)
+B.UY=s([B.S2,B.dy,B.a9m],t.p)
 B.Kj=new A.lP(B.Z,B.dr,B.k,B.o,null,B.bi,null,0,B.UY,null)
 B.Km=new A.pi(!1)
 B.cR=new A.pi(!0)
@@ -114754,11 +114754,11 @@ B.a75=new A.p(!0,B.aL,null,null,null,null,13,B.P,null,null,null,null,null,null,n
 B.a90=new A.a7("You declined the assigned trip. Please wait for the admin to re-assign a new allocation.",null,B.a75,null,null,null,null,null,null,null,null)
 B.Qr=new A.kP(1,B.fj,B.a90,null)
 B.a7G=new A.p(!0,B.aa,null,null,null,null,10,B.P,null,1.1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a9v=new A.a7("ATTENDANCE RECORDS",null,B.a7G,null,null,null,null,null,null,null,null)
+B.a9x=new A.a7("ATTENDANCE RECORDS",null,B.a7G,null,null,null,null,null,null,null,null)
 B.bh=new A.cC(null,4,null,null)
 B.a6h=new A.p(!0,B.f,null,null,null,null,15,B.P,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a8G=new A.a7("View Driver Punch-In & Out",null,B.a6h,null,null,null,null,null,null,null,null)
-B.Vg=s([B.a9v,B.bh,B.a8G],t.p)
+B.Vg=s([B.a9x,B.bh,B.a8G],t.p)
 B.Kk=new A.lP(B.Z,B.j,B.k,B.J,null,B.bi,null,0,B.Vg,null)
 B.Qt=new A.kP(1,B.fj,B.Kk,null)
 B.Qu=new A.Dc(null,null,null,null,null,null,null,null,null,null,null,null,null)
@@ -116544,14 +116544,14 @@ B.aa6=new A.a7("No active trip. Start a trip from the Trips tab to use this sect
 B.Qs=new A.kP(1,B.fj,B.aa6,null)
 B.V5=s([B.RM,B.ch,B.Qs],t.p)
 B.a0_=new A.o7(B.aA,B.j,B.k,B.o,null,B.bi,null,0,B.V5,null)
-B.a9k=new A.a7("Active Assignments (OPEN)",null,B.EH,null,null,null,null,null,null,null,null)
-B.W4=s([B.tx,B.ch,B.a9k],t.p)
+B.a9l=new A.a7("Active Assignments (OPEN)",null,B.EH,null,null,null,null,null,null,null,null)
+B.W4=s([B.tx,B.ch,B.a9l],t.p)
 B.a00=new A.o7(B.aA,B.j,B.k,B.o,null,B.bi,null,0,B.W4,null)
 B.RT=new A.bW(B.tg,18,B.f,null,null)
 B.E4=new A.cC(6,null,null,null)
 B.a5I=new A.p(!0,B.f,null,null,null,null,null,B.al,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a9w=new A.a7("Start New Trip",null,B.a5I,null,null,null,null,null,null,null,null)
-B.VI=s([B.RT,B.E4,B.a9w],t.p)
+B.a9y=new A.a7("Start New Trip",null,B.a5I,null,null,null,null,null,null,null,null)
+B.VI=s([B.RT,B.E4,B.a9y],t.p)
 B.a01=new A.o7(B.aA,B.j,B.an,B.o,null,B.bi,null,0,B.VI,null)
 B.R5=new A.aJ(58059,"MaterialIcons",!1)
 B.Sc=new A.bW(B.R5,18,B.f,null,null)
@@ -116849,8 +116849,8 @@ B.aa2=new A.a7("Trip assigned successfully!",null,null,null,null,null,null,null,
 B.a2s=new A.kc(B.aa2,B.cZ,null,null,null,null,null,null,null,null,null,null,null,B.bI,!1,null,null,null,B.A,null)
 B.aar=new A.a7("Asset Closed successfully",null,null,null,null,null,null,null,null,null,null)
 B.a2t=new A.kc(B.aar,null,null,null,null,null,null,null,null,null,null,null,null,B.bI,!1,null,null,null,B.A,null)
-B.a98=new A.a7("Please fill all fields",null,null,null,null,null,null,null,null,null,null)
-B.a2u=new A.kc(B.a98,null,null,null,null,null,null,null,null,null,null,null,null,B.bI,!1,null,null,null,B.A,null)
+B.a99=new A.a7("Please fill all fields",null,null,null,null,null,null,null,null,null,null)
+B.a2u=new A.kc(B.a99,null,null,null,null,null,null,null,null,null,null,null,null,B.bI,!1,null,null,null,B.A,null)
 B.a9O=new A.a7("Invalid Login \u274c",null,null,null,null,null,null,null,null,null,null)
 B.a2v=new A.kc(B.a9O,null,null,null,null,null,null,null,null,null,null,null,null,B.bI,!1,null,null,null,B.A,null)
 B.Eb=new A.H_(0,"permissive")
@@ -117313,47 +117313,47 @@ B.a45=new A.p(!0,B.f4,null,null,null,null,11,B.al,null,1.2,null,null,null,null,n
 B.a93=new A.a7("ATTENDANCE",null,B.a45,null,null,null,null,null,null,null,null)
 B.a94=new A.a7("Assignment Failed",null,null,null,null,null,null,null,null,null,null)
 B.a95=new A.a7("Today's Summary",null,B.oY,null,null,null,null,null,null,null,null)
-B.a96=new A.a7("Submit Repair Log",null,B.fV,null,null,null,null,null,null,null,null)
-B.a97=new A.a7("New Allocation",null,B.fU,null,null,null,null,null,null,null,null)
+B.a5_=new A.p(!0,null,null,null,null,null,null,B.fl,null,1.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+B.a96=new A.a7("SYSTEM STATUS v3.2.2",null,B.a5_,null,null,null,null,null,null,null,null)
+B.a97=new A.a7("Submit Repair Log",null,B.fV,null,null,null,null,null,null,null,null)
+B.a98=new A.a7("New Allocation",null,B.fU,null,null,null,null,null,null,null,null)
 B.EM=new A.p(!0,B.f,null,null,null,null,14,B.al,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a99=new A.a7("Add Fuel Entry (Non-Trip)",null,B.EM,null,null,null,null,null,null,null,null)
-B.a9a=new A.a7("FUEL LOG",null,B.iy,null,null,null,null,null,null,null,null)
+B.a9a=new A.a7("Add Fuel Entry (Non-Trip)",null,B.EM,null,null,null,null,null,null,null,null)
+B.a9b=new A.a7("FUEL LOG",null,B.iy,null,null,null,null,null,null,null,null)
 B.F_=new A.a7("Enter total litres filled",null,B.iz,null,null,null,null,null,null,null,null)
-B.a9b=new A.a7("Issue / Observation",null,B.c0,null,null,null,null,null,null,null,null)
+B.a9c=new A.a7("Issue / Observation",null,B.c0,null,null,null,null,null,null,null,null)
 B.F0=new A.a7("Secondary Fuel Card (Low Balance?)",null,B.c0,null,null,null,null,null,null,null,null)
-B.a9c=new A.a7("Submit Asset Allocation",null,B.fV,null,null,null,null,null,null,null,null)
-B.a9d=new A.a7("Administrator",null,B.e1,null,null,null,null,null,null,null,null)
-B.a9e=new A.a7("FUEL RECEIPT",null,B.EJ,null,null,null,null,null,null,null,null)
-B.a9f=new A.a7("HIDE ARCHIVE",null,B.p0,null,null,null,null,null,null,null,null)
-B.a9g=new A.a7("Submit Allocation",null,B.fV,null,null,null,null,null,null,null,null)
-B.a9j=new A.a7("Assign Trip",null,B.dB,null,null,null,null,null,null,null,null)
-B.a9m=new A.a7("ODO Reading",null,B.eI,null,null,null,null,null,null,null,null)
-B.a9n=new A.a7("Asset Number",null,B.eI,null,null,null,null,null,null,null,null)
-B.a9o=new A.a7("Trip Configuration",null,B.c0,null,null,null,null,null,null,null,null)
-B.a9p=new A.a7("Driver Interface v1.1",null,B.fU,null,null,null,null,null,null,null,null)
-B.a9q=new A.a7("Installation / Allocation Date",null,B.eI,null,null,null,null,null,null,null,null)
-B.a9r=new A.a7("ODO Entry",null,B.c0,null,null,null,null,null,null,null,null)
-B.a9s=new A.a7("ATTENDANCE",null,B.iy,null,null,null,null,null,null,null,null)
-B.a9t=new A.a7("Vehicles",null,B.dC,null,null,null,null,null,null,null,null)
-B.a9u=new A.a7("REPAIR LOGGING",null,B.iy,null,null,null,null,null,null,null,null)
+B.a9d=new A.a7("Submit Asset Allocation",null,B.fV,null,null,null,null,null,null,null,null)
+B.a9e=new A.a7("Administrator",null,B.e1,null,null,null,null,null,null,null,null)
+B.a9f=new A.a7("FUEL RECEIPT",null,B.EJ,null,null,null,null,null,null,null,null)
+B.a9g=new A.a7("HIDE ARCHIVE",null,B.p0,null,null,null,null,null,null,null,null)
+B.a9h=new A.a7("Submit Allocation",null,B.fV,null,null,null,null,null,null,null,null)
+B.a9k=new A.a7("Assign Trip",null,B.dB,null,null,null,null,null,null,null,null)
+B.a9n=new A.a7("FLEETCONNECT v3.2.2",null,B.iy,null,null,null,null,null,null,null,null)
+B.a9o=new A.a7("ODO Reading",null,B.eI,null,null,null,null,null,null,null,null)
+B.a9p=new A.a7("Asset Number",null,B.eI,null,null,null,null,null,null,null,null)
+B.a9q=new A.a7("Trip Configuration",null,B.c0,null,null,null,null,null,null,null,null)
+B.a9r=new A.a7("Driver Interface v1.1",null,B.fU,null,null,null,null,null,null,null,null)
+B.a9s=new A.a7("Installation / Allocation Date",null,B.eI,null,null,null,null,null,null,null,null)
+B.a9t=new A.a7("ODO Entry",null,B.c0,null,null,null,null,null,null,null,null)
+B.a9u=new A.a7("ATTENDANCE",null,B.iy,null,null,null,null,null,null,null,null)
+B.a9v=new A.a7("Vehicles",null,B.dC,null,null,null,null,null,null,null,null)
+B.a9w=new A.a7("REPAIR LOGGING",null,B.iy,null,null,null,null,null,null,null,null)
 B.F3=new A.a7("Decline",null,null,null,null,null,null,null,null,null,null)
 B.F4=new A.a7("Receipt Photo",null,B.c0,null,null,null,null,null,null,null,null)
-B.a9x=new A.a7("Select Route",null,B.ca,null,null,null,null,null,null,null,null)
-B.a9y=new A.a7("Assigned",null,B.eJ,null,null,null,null,null,null,null,null)
-B.a9A=new A.a7("Recent History",null,B.fU,null,null,null,null,null,null,null,null)
-B.a9C=new A.a7("Add Fuel Entry (Active Trip)",null,B.EM,null,null,null,null,null,null,null,null)
+B.a9z=new A.a7("Select Route",null,B.ca,null,null,null,null,null,null,null,null)
+B.a9A=new A.a7("Assigned",null,B.eJ,null,null,null,null,null,null,null,null)
+B.a9C=new A.a7("Recent History",null,B.fU,null,null,null,null,null,null,null,null)
+B.a9E=new A.a7("Add Fuel Entry (Active Trip)",null,B.EM,null,null,null,null,null,null,null,null)
 B.F5=new A.a7("Select VIN",null,B.c0,null,null,null,null,null,null,null,null)
-B.a9D=new A.a7("Drivers",null,B.dC,null,null,null,null,null,null,null,null)
-B.a9F=new A.a7("Service Information",null,B.kO,null,null,null,null,null,null,null,null)
-B.a5_=new A.p(!0,null,null,null,null,null,null,B.fl,null,1.2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a9G=new A.a7("SYSTEM STATUS",null,B.a5_,null,null,null,null,null,null,null,null)
-B.a9H=new A.a7("Track vehicle instrumentation & hardware",null,B.eK,null,null,null,null,null,null,null,null)
-B.a9I=new A.a7("End Trip & Submit",null,B.fV,null,null,null,null,null,null,null,null)
+B.a9F=new A.a7("Drivers",null,B.dC,null,null,null,null,null,null,null,null)
+B.a9H=new A.a7("Service Information",null,B.kO,null,null,null,null,null,null,null,null)
+B.a9I=new A.a7("Track vehicle instrumentation & hardware",null,B.eK,null,null,null,null,null,null,null,null)
+B.a9J=new A.a7("End Trip & Submit",null,B.fV,null,null,null,null,null,null,null,null)
 B.F6=new A.a7("Auto-filled based on assigned VIN",null,B.iz,null,null,null,null,null,null,null,null)
-B.a9J=new A.a7("Dismiss",null,null,null,null,null,null,null,null,null,null)
-B.a9L=new A.a7("Select Driver 2",null,null,null,null,null,null,null,null,null,null)
-B.a9M=new A.a7("Recent Allocation History",null,B.fU,null,null,null,null,null,null,null,null)
-B.a9N=new A.a7("FLEETCONNECT",null,B.iy,null,null,null,null,null,null,null,null)
+B.a9K=new A.a7("Dismiss",null,null,null,null,null,null,null,null,null,null)
+B.a9M=new A.a7("Select Driver 2",null,null,null,null,null,null,null,null,null,null)
+B.a9N=new A.a7("Recent Allocation History",null,B.fU,null,null,null,null,null,null,null,null)
 B.a9P=new A.a7("Take Photo",null,null,null,null,null,null,null,null,null,null)
 B.EN=new A.p(!0,B.u,null,null,null,null,14,B.al,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a9Q=new A.a7("Service Date",null,B.EN,null,null,null,null,null,null,null,null)
