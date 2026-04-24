@@ -1088,10 +1088,14 @@ Widget _dField(
   String label,
   IconData icon, {
   TextInputType type = TextInputType.text,
+  bool readOnly = false,
+  VoidCallback? onTap,
 }) {
   return TextField(
     controller: ctrl,
     keyboardType: type,
+    readOnly: readOnly,
+    onTap: onTap,
     decoration: InputDecoration(
       labelText: label,
       prefixIcon: Icon(icon, size: 20, color: Colors.grey),
@@ -1378,6 +1382,18 @@ class _DriversScreenState extends State<DriversScreen> {
     });
   }
 
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+    DateTime initial = DateTime.now();
+    try { if (controller.text.isNotEmpty) initial = DateTime.parse(controller.text); } catch (_) {}
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: initial,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) controller.text = picked.toString().split(' ')[0];
+  }
+
   void _showForm({Map? item}) {
     final e = TextEditingController(text: item?['employee_id'] ?? '');
     final n = TextEditingController(text: item?['name'] ?? '');
@@ -1422,9 +1438,22 @@ class _DriversScreenState extends State<DriversScreen> {
                 const SizedBox(height: 10),
                 _dField(l, "License Number", Icons.credit_card),
                 const SizedBox(height: 10),
-                _dField(le, "License Expiry (YYYY-MM-DD)", Icons.event),
                 const SizedBox(height: 10),
-                _dField(jd, "Joining Date (YYYY-MM-DD)", Icons.calendar_today),
+                _dField(
+                  le,
+                  "License Expiry (YYYY-MM-DD)",
+                  Icons.event,
+                  readOnly: true,
+                  onTap: () => _selectDate(context, le),
+                ),
+                const SizedBox(height: 10),
+                _dField(
+                  jd,
+                  "Joining Date (YYYY-MM-DD)",
+                  Icons.calendar_today,
+                  readOnly: true,
+                  onTap: () => _selectDate(context, jd),
+                ),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2293,191 +2322,192 @@ class _TripAllocationScreenState extends State<TripAllocationScreen> {
   }
 
   void _showForm() {
-    int? sd, sv, sr;
+    int? sd1, sd2, sd3, sv, sr;
+    int numDrivers = 1;
     String? ss;
     showDialog(
       context: context,
       builder: (_) => StatefulBuilder(
-        builder: (ctx, setS) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: const Text(
-            "Assign Trip",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1A2E2A),
+        builder: (ctx, setS) {
+          final availableDrivers = drivers.where((d) => d['in_active_trip'] != true).toList();
+          
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButtonFormField<int>(
-                  initialValue: sd,
-                  hint: const Text("Select Driver"),
-                  items: drivers
-                      .map(
-                        (d) => DropdownMenuItem<int>(
-                          value: d['id'],
-                          child: Row(
-                            children: [
-                              Text(
-                                "${d['employee_id']} - ${d['name']}",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              if (d['in_active_trip'] == true) ...[
-                                const SizedBox(width: 8),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                    vertical: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange.shade100,
-                                    borderRadius: BorderRadius.circular(4),
-                                    border: Border.all(
-                                      color: Colors.orange.shade300,
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "ACTIVE TRIP",
-                                    style: TextStyle(
-                                      color: Colors.orange.shade900,
-                                      fontSize: 9,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (v) => setS(() => sd = v),
-                  decoration: InputDecoration(
-                    labelText: "Driver",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                DropdownButtonFormField<int>(
-                  initialValue: sv,
-                  hint: const Text("Select Vehicle"),
-                  items: vehicles
-                      .map(
-                        (v) => DropdownMenuItem<int>(
-                          value: v['id'],
-                          child: Text(v['vin'] ?? ''),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (v) => setS(() => sv = v),
-                  decoration: InputDecoration(
-                    labelText: "Vehicle VIN",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                DropdownButtonFormField<int>(
-                  initialValue: sr,
-                  hint: const Text("Select Route"),
-                  items: routes
-                      .map(
-                        (r) => DropdownMenuItem<int>(
-                          value: r['id'],
-                          child: Text(r['route_name'] ?? ''),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (v) => setS(() => sr = v),
-                  decoration: InputDecoration(
-                    labelText: "Route",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                DropdownButtonFormField<String>(
-                  initialValue: ss,
-                  hint: const Text("Select Shift"),
-                  items: ["Shift-1", "Shift-2"]
-                      .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                      .toList(),
-                  onChanged: (v) => setS(() => ss = v),
-                  decoration: InputDecoration(
-                    labelText: "Shift",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (sd == null || sv == null || sr == null || ss == null)
-                  return;
-                Navigator.pop(ctx);
-                try {
-                  await ApiService.assignTrip(
-                    driverId: sd!,
-                    vehicleId: sv!,
-                    routeId: sr!,
-                    shift: ss!,
-                  );
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Trip assigned successfully!"),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  }
-                  _load();
-                } catch (e) {
-                  if (mounted) {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: const Text("Assignment Failed"),
-                        content: Text(
-                          e.toString().replaceAll("Exception: ", ""),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text("Dismiss"),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF1A2E2A),
-              ),
-              child: const Text(
-                "Assign",
-                style: TextStyle(color: Colors.white),
+            title: const Text(
+              "Assign Trip",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A2E2A),
               ),
             ),
-          ],
-        ),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DropdownButtonFormField<int>(
+                    value: numDrivers,
+                    items: [1, 2, 3]
+                        .map((n) => DropdownMenuItem(value: n, child: Text("$n Driver${n > 1 ? 's' : ''}")))
+                        .toList(),
+                    onChanged: (v) => setS(() => numDrivers = v!),
+                    decoration: InputDecoration(
+                      labelText: "Number of Drivers",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  
+                  // Driver 1
+                  DropdownButtonFormField<int>(
+                    value: sd1,
+                    hint: const Text("Select Driver 1"),
+                    items: availableDrivers.map((d) => DropdownMenuItem<int>(
+                      value: d['id'],
+                      child: Text("${d['employee_id']} - ${d['name']}"),
+                    )).toList(),
+                    onChanged: (v) => setS(() => sd1 = v),
+                    decoration: InputDecoration(
+                      labelText: "Driver 1",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  
+                  if (numDrivers >= 2) ...[
+                    const SizedBox(height: 10),
+                    DropdownButtonFormField<int>(
+                      value: sd2,
+                      hint: const Text("Select Driver 2"),
+                      items: availableDrivers.where((d) => d['id'] != sd1).map((d) => DropdownMenuItem<int>(
+                        value: d['id'],
+                        child: Text("${d['employee_id']} - ${d['name']}"),
+                      )).toList(),
+                      onChanged: (v) => setS(() => sd2 = v),
+                      decoration: InputDecoration(
+                        labelText: "Driver 2",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ],
+                  
+                  if (numDrivers >= 3) ...[
+                    const SizedBox(height: 10),
+                    DropdownButtonFormField<int>(
+                      value: sd3,
+                      hint: const Text("Select Driver 3"),
+                      items: availableDrivers.where((d) => d['id'] != sd1 && d['id'] != sd2).map((d) => DropdownMenuItem<int>(
+                        value: d['id'],
+                        child: Text("${d['employee_id']} - ${d['name']}"),
+                      )).toList(),
+                      onChanged: (v) => setS(() => sd3 = v),
+                      decoration: InputDecoration(
+                        labelText: "Driver 3",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ],
+
+                  const SizedBox(height: 10),
+                  DropdownButtonFormField<int>(
+                    value: sv,
+                    hint: const Text("Select Vehicle"),
+                    items: vehicles.map((v) => DropdownMenuItem<int>(
+                      value: v['id'],
+                      child: Text(v['vin'] ?? ''),
+                    )).toList(),
+                    onChanged: (v) => setS(() => sv = v),
+                    decoration: InputDecoration(
+                      labelText: "Vehicle VIN",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  DropdownButtonFormField<int>(
+                    value: sr,
+                    hint: const Text("Select Route"),
+                    items: routes.map((r) => DropdownMenuItem<int>(
+                      value: r['id'],
+                      child: Text(r['route_name'] ?? ''),
+                    )).toList(),
+                    onChanged: (v) => setS(() => sr = v),
+                    decoration: InputDecoration(
+                      labelText: "Route",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  DropdownButtonFormField<String>(
+                    value: ss,
+                    hint: const Text("Select Shift"),
+                    items: ["Shift-1", "Shift-2"]
+                        .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                        .toList(),
+                    onChanged: (v) => setS(() => ss = v),
+                    decoration: InputDecoration(
+                      labelText: "Shift",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (sd1 == null || sv == null || sr == null || ss == null) return;
+                  if (numDrivers >= 2 && sd2 == null) return;
+                  if (numDrivers >= 3 && sd3 == null) return;
+                  
+                  Navigator.pop(ctx);
+                  try {
+                    await ApiService.assignTrip(
+                      driverId: sd1!,
+                      driverId2: sd2,
+                      driverId3: sd3,
+                      vehicleId: sv!,
+                      routeId: sr!,
+                      shift: ss!,
+                    );
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Trip assigned successfully!"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                    _load();
+                  } catch (e) {
+                    if (mounted) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: const Text("Assignment Failed"),
+                          content: Text(e.toString().replaceAll("Exception: ", "")),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("Dismiss"),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF1A2E2A),
+                ),
+                child: const Text("Assign", style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -27,6 +27,8 @@ class _DriverHomeState extends State<DriverHome> {
   String? assignedVin;
   String? assignedRoute;
   String? assignedShift;
+  String? allocationStatus;
+  int? allocationId;
   bool isLoading = true;
   Map<String, dynamic>? _todayAttendance;
 
@@ -48,6 +50,14 @@ class _DriverHomeState extends State<DriverHome> {
             assignedVin = allocation['vin'];
             assignedRoute = allocation['route_name'];
             assignedShift = allocation['shift'];
+            allocationStatus = allocation['status'];
+            allocationId = allocation['id'];
+          } else {
+            assignedVin = null;
+            assignedRoute = null;
+            assignedShift = null;
+            allocationStatus = null;
+            allocationId = null;
           }
           isLoading = false;
         });
@@ -55,6 +65,16 @@ class _DriverHomeState extends State<DriverHome> {
     } catch (e) {
       debugPrint("Error fetching allocation: $e");
       if (mounted) setState(() => isLoading = false);
+    }
+  }
+
+  Future<void> _updateAllocation(String status) async {
+    if (allocationId == null) return;
+    try {
+      await ApiService.updateAllocationStatus(allocationId!, status);
+      _fetchAllocation();
+    } catch (e) {
+      debugPrint("Error updating allocation: $e");
     }
   }
 
@@ -417,10 +437,10 @@ class _DriverHomeState extends State<DriverHome> {
                                   color: const Color(0xFF4CAF50),
                                 ),
                               ),
-                              child: const Text(
-                                "active",
+                              child: Text(
+                                allocationStatus == 'ACCEPTED' ? "assigned" : (allocationStatus == 'PENDING' ? "pending" : "none"),
                                 style: TextStyle(
-                                  color: Color(0xFF4CAF50),
+                                  color: allocationStatus == 'ACCEPTED' ? Colors.green : (allocationStatus == 'PENDING' ? Colors.blue : Colors.grey),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -485,7 +505,61 @@ class _DriverHomeState extends State<DriverHome> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
+
+                  // ── NEW TRIP ASSIGNED BANNER ──
+                  if (allocationStatus == 'PENDING') ...[
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade50,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.blue.shade200),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.info_outline, color: Colors.blue.shade800),
+                              const SizedBox(width: 10),
+                              const Expanded(
+                                child: Text(
+                                  "New Trip Assigned! Please accept or decline.",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: () => _updateAllocation('CANCELLED'),
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                    side: const BorderSide(color: Colors.red),
+                                  ),
+                                  child: const Text("Decline"),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () => _updateAllocation('ACCEPTED'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                  ),
+                                  child: const Text("Accept", style: TextStyle(color: Colors.white)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
 
                   // ── Attendance Banner Card ──
                   GestureDetector(

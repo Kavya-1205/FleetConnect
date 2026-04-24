@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "Build Version: 3.0.1 (Premium Branding)",
+                        "Build Version: 3.0.2 (Push Verified)",
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.grey.shade500,

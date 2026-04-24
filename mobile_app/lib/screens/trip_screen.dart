@@ -18,7 +18,8 @@ class _TripScreenState extends State<TripScreen> {
   String? selectedVehicleVin;
   int? selectedRoute;
   String? selectedRouteName;
-  String? selectedShift; // ✅ null by default = "Not Set"
+  String? selectedShift;
+  Map? currentAllocation;
 
   bool tripStarted = false;
   int? tripId;
@@ -61,8 +62,9 @@ class _TripScreenState extends State<TripScreen> {
     setState(() {
       vehicles = v;
       routes = r;
+      currentAllocation = allocation;
 
-      if (!tripStarted && allocation != null) {
+      if (!tripStarted && allocation != null && allocation['status'] == 'ACCEPTED') {
         selectedVehicle = allocation['vehicle_id'];
         selectedVehicleVin = allocation['vin'];
         selectedRoute = allocation['route_id'];
@@ -70,6 +72,108 @@ class _TripScreenState extends State<TripScreen> {
         selectedShift = allocation['shift'];
       }
     });
+  }
+
+  Widget _allocationStatusCard() {
+    if (currentAllocation == null) return const SizedBox.shrink();
+    final status = currentAllocation!['status'] ?? 'PENDING';
+    final isPending = status == 'PENDING';
+    final isAccepted = status == 'ACCEPTED';
+
+    if (status == 'CANCELLED') return const SizedBox.shrink();
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isAccepted ? Colors.green.shade50 : Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isAccepted ? Colors.green.shade200 : Colors.blue.shade200,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "ASSIGNED TRIP",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: isAccepted ? Colors.green.shade800 : Colors.blue.shade800,
+                  letterSpacing: 1.1,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: isAccepted ? Colors.green : (status == 'CANCELLED' ? Colors.red : Colors.blue),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  status,
+                  style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            "Vehicle: ${currentAllocation!['vin'] ?? '—'}",
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          Text("Route: ${currentAllocation!['route_name'] ?? '—'}"),
+          Text("Shift: ${currentAllocation!['shift'] ?? '—'}"),
+          if (isPending) ...[
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => _updateStatus('CANCELLED'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red),
+                    ),
+                    child: const Text("Decline"),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => _updateStatus('ACCEPTED'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
+                    child: const Text("Accept", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  void _updateStatus(String status) async {
+    try {
+      await ApiService.updateAllocationStatus(currentAllocation!['id'], status);
+      loadData(); // Refresh
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Trip $status")),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to update status"), backgroundColor: Colors.red),
+        );
+      }
+    }
   }
 
   void _showDialog(String title, bool isSuccess) {
@@ -368,6 +472,10 @@ class _TripScreenState extends State<TripScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (currentAllocation != null && !tripStarted) ...[
+                        _allocationStatusCard(),
+                        const SizedBox(height: 20),
+                      ],
                       // ✅ Top summary: VIN | Route | Shift (order changed)
                       const Text(
                         "Assigned Schedule",

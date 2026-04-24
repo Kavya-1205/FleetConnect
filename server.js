@@ -300,7 +300,10 @@ app.post('/fuel-cards', async (req, res) => {
       [fc_number, vehicle_id || null]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("ADD FUEL CARD ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.put('/fuel-cards/:id', async (req, res) => {
@@ -311,7 +314,10 @@ app.put('/fuel-cards/:id', async (req, res) => {
       [fc_number, vehicle_id || null, active, req.params.id]
     );
     res.json(result.rows[0]);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("UPDATE FUEL CARD ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.delete('/fuel-cards/:id', async (req, res) => {
@@ -338,44 +344,65 @@ app.get('/fuel-cards/by-vehicle/:vehicle_id', async (req, res) => {
 app.get('/trip-allocations', async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT ta.id, u.name AS driver_name, u.employee_id, v.vin, r.route_name, ta.shift, ta.date,
-         EXISTS (SELECT 1 FROM trips WHERE driver_id = ta.driver_id AND trip_status = 'STARTED') AS in_active_trip
+      `SELECT ta.*, 
+         u1.name AS driver_name, u1.employee_id AS emp_id_1,
+         u2.name AS driver_name_2, u2.employee_id AS emp_id_2,
+         u3.name AS driver_name_3, u3.employee_id AS emp_id_3,
+         v.vin, r.route_name
        FROM trip_allocations ta
-       JOIN users u ON ta.driver_id = u.id
+       JOIN users u1 ON ta.driver_id = u1.id
+       LEFT JOIN users u2 ON ta.driver_id_2 = u2.id
+       LEFT JOIN users u3 ON ta.driver_id_3 = u3.id
        JOIN vehicles v ON ta.vehicle_id = v.id
        JOIN routes r ON ta.route_id = r.id
        ORDER BY ta.id DESC`
     );
     res.json(result.rows);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("GET TRIP ALLOCATIONS ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 app.post('/trip-allocations', async (req, res) => {
-  const { driver_id, vehicle_id, route_id, shift } = req.body;
+  const { driver_id, driver_id_2, driver_id_3, vehicle_id, route_id, shift } = req.body;
   try {
-    // 1. Check if driver has an active trip
-    // A driver cannot start a new trip if they are already in one.
-    const driverCheck = await pool.query(
-      "SELECT id FROM trips WHERE driver_id = $1 AND trip_status = 'STARTED' LIMIT 1",
-      [driver_id]
+    const drivers = [driver_id, driver_id_2, driver_id_3].filter(id => id != null);
+    
+    // Check if any of the drivers are in an active trip
+    const activeTrips = await pool.query(
+      "SELECT driver_id FROM trips WHERE driver_id = ANY($1) AND trip_status = 'STARTED'",
+      [drivers]
     );
-    if (driverCheck.rows.length > 0) {
-      return res.status(400).json({ error: "Driver is already in an active trip!" });
+
+    if (activeTrips.rows.length > 0) {
+      const busyIds = activeTrips.rows.map(r => r.driver_id).join(', ');
+      return res.status(400).json({ error: `Driver(s) ${busyIds} are already in an active trip!` });
     }
 
-    // Note: Multiple drivers CAN be assigned to the same vehicle (e.g. for long trips),
-    // so we don't check for vehicle availability here.
-
-    // 2. If all clear, insert allocation
     const result = await pool.query(
-      `INSERT INTO trip_allocations (driver_id, vehicle_id, route_id, shift, date)
-       VALUES ($1,$2,$3,$4,NOW()) RETURNING *`,
-      [driver_id, vehicle_id, route_id, shift]
+      `INSERT INTO trip_allocations (driver_id, driver_id_2, driver_id_3, vehicle_id, route_id, shift, date, status)
+       VALUES ($1,$2,$3,$4,$5,$6,NOW(), 'PENDING') RETURNING *`,
+      [driver_id, driver_id_2, driver_id_3, vehicle_id, route_id, shift]
     );
     res.json(result.rows[0]);
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Error');
+    console.error("ADD ALLOCATION ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/trip-allocations/:id/status', async (req, res) => {
+  const { status } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE trip_allocations SET status = $1 WHERE id = $2 RETURNING *",
+      [status, req.params.id]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("UPDATE STATUS ERROR:", err);
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -393,11 +420,16 @@ app.get('/trip-allocations/by-driver/:driver_id', async (req, res) => {
       `SELECT ta.*, v.vin, r.route_name FROM trip_allocations ta
        JOIN vehicles v ON ta.vehicle_id = v.id
        JOIN routes r ON ta.route_id = r.id
-       WHERE ta.driver_id = $1 ORDER BY ta.id DESC LIMIT 1`,
+       WHERE (ta.driver_id = $1 OR ta.driver_id_2 = $1 OR ta.driver_id_3 = $1)
+       AND ta.status != 'CANCELLED'
+       ORDER BY ta.id DESC LIMIT 1`,
       [req.params.driver_id]
     );
     res.json(result.rows[0] || null);
-  } catch (err) { res.status(500).send('Error'); }
+  } catch (err) { 
+    console.error("GET BY DRIVER ERROR:", err);
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 // ─────────────────────────────────────────────

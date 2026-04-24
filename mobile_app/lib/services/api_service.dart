@@ -354,6 +354,8 @@ class ApiService {
 
   static Future<void> assignTrip({
     required int driverId,
+    int? driverId2,
+    int? driverId3,
     required int vehicleId,
     required int routeId,
     required String shift,
@@ -363,6 +365,8 @@ class ApiService {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "driver_id": driverId,
+        "driver_id_2": driverId2,
+        "driver_id_3": driverId3,
         "vehicle_id": vehicleId,
         "route_id": routeId,
         "shift": shift,
@@ -372,6 +376,17 @@ class ApiService {
     if (response.statusCode != 200 && response.statusCode != 201) {
       final body = jsonDecode(response.body);
       throw Exception(body['error'] ?? "Failed to assign trip");
+    }
+  }
+
+  static Future<void> updateAllocationStatus(int id, String status) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/trip-allocations/$id/status'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"status": status}),
+    );
+    if (response.statusCode != 200) {
+      throw Exception("Failed to update status");
     }
   }
 
