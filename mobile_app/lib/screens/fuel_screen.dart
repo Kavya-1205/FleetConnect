@@ -79,17 +79,13 @@ class _FuelScreenState extends State<FuelScreen> {
         final vehicle = await ApiService.getVehicleById(vehicleId);
         setState(() {
           activePrimaryFC = fc;
-          if (vehicle['engine_type'] != null) {
-            final engine = vehicle['engine_type'].toString().toLowerCase();
-            if (engine.contains('gas') || engine.contains('petrol')) {
-              activeFuelType = "Petrol";
-              activeFuelTypeFixed = true;
-            } else if (engine.contains('diesel')) {
-              activeFuelType = "Diesel";
-              activeFuelTypeFixed = true;
-            } else {
-              activeFuelTypeFixed = false;
-            }
+          final pt = (vehicle['powertrain_type'] ?? vehicle['engine_type'] ?? '').toString().toLowerCase();
+          if (pt.contains('gas') || pt.contains('petrol')) {
+            activeFuelType = "Petrol";
+            activeFuelTypeFixed = true;
+          } else if (pt.contains('diesel')) {
+            activeFuelType = "Diesel";
+            activeFuelTypeFixed = true;
           } else {
             activeFuelTypeFixed = false;
           }
@@ -125,17 +121,13 @@ class _FuelScreenState extends State<FuelScreen> {
       setState(() {
         inactivePrimaryFC = fc;
         inactiveSecondaryFC = null;
-        if (vehicle['engine_type'] != null) {
-          final engine = vehicle['engine_type'].toString().toLowerCase();
-          if (engine.contains('gas') || engine.contains('petrol')) {
-            inactiveFuelType = "Petrol";
-            inactiveFuelTypeFixed = true;
-          } else if (engine.contains('diesel')) {
-            inactiveFuelType = "Diesel";
-            inactiveFuelTypeFixed = true;
-          } else {
-            inactiveFuelTypeFixed = false;
-          }
+        final pt = (vehicle['powertrain_type'] ?? vehicle['engine_type'] ?? '').toString().toLowerCase();
+        if (pt.contains('gas') || pt.contains('petrol')) {
+          inactiveFuelType = "Petrol";
+          inactiveFuelTypeFixed = true;
+        } else if (pt.contains('diesel')) {
+          inactiveFuelType = "Diesel";
+          inactiveFuelTypeFixed = true;
         } else {
           inactiveFuelTypeFixed = false;
         }
@@ -368,26 +360,80 @@ class _FuelScreenState extends State<FuelScreen> {
 
   // ── Reusable fuel form ──
   Widget _fuelTypeRow(String selected, ValueChanged<String> onChanged, {bool isFixed = false}) {
+    // When fixed, show a non-interactive locked chip
+    if (isFixed) {
+      final isPetrol = selected == "Petrol";
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1A2E2A).withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xFF1A2E2A).withValues(alpha: 0.35)),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              isPetrol ? Icons.local_gas_station : Icons.opacity,
+              color: const Color(0xFF1A2E2A),
+              size: 22,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              selected,
+              style: const TextStyle(
+                color: Color(0xFF1A2E2A),
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+              ),
+            ),
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A2E2A).withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Icon(Icons.lock_outline, size: 12, color: Color(0xFF1A2E2A)),
+                  SizedBox(width: 4),
+                  Text(
+                    "Fixed",
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Color(0xFF1A2E2A),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // When not fixed, show selectable buttons
     return Row(
       children: ["Petrol", "Diesel"].map((type) {
         final isSelected = selected == type;
         return Expanded(
           child: GestureDetector(
-            onTap: isFixed ? null : () => onChanged(type),
+            onTap: () => onChanged(type),
             child: Container(
               margin: EdgeInsets.only(right: type == "Petrol" ? 8 : 0),
               padding: const EdgeInsets.symmetric(vertical: 14),
               decoration: BoxDecoration(
-                color: isSelected 
-                    ? (isFixed ? const Color(0xFF1A2E2A).withOpacity(0.7) : const Color(0xFF1A2E2A))
-                    : Colors.white,
+                color: isSelected ? const Color(0xFF1A2E2A) : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected && isFixed ? Colors.blue.shade200 : Colors.grey.shade300),
+                border: Border.all(color: Colors.grey.shade300),
               ),
               child: Column(
                 children: [
                   Icon(
-                    isSelected && isFixed ? Icons.lock : Icons.local_gas_station,
+                    Icons.local_gas_station,
                     color: isSelected ? Colors.white : Colors.grey,
                     size: 20,
                   ),
@@ -890,9 +936,9 @@ class _FuelScreenState extends State<FuelScreen> {
                               (f) => setState(() => activeBillImage = f),
                             ),
                           ),
-                          const Text(
-                            "Select Fuel Type",
-                            style: TextStyle(
+                          Text(
+                            activeFuelTypeFixed ? "Fuel Type (Auto-detected)" : "Select Fuel Type",
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF1A2E2A),
@@ -904,6 +950,14 @@ class _FuelScreenState extends State<FuelScreen> {
                             (v) => setState(() => activeFuelType = v),
                             isFixed: activeFuelTypeFixed,
                           ),
+                          if (activeFuelTypeFixed)
+                            const Padding(
+                              padding: EdgeInsets.only(top: 4),
+                              child: Text(
+                                "Set automatically from vehicle's powertrain type",
+                                style: TextStyle(color: Color(0xFF4A90A4), fontSize: 12),
+                              ),
+                            ),
                           const SizedBox(height: 12),
 
                           _inputField(
@@ -1109,9 +1163,9 @@ class _FuelScreenState extends State<FuelScreen> {
                             (f) => setState(() => inactiveBillImage = f),
                           ),
                         ),
-                        const Text(
-                          "Select Fuel Type",
-                          style: TextStyle(
+                        Text(
+                          inactiveFuelTypeFixed ? "Fuel Type (Auto-detected)" : "Select Fuel Type",
+                          style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF1A2E2A),
@@ -1123,6 +1177,14 @@ class _FuelScreenState extends State<FuelScreen> {
                           (v) => setState(() => inactiveFuelType = v),
                           isFixed: inactiveFuelTypeFixed,
                         ),
+                        if (inactiveFuelTypeFixed)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 4),
+                            child: Text(
+                              "Set automatically from vehicle's powertrain type",
+                              style: TextStyle(color: Color(0xFF4A90A4), fontSize: 12),
+                            ),
+                          ),
                         const SizedBox(height: 12),
 
                         _inputField(
