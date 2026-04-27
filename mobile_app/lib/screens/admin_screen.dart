@@ -1320,24 +1320,40 @@ class _AdminsScreenState extends State<AdminsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Admins",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Column(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "ADMIN MANAGEMENT",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           Expanded(
             child: loading
@@ -1382,8 +1398,13 @@ class _AdminsScreenState extends State<AdminsScreen> {
                 )
                 .toList(),
           ),
-        ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
     );
   }
 }
@@ -1561,24 +1582,40 @@ class _DriversScreenState extends State<DriversScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Drivers",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Column(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "DRIVER MANAGEMENT",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           Expanded(
             child: loading
@@ -1660,8 +1697,13 @@ class _DriversScreenState extends State<DriversScreen> {
                 )
                 .toList(),
           ),
-        ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
     );
   }
 }
@@ -1817,24 +1859,40 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Vehicles",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Column(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "VEHICLE FLEET",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           Expanded(
             child: loading
@@ -1901,8 +1959,13 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                 )
                 .toList(),
           ),
-        ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
     );
   }
 }
@@ -2041,24 +2104,40 @@ class _RoutesScreenState extends State<RoutesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Routes",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Column(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "ROUTE MANAGEMENT",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           Expanded(
             child: loading
@@ -2113,8 +2192,13 @@ class _RoutesScreenState extends State<RoutesScreen> {
                 )
                 .toList(),
           ),
-        ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
     );
   }
 }
@@ -2250,24 +2334,40 @@ class _FuelCardsScreenState extends State<FuelCardsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Fuel Cards",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Column(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "FUEL CARDS",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           Expanded(
             child: loading
@@ -2315,8 +2415,13 @@ class _FuelCardsScreenState extends State<FuelCardsScreen> {
                 )
                 .toList(),
           ),
-        ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
     );
   }
 }
@@ -2549,24 +2654,40 @@ class _TripAllocationScreenState extends State<TripAllocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Trip Allocation",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Column(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "TRIP ALLOCATION",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           Expanded(
             child: loading
@@ -2727,8 +2848,13 @@ class _TripAllocationScreenState extends State<TripAllocationScreen> {
                 )
                 .toList(),
           ),
-        ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    ),
     );
   }
 }
@@ -2932,51 +3058,66 @@ class _AdminReportsScreenState extends State<AdminReportsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Light grey background
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Driver Interface v1.1",
-              style: TextStyle(
-                color: Color(0xFF1A1A2E),
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              "Activity & Performance Reports",
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        bottom: TabBar(
-          controller: _tab,
-          isScrollable: true,
-          labelColor: const Color(0xFF1A2E2A),
-          unselectedLabelColor: Colors.grey.shade400,
-          indicatorColor: const Color(0xFF1A2E2A),
-          indicatorWeight: 3,
-          labelStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
-          tabs: _tabs.map((t) => Tab(text: t)).toList(),
         ),
-      ),
-      body: loading
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "REPORTS",
+                              style: TextStyle(
+                                fontSize: 18,
+                                letterSpacing: 1.2,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF1A1A2E),
+                              ),
+                            ),
+                            Text(
+                              "Activity & Performance",
+                              style: TextStyle(fontSize: 11, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    TabBar(
+                      controller: _tab,
+                      isScrollable: true,
+                      labelColor: const Color(0xFF1A2E2A),
+                      unselectedLabelColor: Colors.grey.shade400,
+                      indicatorColor: const Color(0xFF1A2E2A),
+                      indicatorWeight: 3,
+                      labelStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                      tabs: _tabs.map((t) => Tab(text: t)).toList(),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: loading
           ? const Center(
               child: CircularProgressIndicator(color: Color(0xFF1A2E2A)),
             )
@@ -3008,7 +3149,12 @@ class _AdminReportsScreenState extends State<AdminReportsScreen>
                   (v) => setState(() => showOldRepairs = v),
                 ),
               ],
-            ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
         decoration: BoxDecoration(
@@ -3558,24 +3704,40 @@ class AssetTrackingScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "Asset Tracking",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-      ),
-      body: Padding(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "ASSET TRACKING",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -3672,9 +3834,13 @@ class AssetTrackingScreen extends StatelessWidget {
                 },
               ),
             ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+    ),
     );
   }
 }
@@ -3928,61 +4094,76 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          widget.categoryTitle,
-          style: const TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.black87),
-            onPressed: _refresh,
-          ),
-          IconButton(
-            icon: const Icon(Icons.download, color: Colors.blue),
-            onPressed: () {
-              downloadAsXlsx(
-                context,
-                widget.categoryTitle,
-                [
-                  "Date",
-                  "Time",
-                  "VIN",
-                  "Asset No",
-                  "Requested By",
-                  "Fitted By",
-                  "ODO",
-                ],
-                assets
-                    .map<List<String>>(
-                      (a) => [
-                        a['report_date'] ?? '',
-                        _formatTime(a['created_at']),
-                        a['vin'] ?? '',
-                        a['asset_number'] ?? '',
-                        a['requested_by'] ?? '',
-                        a['fitted_by'] ?? '',
-                        a['odo_reading']?.toString() ?? '',
-                      ],
-                    )
-                    .toList(),
-              );
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Text(
+                      widget.categoryTitle.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.refresh, color: Color(0xFF1A1A2E)),
+                      onPressed: _refresh,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.download, color: Colors.blue),
+                      onPressed: () {
+                        downloadAsXlsx(
+                          context,
+                          widget.categoryTitle,
+                          [
+                            "Date",
+                            "Time",
+                            "VIN",
+                            "Asset No",
+                            "Requested By",
+                            "Fitted By",
+                            "ODO",
+                          ],
+                          assets
+                              .map<List<String>>(
+                                (a) => [
+                                  a['report_date'] ?? '',
+                                  _formatTime(a['created_at']),
+                                  a['vin'] ?? '',
+                                  a['asset_number'] ?? '',
+                                  a['requested_by'] ?? '',
+                                  a['fitted_by'] ?? '',
+                                  a['odo_reading']?.toString() ?? '',
+                                ],
+                              )
+                              .toList(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -4317,6 +4498,8 @@ class _AdminAssetFormScreenState extends State<AdminAssetFormScreen> {
           ],
         ),
       ),
+    ),
+    ),
     );
   }
 
@@ -4537,59 +4720,74 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "TC Plate Allocation",
-              style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              "Assign TC Plate to Vehicle",
-              style: TextStyle(color: Colors.grey, fontSize: 12),
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.black87),
-            onPressed: _refresh,
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
-          IconButton(
-            icon: const Icon(Icons.download, color: Colors.orange),
-            onPressed: () {
-              downloadAsXlsx(
-                context,
-                "TC Plate Allocation",
-                ["Date", "Time", "VIN", "TC Plate No"],
-                assets
-                    .map<List<String>>(
-                      (a) => [
-                        a['report_date'] ?? '',
-                        _formatTime(a['created_at']),
-                        a['vin'] ?? '',
-                        a['asset_number'] ?? '',
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "TC PLATE",
+                          style: TextStyle(
+                            fontSize: 18,
+                            letterSpacing: 1.2,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF1A1A2E),
+                          ),
+                        ),
+                        Text(
+                          "Assign TC Plate to Vehicle",
+                          style: TextStyle(fontSize: 11, color: Colors.grey),
+                        ),
                       ],
-                    )
-                    .toList(),
-              );
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.refresh, color: Color(0xFF1A1A2E)),
+                      onPressed: _refresh,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.download, color: Colors.orange),
+                      onPressed: () {
+                        downloadAsXlsx(
+                          context,
+                          "TC Plate Allocation",
+                          ["Date", "Time", "VIN", "TC Plate No"],
+                          assets
+                              .map<List<String>>(
+                                (a) => [
+                                  a['report_date'] ?? '',
+                                  _formatTime(a['created_at']),
+                                  a['vin'] ?? '',
+                                  a['asset_number'] ?? '',
+                                ],
+                              )
+                              .toList(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -4897,6 +5095,11 @@ class _AdminTCPlateScreenState extends State<AdminTCPlateScreen> {
           ],
         ),
       ),
+    ),
+    ],
+    ),
+    ),
+    ),
     );
   }
 
@@ -5009,24 +5212,49 @@ class _AdminAttendanceScreenState extends State<AdminAttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
-      appBar: AppBar(
-        title: const Text(
-          "Attendance Records",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF1A1A2E),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.calendar_month_outlined),
-            onPressed: () => _selectDate(context),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8FAFB), Color(0xFFF0F2F5)],
           ),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
-        ],
-      ),
-      body: Column(
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text(
+                      "ATTENDANCE",
+                      style: TextStyle(
+                        fontSize: 18,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1A1A2E),
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.calendar_month_outlined, color: Color(0xFF1A1A2E)),
+                      onPressed: () => _selectDate(context),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.refresh, color: Color(0xFF1A1A2E)),
+                      onPressed: _loadData,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
         children: [
           // Stats summary
           Container(
@@ -5134,8 +5362,13 @@ class _AdminAttendanceScreenState extends State<AdminAttendanceScreen> {
                     },
                   ),
           ),
-        ],
-      ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  ),
+),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
         decoration: BoxDecoration(
